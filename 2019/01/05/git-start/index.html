@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Git中文安装教程 window10 | Missionary&#39;s Blog | Missionary 中国</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="git">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="Missionary's Blog" type="application/atom+xml">
+</head>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Git中文安装教程 window10</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">Git中文安装教程 window10</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2019-01-05T10:02:39.000Z" itemprop="datePublished" class="page-time">
+  2019-01-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/配置/">配置</a></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-git-start"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Git中文安装教程 window10</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2019-01-05 18:02:39" datetime="2019-01-05T10:02:39.000Z"  itemprop="datePublished">2019-01-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/配置/">配置</a></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2019/01/05/git-start/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2019/01/05/git-start/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2019/01/05/git-start/#comment">
+            <span class="valine-comment-count" data-xid="/2019/01/05/git-start/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="1-Git简介"><a href="#1-Git简介" class="headerlink" title="1.Git简介"></a>1.Git简介</h2><blockquote>
+<p><code>Git</code>是一个开源的<strong>分布式版本控制系统</strong>，可以有效、高速地处理从很小到非常大的项目版本管理。  Git 是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。</p>
+</blockquote>
+<h2 id="2-为何选择Git"><a href="#2-为何选择Git" class="headerlink" title="2.为何选择Git"></a>2.为何选择Git</h2><blockquote>
+<p> Git 是目前最流行的版本管理工具，如果你使用 <code>Github</code>的话，必定要用到Git。如果这里你说你没使用 <code>GitHub</code>，那么就快去用起来，哥们你错过了很多优秀的开源项目啊不能再这样下去了。目前最火的开源社区 <code>Github</code> ,就是基于 Git 版本控制系统，所以掌握 Git 技能很重要。</p>
+<p> 因为 Git 很火，现在很多 IDE 都集成了 Git,并且提供一些相关的图形化操作。也有很多很优秀,专门用来简化 Git 操作的 Git GUI 工具，例如 <code>SourceTree</code>,<code>Tortoise</code> 等。</p>
+<p>但是我想说的是，<code>命令行</code>才是Git的王者操作！原因是，Git Gui的工具底层也是对常用的 Git 命令进行封装实现的，所以，直接Git命令，才是最灵活的操作。</p>
+</blockquote>
+<h2 id="3-Git优点"><a href="#3-Git优点" class="headerlink" title="3.Git优点"></a>3.Git优点</h2><blockquote>
+<p> 1、适合分布式开发，强调个体；<br> 2、公共的服务器压力和数量都不会太大；<br> 3、速度快， 成熟的架构，开发灵活；<br> 4、任意两个开发者之间可以很容易的解决冲突；<br> 5、离线工作，管理代码成本低，不需要依赖服务器；<br> 6、部署方便。基本上下个命令就可以用；<br> 7、良好的分支机制，可以让主干代码保持干净。</p>
+</blockquote>
+<h2 id="4-什么是版本控制系统"><a href="#4-什么是版本控制系统" class="headerlink" title="4.什么是版本控制系统?"></a>4.什么是版本控制系统?</h2><blockquote>
+<p>如果你用Microsoft Word写过长篇大论，那你一定有这样的经历：</p>
+<p>想删除一个段落，又怕将来想恢复找不回来怎么办？有办法，先把当前文件“另存为……”一个新的Word文件，再接着改，改到一定程度，再“另存为……”一个新文件，这样一直改下去，最后你的Word文档就“魂飞魄散”了！</p>
+<p>过了一周，你想找回被删除的文字，但是已经记不清删除前保存在哪个文件里了，只好一个一个文件去找，真麻烦。</p>
+<p>看着一堆乱七八糟的文件，想保留最新的一个，然后把其他的删掉，又怕哪天会用上，还不敢删，真郁闷。</p>
+<p>更要命的是，有些部分需要你的财务同事帮助填写，于是你把文件Copy到U盘里给她（也可能通过Email发送一份给她），然后，你继续修改Word文件。一天后，同事再把Word文件传给你，此时，你必须想想，发给她之后到你收到她的文件期间，你作了哪些改动，得把你的改动和她的部分合并，真困难。</p>
+<p>于是你想，如果有一个软件，不但能自动帮我记录每次文件的改动，还可以让同事协作编辑，这样就不用自己管理一堆类似的文件了，也不需要把文件传来传去。如果想查看某次改动，只需要在软件里瞄一眼就可以，岂不是很方便？</p>
+<p>这个软件用起来就应该像这个样子，能记录每次文件的改动：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th style="text-align:right">用户</th>
+<th style="text-align:right">说明</th>
+<th style="text-align:center">日期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align:right">张三</td>
+<td style="text-align:right">删除了软件服务条款5</td>
+<td style="text-align:center">7/12 10:38</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align:right">张三</td>
+<td style="text-align:right">增加了License人数限制</td>
+<td style="text-align:center">7/12 18:09</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align:right">李四</td>
+<td style="text-align:right">财务部门调整了合同金额</td>
+<td style="text-align:center">7/13 9:51</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align:right">张三</td>
+<td style="text-align:right">延长了免费升级周期</td>
+<td style="text-align:center">7/14 15:17</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-下载"><a href="#4-下载" class="headerlink" title="4.下载"></a>4.下载</h2><p>网址: <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">https://git-scm.com/download/win</a></p>
+<h2 id="5-安装"><a href="#5-安装" class="headerlink" title="5.安装"></a>5.安装</h2><p>信息</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="c532d8a1ea8f5f0e40fdd5dfd22a957b.png" title="" data-fancybox="images"><img src="c532d8a1ea8f5f0e40fdd5dfd22a957b.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>选择安装位置</p>
+<p><a rel=Git中文安装教程 window10 href="46f018daeac3ea4d800b68357c1ccdfe.png" title="" data-fancybox="images"><img src="46f018daeac3ea4d800b68357c1ccdfe.png" alt></a><br>选择组件</p>
+<p><a rel=Git中文安装教程 window10 href="d3e00efe821376bddeb2a710a180bcf1.png" title="" data-fancybox="images"><img src="d3e00efe821376bddeb2a710a180bcf1.png" alt></a></p>
+<p>创建开始菜单目录</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="ff01c1b86b69befebe8a582512559807.png" title="" data-fancybox="images"><img src="ff01c1b86b69befebe8a582512559807.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>选择Git使用的默认编辑器</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="95f0c82636056141dcc8746ed92e841a.png" title="" data-fancybox="images"><img src="95f0c82636056141dcc8746ed92e841a.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>选择VIm</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="32c8f0c6b3ea1eb5cce5096beb639634.png" title="" data-fancybox="images"><img src="32c8f0c6b3ea1eb5cce5096beb639634.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>配置PATH环境<br><figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="52b139c0538ec8164b8518ec748c985a.png" title="" data-fancybox="images"><img src="52b139c0538ec8164b8518ec748c985a.png" alt title class></a>
+                <p></p>
+            </figure></p>
+<p>选择HTTPS传输后端</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="840b6f3cec80ed2d1467a127e441a625.png" title="" data-fancybox="images"><img src="840b6f3cec80ed2d1467a127e441a625.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>配置行结束转换</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="4449dad2043e81de03f7b9bd2045baa6.png" title="" data-fancybox="images"><img src="4449dad2043e81de03f7b9bd2045baa6.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>配置终端模拟器以与 Git Bash 一起使用</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="2a84a2912dca2b1daa80ed4e4fa7c8ba.png" title="" data-fancybox="images"><img src="2a84a2912dca2b1daa80ed4e4fa7c8ba.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>配置额外的选项</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="b2b82340704cc0ea2713a0d35bd7bfa0.png" title="" data-fancybox="images"><img src="b2b82340704cc0ea2713a0d35bd7bfa0.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>Installing</p>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="21b2bb47bf4d93bce747505e10f451b5.png" title="" data-fancybox="images"><img src="21b2bb47bf4d93bce747505e10f451b5.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>完成安装<br><figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="71c0cf85416ccf9f9789c0bb82598b2d.png" title="" data-fancybox="images"><img src="71c0cf85416ccf9f9789c0bb82598b2d.png" alt title class></a>
+                <p></p>
+            </figure></p>
+<p>运行软件<br><figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="ebb6ec0f3b19c86118289f3548bd288d.png" title="" data-fancybox="images"><img src="ebb6ec0f3b19c86118289f3548bd288d.png" alt title class></a>
+                <p></p>
+            </figure></p>
+<h1 id="6-设置"><a href="#6-设置" class="headerlink" title="6.设置"></a>6.设置</h1><h2 id="6-1配置github的ssh密钥"><a href="#6-1配置github的ssh密钥" class="headerlink" title="6.1配置github的ssh密钥:"></a>6.1配置github的ssh密钥:</h2><p>(1)打开Git Bash查看电脑上是否已经存在SSH密钥：<br>输入<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh</span><br><span class="line">`</span><br></pre></td></tr></table></figure></p>
+<p>(2)创建新的ssh key:<br>输入<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C "your_email@youremail.com"</span><br></pre></td></tr></table></figure></p>
+<p>按Enter，然后提示输入<code>passphrase（密码）</code>，输入两次（可以不输直接两次Enter），</p>
+<p>然后会在 .ssh 目录生产两个文件<br>：id_rsa和id_rsa.pub用记事本打开.ssh目录下的id_rsa.pub文件，复制里面的内容；</p>
+<h2 id="6-2复制ssh-key到github："><a href="#6-2复制ssh-key到github：" class="headerlink" title="6.2复制ssh key到github："></a>6.2复制ssh key到github：</h2><blockquote>
+<p>On the GitHub site Click “Account Settings” &gt; Click “SSH Keys” &gt; Click “Add SSH key”</p>
+</blockquote>
+<p>打开github网站，点击右上角扳手图标，然后点击左边菜单的 ssh key， 然后右边页面的 add ssh key，将复制的内容粘贴到github的key中，title可以不填，直接保存即可。</p>
+<h2 id="6-3测试-ssh-链接-github："><a href="#6-3测试-ssh-链接-github：" class="headerlink" title="6.3测试 ssh 链接 github："></a>6.3测试 ssh 链接 github：</h2><p>输入<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure></p>
+<h2 id="6-4设置自己的git信息："><a href="#6-4设置自己的git信息：" class="headerlink" title="6.4设置自己的git信息："></a>6.4设置自己的git信息：</h2><p>输入<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "Firstname Lastname"</span><br></pre></td></tr></table></figure></p>
+<p>（此处name可修改也不是用于登录github的登录名）<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email "your_email@youremail.com"</span><br></pre></td></tr></table></figure></p>
+<p>设置自己的git信息即完成安装和设置，可以输入git config –list查看自己的git信息。</p>
+<h2 id="7-IntelliJ-IDEA-中GIT功能"><a href="#7-IntelliJ-IDEA-中GIT功能" class="headerlink" title="7.IntelliJ IDEA 中GIT功能"></a>7.IntelliJ IDEA 中GIT功能</h2><figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="dd597e1d9e0975fd13461495920258a9.png" title="" data-fancybox="images"><img src="dd597e1d9e0975fd13461495920258a9.png" alt title class></a>
+                <p></p>
+            </figure>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="dd597e1d9e0975fd13461495920258a9.png" title="" data-fancybox="images"><img src="dd597e1d9e0975fd13461495920258a9.png" alt title class></a>
+                <p></p>
+            </figure>
+<figure class="image-box">
+                <a rel=Git中文安装教程 window10 href="4acb282c21ae8cd957093583ce38311f.png" title="" data-fancybox="images"><img src="4acb282c21ae8cd957093583ce38311f.png" alt title class></a>
+                <p></p>
+            </figure>
+<h3 id="文献"><a href="#文献" class="headerlink" title="文献"></a>文献</h3><p><a href="https://blog.csdn.net/bmicnj/article/details/78413058" target="_blank" rel="noopener">https://blog.csdn.net/bmicnj/article/details/78413058</a><br><a href="https://baike.baidu.com/item/GIT/12647237?fr=aladdin" target="_blank" rel="noopener">https://baike.baidu.com/item/GIT/12647237?fr=aladdin</a><br><a href="https://git-scm.com/doc" target="_blank" rel="noopener">https://git-scm.com/doc</a><br><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137396287703354d8c6c01c904c7d9ff056ae23da865a000" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137396287703354d8c6c01c904c7d9ff056ae23da865a000</a></p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-01-05T12:33:40.964Z" itemprop="dateUpdated">2019-01-05 20:33:40</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/01/05/git-start/" target="_blank" rel="external">https://github.com/missionOdd/2019/01/05/git-start/</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2019/01/05/git-start/&title=《Git中文安装教程 window10》 — Missionary's Blog&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2019/01/05/git-start/&title=《Git中文安装教程 window10》 — Missionary's Blog&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/02/04/2019-new-year/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">使用EasyCode十分钟写后端增删改查代码</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/01/05/mysql-start/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MySQL 下载安装图文教程</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-Git简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">1.Git简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-为何选择Git"><span class="post-toc-number">2.</span> <span class="post-toc-text">2.为何选择Git</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-Git优点"><span class="post-toc-number">3.</span> <span class="post-toc-text">3.Git优点</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-什么是版本控制系统"><span class="post-toc-number">4.</span> <span class="post-toc-text">4.什么是版本控制系统?</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-下载"><span class="post-toc-number">5.</span> <span class="post-toc-text">4.下载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-安装"><span class="post-toc-number">6.</span> <span class="post-toc-text">5.安装</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#6-设置"><span class="post-toc-number"></span> <span class="post-toc-text">6.设置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-1配置github的ssh密钥"><span class="post-toc-number">1.</span> <span class="post-toc-text">6.1配置github的ssh密钥:</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-2复制ssh-key到github："><span class="post-toc-number">2.</span> <span class="post-toc-text">6.2复制ssh key到github：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-3测试-ssh-链接-github："><span class="post-toc-number">3.</span> <span class="post-toc-text">6.3测试 ssh 链接 github：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-4设置自己的git信息："><span class="post-toc-number">4.</span> <span class="post-toc-text">6.4设置自己的git信息：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7-IntelliJ-IDEA-中GIT功能"><span class="post-toc-number">5.</span> <span class="post-toc-text">7.IntelliJ IDEA 中GIT功能</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#文献"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">文献</span></a></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2021
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2019/01/05/git-start/&title=《Git中文安装教程 window10》 — Missionary's Blog&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2019/01/05/git-start/&title=《Git中文安装教程 window10》 — Missionary's Blog&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3aQQ7CMAwFUe5/6bJFQqTz7RapzmSFoKR5WViOndcLj+NjfH7z/et6kDm/n7xsyJAh47EM8mKyFPKvX0skM6w3RYYMGTswfk29/kwCZRp8OVuGDBkyCIOEV54Uki2TIUOGDMLgL1sH0/XzMmTIkFE7xPLFdZLF28/iMmTIeCCDV93///mW/oYMGTIexTjC0aGmwTdYlQwZMkYzeICrXZjoXM6I1yNDhoyhjM7UpMRWK+ql75IhQ8Y+DD5RmvbVQjMP2TJkyJjN6LQHguZiI+zGs8mQIWMco1aOTw+fteti/BkZMmTMZvArXzxFq6WDJByfhGAZMmQMZfASWzHfbLc5g9RQhgwZQxlpECSH2zTepwW7k06sDBkyRjPSAFdrIXTCN0oQZciQMZqRpoNr/H1bE1QBZciQMYiRLq6WIKaNz7QIKEOGjKmMWuvx2mp8uikyZMjYmcETwX7TMW18ojsjMmTIGMogR0e+iE6JPy3hnZTbZMiQsQGjs1CeJqZPnhyJZciQsQGjBrhqC3iiGTQDZMiQMY7RaSXW0kdeXCseYmXIkDGCcYQjZV91F+KEKkOGjNGM9J5VcKRsXPnqFOZkyJAxlcGDbK0NQL7n7c+f88iQIWMDRq3pyJ/ngbV1FpchQ4YMXI0niyO/BlQZMmTICA+rvLR3VaNUhgwZOzA6r0mvWZCF3lhukyFDxgMZ/2k6rrep9nYZMmRswHgDRjyJh8AD+EQAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+    
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ab84488547116c4d03e6764e6ced5433";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="60" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":200,"hOffset":150,"vOffset":-20},"mobile":{"show":true},"react":{"opacity":0.5}});</script></body>
+</html>

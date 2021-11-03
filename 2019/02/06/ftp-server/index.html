@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>配置FTP服务器 window10 | Missionary&#39;s Blog | Missionary 中国</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="ftp">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="Missionary's Blog" type="application/atom+xml">
+</head>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>配置FTP服务器 window10</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">配置FTP服务器 window10</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2019-02-06T09:30:41.000Z" itemprop="datePublished" class="page-time">
+  2019-02-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/配置/">配置</a></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-ftp-server"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">配置FTP服务器 window10</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2019-02-06 17:30:41" datetime="2019-02-06T09:30:41.000Z"  itemprop="datePublished">2019-02-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/配置/">配置</a></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2019/02/06/ftp-server/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2019/02/06/ftp-server/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2019/02/06/ftp-server/#comment">
+            <span class="valine-comment-count" data-xid="/2019/02/06/ftp-server/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <blockquote>
+<p>博主最近对文件网络存储进行了少许摸索, 了解到FTP服务是文件存储的方式之一。下面就讲讲在window10下搭建FTP服务器吧~</p>
+</blockquote>
+<h1 id="FTP服务简介"><a href="#FTP服务简介" class="headerlink" title="FTP服务简介"></a>FTP服务简介</h1><blockquote>
+<p><code>FTP</code> 是<code>File Transfer Protocol</code>（文件传输协议）的英文简称，而中文简称为“文件传输协议”。用于Internet上的控制文件的双向传输。同时，它也是一个应用程序（Application）。基于不同的操作系统有不同的FTP应用程序，而所有这些应用程序都遵守同一种协议以传输文件。在FTP的使用当中，用户经常遇到两个概念：”下载”（Download）和”上传”（Upload）。”下载”文件就是从远程主机拷贝文件至自己的计算机上；”上传”文件就是将文件从自己的计算机中拷贝至远程主机上。用Internet语言来说，用户可通过客户机程序向（从）远程主机上传（下载）文件。由于FTP的文件传输是明文方式，具有一定危险性，所以又诞生了一种更加安全的传输方式vsftp,有兴趣自行了解。下面将演示如何在Window10 下开启FTP服务。</p>
+</blockquote>
+<h1 id="开启FTP服务"><a href="#开启FTP服务" class="headerlink" title="开启FTP服务"></a>开启FTP服务</h1><ol>
+<li><strong>按【Win + R】快捷键打开运行对话框，输入“optionalfeatures”后，按回车键</strong><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="cded92cfb84e998ab5dc5524d0b4b1dc.png" title="" data-fancybox="images"><img src="cded92cfb84e998ab5dc5524d0b4b1dc.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<ol start="2">
+<li><strong>从“启用或关闭Windows功能”弹窗中找到Internet Information Services(或者中文版Internet信息服务)并打开</strong><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="7e15c1b94ef45715cec16992c0ea9302.png" title="" data-fancybox="images"><img src="7e15c1b94ef45715cec16992c0ea9302.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<ol start="3">
+<li><strong>配置IIS并点击确定</strong><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="4016239a6c0c0ac2ec87ef1b3e0061db.png" title="" data-fancybox="images"><img src="4016239a6c0c0ac2ec87ef1b3e0061db.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<ol start="4">
+<li><strong>开始菜单搜索“IIS”并点击进入IIS管理器</strong><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="d719fcafd5a8e0733338f2d6653d968d.png" title="" data-fancybox="images"><img src="d719fcafd5a8e0733338f2d6653d968d.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<ol start="5">
+<li><strong>查看本机ip地址，后续访问Ftp地址需要用到（打开cmd输入ipconfig）</strong><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="331455aee43602549541b3ccb028d359.png" title="" data-fancybox="images"><img src="331455aee43602549541b3ccb028d359.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<ol start="6">
+<li><strong>IIS网站管理器“网站”右键弹出菜单点击“添加FTP站点”</strong><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="af6cae20df02d6b398b9bf8b978f588c.png" title="" data-fancybox="images"><img src="af6cae20df02d6b398b9bf8b978f588c.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<p>7.<strong>配置网站（网站名称：FtpSite 物理路径：D:\projectdev\ftpserver</strong><br><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="c4a658488e25b98c816167ba406a7743.png" title="" data-fancybox="images"><img src="c4a658488e25b98c816167ba406a7743.png" alt title class></a>
+                <p></p>
+            </figure></p>
+<ol start="8">
+<li><strong>IP 端口号 SSL设置</strong> <figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="bd59d4c115ba466544c80e21dc03275d.png" title="" data-fancybox="images"><img src="bd59d4c115ba466544c80e21dc03275d.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<ol start="9">
+<li><strong>身份验证和授权信息设置</strong> <figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="ed1a1af5b07a5b980ab0e37202f1c90e.png" title="" data-fancybox="images"><img src="ed1a1af5b07a5b980ab0e37202f1c90e.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="1a92cf57ebed2a6dc4d8070744182003.png" title="" data-fancybox="images"><img src="1a92cf57ebed2a6dc4d8070744182003.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>可以看到,当访问ftp://<strong> </strong> <strong> </strong> ** 的时候,我们无需用户权限,这样是不安全的<br>所以,下面将为ftp设置禁用匿名权限,只有登录用户才可以访问</p>
+<ol start="10">
+<li><strong>禁用匿名用户访问</strong><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="820c7ab5e5bccaff543ce9ac2c28d906.png" title="" data-fancybox="images"><img src="820c7ab5e5bccaff543ce9ac2c28d906.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="9ad8290cd1e5d9a2a047b5b968bd5d81.png" title="" data-fancybox="images"><img src="9ad8290cd1e5d9a2a047b5b968bd5d81.png" alt title class></a>
+                <p></p>
+            </figure>
+<ol start="11">
+<li><strong>创建新的可登录用户</strong><figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="73145d99ad7c918bd7cd0f50c9ff2645.png" title="" data-fancybox="images"><img src="73145d99ad7c918bd7cd0f50c9ff2645.png" alt title class></a>
+                <p></p>
+            </figure>
+</li>
+</ol>
+<figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="e75f2c0da2cb3611c92b2f178bca94a3.png" title="" data-fancybox="images"><img src="e75f2c0da2cb3611c92b2f178bca94a3.png" alt title class></a>
+                <p></p>
+            </figure>
+<figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="6f1ee8bdf87910e6bbe15611dcf7fd31.png" title="" data-fancybox="images"><img src="6f1ee8bdf87910e6bbe15611dcf7fd31.png" alt title class></a>
+                <p></p>
+            </figure>
+<figure class="image-box">
+                <a rel=配置FTP服务器 window10 href="3dd44ac1bbffe41bb5096ff1831166e9.png" title="" data-fancybox="images"><img src="3dd44ac1bbffe41bb5096ff1831166e9.png" alt title class></a>
+                <p></p>
+            </figure>
+<p>输入新用户账号密码,即可访问</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>这种配置FTP服务的方式,只能针对固定的IPV4地址。当我们换了IPV4地址,则需要再新建一个FTP服务。 这确实不是最佳的FTP服务方案。 如果作为局域网或测试项目的使用, 博主觉得已经这样可以满足您。但是, 当需求更高, 任务更重, 则需要在Linux服务器上搭建vftp服务了。好了, 本文结束, ヾ(￣▽￣)Bye~Bye~</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-06T09:57:58.823Z" itemprop="dateUpdated">2019-02-06 17:57:58</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/02/06/ftp-server/" target="_blank" rel="external">https://github.com/missionOdd/2019/02/06/ftp-server/</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ftp/">ftp</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2019/02/06/ftp-server/&title=《配置FTP服务器 window10》 — Missionary's Blog&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2019/02/06/ftp-server/&title=《配置FTP服务器 window10》 — Missionary's Blog&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/02/16/2019-holiday/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">2019春节假回家碎碎念</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/02/05/jpa-problem/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">spring-data-jpa 投影查询性能之坑</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#FTP服务简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">FTP服务简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#开启FTP服务"><span class="post-toc-number">2.</span> <span class="post-toc-text">开启FTP服务</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#结语"><span class="post-toc-number">3.</span> <span class="post-toc-text">结语</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2021
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2019/02/06/ftp-server/&title=《配置FTP服务器 window10》 — Missionary's Blog&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2019/02/06/ftp-server/&title=《配置FTP服务器 window10》 — Missionary's Blog&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aQU7EMAwF0Ln/pYvECgm1+XZaRJOXVcXQTF6QjOP484nH8T1+P599+nNcv3X27ueJgYGB8VrGcTnyRVzPdo3MN+X0XQwMjA0Y+XTViJcvLgnupz/HwMDAaCV/eQqIgYGB8UTATdK76tKrW4OBgbEb47nD5/WCEsbNZ3EMDIwXMmYuBp5+/qP7DQwMjH/MOIqjV8S/K7yezo+BgbE0I2meeCKyJe0a5RQTAwNjUUZeFEuaLfKlVC9KB8kiBgbG0ownWr6S7eiBB7+DgYGxDaOallWPqTObMpgZAwNjG8ZdgbiaVuYFOwwMjJ0ZectFtWEiv3/shWwMDIy1GXnaV11ctV0jCbKnPAwMjG0YveNlbwuiQ2l+wMbAwFia0Zu0V3TLk8vezBgYGKsy7gqCvZaLJNGMthIDA2MDRrk+NxFMq/NH24eBgbE0I2/hypPCHFxt1BhsNwYGxgaMJAjOL3e+gWNwE4uBgbEo465F9I6p1XLe4DIVAwNjOUaShFXLajm4Ok/0F8DAwFiUkbRwzRT0C7epvasFDAyMpRnzoTBPDe9KIjEwMHZjHMUxc3ytJouFcIyBgbE0o1oI6339oM4X/2eYL+dhYGC8lzGT5OXFuGq7xtTlJQYGxqKMmaJb9bk3BrNhYGBgxIEyL/rPJJ0YGBgY+WGyd5Ttldii5jAMDIylGfnXzKeASQGu2qKBgYGxNqN6gMxTveduMJoYDAyM9zG+ANU4qHZz4EoZAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+    
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ab84488547116c4d03e6764e6ced5433";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="60" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":200,"hOffset":150,"vOffset":-20},"mobile":{"show":true},"react":{"opacity":0.5}});</script></body>
+</html>

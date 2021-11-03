@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>spring-data-jpa 投影查询性能之坑 | Missionary&#39;s Blog | Missionary 中国</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="springboot,jpa">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="Missionary's Blog" type="application/atom+xml">
+</head>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>spring-data-jpa 投影查询性能之坑</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">spring-data-jpa 投影查询性能之坑</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2019-02-05T05:44:56.000Z" itemprop="datePublished" class="page-time">
+  2019-02-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-jpa-problem"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">spring-data-jpa 投影查询性能之坑</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2019-02-05 13:44:56" datetime="2019-02-05T05:44:56.000Z"  itemprop="datePublished">2019-02-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2019/02/05/jpa-problem/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2019/02/05/jpa-problem/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2019/02/05/jpa-problem/#comment">
+            <span class="valine-comment-count" data-xid="/2019/02/05/jpa-problem/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <blockquote>
+<p>项目开发过程中, 遇到了一个文章列表查询速度非常慢的问题。这到底是怎么回事呢?</p>
+<p>一路追查下来, 发现竟然是<code>spring-data-jpa</code>设计上的问题, 问题稍后说明, 博主先简评一下<code>spring-data-jpa</code>, <code>spring-data-jpa</code>很多时候真的很令人劝退, 各种奇奇怪怪的BUG, 功能达不到项目所需, 关联查询灵活性低 , 一些注解失效或难用, 但它简便的开发方式又令人不忍割舍, 正向生成数据库, 通过命名方法对数据库操作,分页排序查询等确实特别好用。</p>
+<p>总之, <code>spring-data-jpa</code>像个爱耍小脾气的漂亮女生, 一开始接触她, 你能享受到各种快乐优雅的开发模式, 觉得她就是我最想要的人, 被她迷得神魂颠倒, 接触久了, 便发现其中的各种毛病, 她不仅满足不了自己, 还可能会给你带来各种烦恼, 让你不禁会问:  为什么你的操作总是令我头秃 ? 她会说: 你去翻遍我所有的文档, 你会发现, 我就是这样不讲理的。</p>
+<p>这时候, 无奈的你则需要其他框架的辅助, <code>JdbcTemplate</code> 或 <code>Mybatis Plus</code>能够帮帮你解决问题。<code>spring-data-jpa</code>优势很明显, 缺点也多,  希望<code>spring-data-jpa</code>能日趋成熟,  以后做个善解人意的女人, 加大开发灵活性, 满足更多开发者的诉求, 这样博主也会服服帖帖地倒在她的石榴裙下o(<em>￣▽￣</em>)o~嗷~  。</p>
+</blockquote>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>看代码</p>
+<h4 id="Article实体类"><a href="#Article实体类" class="headerlink" title="Article实体类"></a>Article实体类</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonIgnoreProperties;</span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.Sets;</span><br><span class="line"><span class="keyword">import</span> lombok.Getter;</span><br><span class="line"><span class="keyword">import</span> lombok.Setter;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.annotations.NotFound;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.annotations.NotFoundAction;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.annotations.Where;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.validator.constraints.Range;</span><br><span class="line"><span class="keyword">import</span> javax.persistence.*;</span><br><span class="line"><span class="keyword">import</span> javax.validation.constraints.NotNull;</span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mission</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/1/24 0024-15:39</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//jpa 注解</span></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"article"</span>)</span><br><span class="line"><span class="comment">//Lombok</span></span><br><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="meta">@Setter</span></span><br><span class="line"><span class="meta">@Where</span>(clause = <span class="string">"ar_status = 1"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Article</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Id</span></span><br><span class="line">  <span class="meta">@GeneratedValue</span>(strategy =  GenerationType.IDENTITY)</span><br><span class="line">  <span class="keyword">private</span> Long arId;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotNull</span>(message = <span class="string">"文章标题arTitle不能为空"</span>)</span><br><span class="line">  <span class="meta">@Column</span>(nullable = <span class="keyword">false</span>)</span><br><span class="line">  <span class="keyword">private</span> String arTitle;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@Column</span>(columnDefinition = <span class="string">"longtext "</span>)</span><br><span class="line">  <span class="keyword">private</span> String arContent;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Column</span>(nullable = <span class="keyword">false</span>,columnDefinition = <span class="string">"datetime DEFAULT CURRENT_TIMESTAMP"</span>)</span><br><span class="line">  <span class="keyword">private</span> LocalDate arDate;<span class="comment">//时间  默认当前系统时间</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Range</span>(min=-<span class="number">1</span>,max=<span class="number">1</span>,message = <span class="string">"逻辑状态arStatus超出范围"</span>)</span><br><span class="line">  <span class="meta">@Column</span>(length = <span class="number">2</span>)</span><br><span class="line">  <span class="keyword">private</span> Integer arStatus; <span class="comment">// 状态 (0回收站删除 ,1显示)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="meta">@OrderBy</span>(<span class="string">"ac_id asc "</span>)</span><br><span class="line">  <span class="meta">@JsonIgnoreProperties</span>(<span class="string">"articles"</span>)</span><br><span class="line">  <span class="meta">@NotFound</span>(action= NotFoundAction.IGNORE)</span><br><span class="line">  <span class="meta">@ManyToMany</span>(cascade = &#123;CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH&#125;,fetch = FetchType.LAZY)</span><br><span class="line">  <span class="meta">@JoinTable</span>(name = <span class="string">"relation_article_cate"</span>,joinColumns = <span class="meta">@JoinColumn</span>(name = <span class="string">"ar_id"</span>),inverseJoinColumns = <span class="meta">@JoinColumn</span>(name = <span class="string">"arc_id"</span>))</span><br><span class="line">  <span class="keyword">private</span> Set&lt;ArticleCategory&gt; articleCategories= Sets.newHashSet();</span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotFound</span>(action= NotFoundAction.IGNORE)</span><br><span class="line">  <span class="meta">@OneToMany</span>(cascade = &#123;CascadeType.ALL&#125;,fetch = FetchType.LAZY)</span><br><span class="line">  <span class="meta">@JoinColumn</span>(name = <span class="string">"ar_id"</span>)</span><br><span class="line">  <span class="keyword">private</span> Set&lt;FileResource&gt; fileResources = Sets.newHashSet();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="meta">@NotFound</span>(action= NotFoundAction.IGNORE)</span><br><span class="line">  <span class="meta">@OneToMany</span>(cascade = &#123;CascadeType.ALL&#125;,fetch = FetchType.LAZY)</span><br><span class="line">  <span class="meta">@JoinColumn</span>(name = <span class="string">"ar_id"</span>)</span><br><span class="line">  <span class="keyword">private</span> Set&lt;Video&gt; videos= Sets.newHashSet();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Article投影"><a href="#Article投影" class="headerlink" title="Article投影"></a>Article投影</h4><p>主要关注这里<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonInclude;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mission</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/1/27 0027-9:05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ArticleSimpleProjection</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">Long <span class="title">getArId</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="function">String <span class="title">getArTitle</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="function">LocalDate <span class="title">getArDate</span><span class="params">()</span></span>;<span class="comment">//时间  默认当前系统时间</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@JsonInclude</span>(JsonInclude.Include.NON_EMPTY)</span><br><span class="line">  <span class="function">Set&lt;ArticleCategoryProjection&gt; <span class="title">getArticleCategories</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="Article投影查询方法"><a href="#Article投影查询方法" class="headerlink" title="Article投影查询方法"></a>Article投影查询方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.wteam.gdousd.entity.Article;</span><br><span class="line"><span class="keyword">import</span> com.wteam.gdousd.entity.projection.ArticleSimpleProjection;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.domain.Page;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.domain.Pageable;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.JpaRepository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.JpaSpecificationExecutor;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * (Article)表数据库JPA储存库</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> makejava</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2019-01-25 15:21:13</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ArticleRepository</span> <span class="keyword">extends</span> <span class="title">JpaSpecificationExecutor</span>&lt;<span class="title">Article</span>&gt;,<span class="title">JpaRepository</span>&lt;<span class="title">Article</span>,<span class="title">Long</span>&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">Page&lt;ArticleSimpleProjection&gt; <span class="title">findByArStatusAndArTitleLike</span><span class="params">(Integer status,String arTitle, Pageable pageable)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><p>当执行方法以后<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hibernate: <span class="keyword">select</span> article0_.ar_id <span class="keyword">as</span> ar_id1_1_, article0_.ar_content <span class="keyword">as</span> ar_conte2_1_, article0_.ar_date <span class="keyword">as</span> ar_date3_1_, article0_.ar_status <span class="keyword">as</span> ar_statu4_1_, article0_.ar_title <span class="keyword">as</span> ar_title5_1_ <span class="keyword">from</span> article article0_ <span class="keyword">where</span> ( article0_.ar_status = <span class="number">1</span>) <span class="keyword">and</span> article0_.ar_status=? <span class="keyword">and</span> (article0_.ar_title <span class="keyword">like</span> ?) <span class="keyword">order</span> <span class="keyword">by</span> article0_.ar_date <span class="keyword">desc</span> <span class="keyword">limit</span> ?</span><br></pre></td></tr></table></figure></p>
+<p>可以看到,<code>article0_.ar_content , article0_.ar_status</code> 等在<code>ArticleSimpleProjection</code> 接口中定义方法没有对应上的数据库字段竟然也被jpa查出 ,其中<code>ar_content</code>是文章内容,属于大文本字段, 查询多个记录而且还查询该字段的话,查询速度就比原来慢了好几倍。 这不是博主想要的结果, 必须优化!</p>
+<h1 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h1><p>投影接口中存在返回集合的定义方法, 使得<code>spring-data-jpa</code>会自动查询所有字段, 目前博主也不知道什么原因(博主没有看过源码)。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonInclude</span>(JsonInclude.Include.NON_EMPTY)</span><br><span class="line"> <span class="function">Set&lt;ArticleCategoryProjection&gt; <span class="title">getArticleCategories</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure></p>
+<p>因为在投影中存在集合,在<code>ArticleSimpleProjection</code> 接口中就存在了返回Set集合的定义方法<code>getArticleCategories()</code>, 所以查询投影就会将所有字段查询,这是<code>spring-data-jpa</code>的设计所致</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h4 id="Article投影-1"><a href="#Article投影-1" class="headerlink" title="Article投影"></a>Article投影</h4><p>去掉Set集合<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wteam.gdousd.entity.projection;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.annotation.JsonInclude;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> mission</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/1/27 0027-9:05</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ArticleSimpleProjection</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">Long <span class="title">getArId</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="function">String <span class="title">getArTitle</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="function">LocalDate <span class="title">getArDate</span><span class="params">()</span></span>;<span class="comment">//时间  默认当前系统时间</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@JsonInclude</span>(JsonInclude.Include.NON_EMPTY)</span><br><span class="line">  <span class="function">ArticleCategoryProjection <span class="title">getArticleCategories</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hibernate: <span class="keyword">select</span> article0_.ar_id <span class="keyword">as</span> col_0_0_, article0_.ar_title <span class="keyword">as</span> col_1_0_, article0_.ar_date <span class="keyword">as</span> col_2_0_, articlecat2_.ac_id <span class="keyword">as</span> col_3_0_, articlecat2_.ac_id <span class="keyword">as</span> ac_id1_2_, articlecat2_.ac_name <span class="keyword">as</span> ac_name2_2_, articlecat2_.sub_classify <span class="keyword">as</span> sub_clas3_2_ <span class="keyword">from</span> article article0_ <span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> relation_article_cate articlecat1_ <span class="keyword">on</span> article0_.ar_id=articlecat1_.ar_id <span class="keyword">left</span> <span class="keyword">outer</span> <span class="keyword">join</span> article_category articlecat2_ <span class="keyword">on</span> articlecat1_.arc_id=articlecat2_.ac_id <span class="keyword">where</span> ( article0_.ar_status = <span class="number">1</span>) <span class="keyword">and</span> article0_.ar_status=? <span class="keyword">and</span> (article0_.ar_title <span class="keyword">like</span> ?) <span class="keyword">order</span> <span class="keyword">by</span> article0_.ar_date <span class="keyword">desc</span> <span class="keyword">limit</span> ?</span><br></pre></td></tr></table></figure>
+<p>从结果可见,只要不用set集合,就不会发生jpa查询所有字段的事情。<br>有时候, 非要把查询结果放在用Set集合中, 就自定义查询吧! 博主认为, 这种情况, 用其他框架 <code>JdbcTemplate</code> 或 <code>Mybatis Plus</code>实现更好。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p> 目前对数据库操作的框架, 博主使用的是<code>spring-data-jpa</code> +<code>JdbcTemplate</code>  或 <code>Mybatis Plus</code>, 基本满足小项目的开发。可是, 各个框架都有优有劣, 博主至今很难做出最佳选择, 真的想全都要呀!可是这样项目体积会变得很庞大哎~~ 如果读者有更好的对数据库操作的框架推荐 或 对本章内容有什么意见建议, 可以在下方评论留言,你的每一言都会让这个无聊博主的人生添上不一样的色彩哦~ヾ(￣▽￣)Bye~Bye~</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-02-06T09:55:08.768Z" itemprop="dateUpdated">2019-02-06 17:55:08</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2019/02/05/jpa-problem/" target="_blank" rel="external">https://github.com/missionOdd/2019/02/05/jpa-problem/</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/">jpa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2019/02/05/jpa-problem/&title=《spring-data-jpa 投影查询性能之坑》 — Missionary's Blog&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2019/02/05/jpa-problem/&title=《spring-data-jpa 投影查询性能之坑》 — Missionary's Blog&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2019/02/06/ftp-server/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">配置FTP服务器 window10</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2019/02/04/2019-new-year/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">使用EasyCode十分钟写后端增删改查代码</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Article实体类"><span class="post-toc-number">1.0.0.1.</span> <span class="post-toc-text">Article实体类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Article投影"><span class="post-toc-number">1.0.0.2.</span> <span class="post-toc-text">Article投影</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Article投影查询方法"><span class="post-toc-number">1.0.0.3.</span> <span class="post-toc-text">Article投影查询方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#结果"><span class="post-toc-number">1.0.0.4.</span> <span class="post-toc-text">结果</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#原因"><span class="post-toc-number">2.</span> <span class="post-toc-text">原因</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">解决</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Article投影-1"><span class="post-toc-number">2.1.0.1.</span> <span class="post-toc-text">Article投影</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#结果-1"><span class="post-toc-number">2.1.0.2.</span> <span class="post-toc-text">结果</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#结语"><span class="post-toc-number">3.</span> <span class="post-toc-text">结语</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2021
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2019/02/05/jpa-problem/&title=《spring-data-jpa 投影查询性能之坑》 — Missionary's Blog&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2019/02/05/jpa-problem/&title=《spring-data-jpa 投影查询性能之坑》 — Missionary's Blog&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3ay27DIBAF0Pz/T6fbSo3xnYFUMhyvqqQBjhcj5vF6xc974vm9wtWaV58sfjAwMB7LyA+Rf/v36OMjVvf9sA4GBsYBjKulx//TO+I4+Cb7YmBgYIwZSXAc85LQjIGBgbE24CbZZbIjBgYGxpiRF8vybcaAmeQZAwPjNEY1aP7n31/pb2BgYDyKsaoZ2Ut6k9Q3OhUGBsbWjDzA5Ve0ajuzd+3DwMA4hzGTQOYls2qYrpbnMDAwzmFUy2cJaaadWRgyw8DA2JqxNvmstidnXtCH1TAwMDZlJC3G5BI5E6yTC+vNtxgYGAcw8uUWXOAmEt1oWgQDA+NIRh6Iq1fDalv05mqIgYGxKSNZbtWlsJoMV18fBgbG3ozkZ4WGYtAYSMJ0PsaBgYGxNyNPRPMQmb+OL86MYGBgbMqofl5tdvZapBEYAwPjAEa+QW/kotewTMI0BgbGOYxqQS3fIA/oya+iYQsMDIztGNXSWLNMHxfv5sM3BgbGrozeoXsBtxfio9CPgYFxACMPvjPl/rz9WU2VMTAwzmRUpzbWXiXLzVEMDIxNGe/iMzN+MfM6bkI8BgbG1oyZy1k1yVy1wlTIxsDAeCxjvtzWO2IvHF+ug4GBcQCjkPW2vu0F3wISAwMDozUAkTc7Zy6jGBgYGKtKXdUhjIS0IOBiYGA8ipFvM45yvUGNfHQVAwPjTEZvxKFX4u+NiPVGaTEwMLZg/AAwK7JQ9GMNNgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+    
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ab84488547116c4d03e6764e6ced5433";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="60" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":200,"height":200,"hOffset":150,"vOffset":-20},"mobile":{"show":true},"react":{"opacity":0.5}});</script></body>
+</html>

@@ -1,0 +1,15 @@
+#handleClick{
+  width:3em;
+  height:3em;
+  transition: 0.5s;
+  opacity: .7;
+}
+
+#handleClick:hover {
+  width:3.5em;
+  height:3.5em;
+}
+
+#handleClick:active {
+  opacity: 1;
+}
