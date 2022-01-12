@@ -113,7 +113,7 @@ jQuery(function($) {
     $('#handleClick').on('click', function() {
         $('#handleClick').animateCss('bounce flip');
         if (!Show) {
-            $("#live2dcanvas").show()
+            //$("#live2dcanvas").show()
             mdui.snackbar({
                 message: 'ヾ(≧へ≦)〃[嗯!睡醒] ',
                 position: 'right-bottom',
@@ -121,7 +121,7 @@ jQuery(function($) {
             });
             Show = true
         } else {
-            $("#live2dcanvas").hide()
+            //$("#live2dcanvas").hide()
             mdui.snackbar({
                 message: '（┬＿┬）[掰掰!嘤嘤嘤] ',
                 position: 'right-bottom',
