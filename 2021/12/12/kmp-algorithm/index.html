@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>双串题 | kmp算法的简单理解 （java） | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="算法,kmp,双串题">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="🎉 Missionary's Blog 😆" type="application/atom+xml">
+</head>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>双串题 | kmp算法的简单理解 （java）</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">双串题 | kmp算法的简单理解 （java）</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2021-12-12T07:50:37.000Z" itemprop="datePublished" class="page-time">
+  2021-12-12
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-kmp-algorithm"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">双串题 | kmp算法的简单理解 （java）</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2021-12-12 15:50:37" datetime="2021-12-12T07:50:37.000Z"  itemprop="datePublished">2021-12-12</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2021/12/12/kmp-algorithm/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2021/12/12/kmp-algorithm/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2021/12/12/kmp-algorithm/#comment">
+            <span class="valine-comment-count" data-xid="/2021/12/12/kmp-algorithm/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p><a href="https://leetcode-cn.com/problems/implement-strstr/" target="_blank" rel="noopener">the leetcode link</a></p>
+<blockquote>
+<p>实现 strStr()<br>给你两个字符串&nbsp;<code>haystack</code> 和 <code>needle</code> ，请你在 <code>haystack</code> 字符串中找出 <code>needle</code> 字符串出现的第一个位置（下标从 0 开始）。如果不存在，则返回&nbsp; <code>-1</code><strong> </strong>。<br><strong>说明：</strong><br>当&nbsp;<code>needle</code>&nbsp;是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。<br>对于本题而言，当&nbsp;<code>needle</code>&nbsp;是空字符串时我们应当返回 0 。这与 C 语言&gt; &gt; 的&nbsp;<a href="https://baike.baidu.com/item/strstr/811469" target="_blank" rel="noopener">strstr()</a>&nbsp;以及 Java 的&nbsp;<a href="https://docs.oracle.com/javase/7/docs/api/java/lang/String.html#indexOf(java.lang.String" target="_blank" rel="noopener">indexOf()</a>)&nbsp;定义相符。</p>
+</blockquote>
+<blockquote>
+<p><strong>示例 1：</strong></p>
+<p><strong>输入：</strong>haystack = “hello”, needle = “ll”<br><strong>输出：</strong>2</p>
+</blockquote>
+<blockquote>
+<p><strong>示例 2：</strong></p>
+<p><strong>输入：</strong>haystack = “aaaaa”, needle = “bba”<br><strong>输出：</strong>-1</p>
+</blockquote>
+<blockquote>
+<p><strong>示例 3：</strong></p>
+<p><strong>输入：</strong>haystack = “”, needle = “”<br><strong>输出：</strong>0</p>
+</blockquote>
+<blockquote>
+<p>&nbsp;</p>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>0 &amp;lt;= haystack.length, needle.length &amp;lt;= 5 * 10&lt;sup&gt;4&lt;/sup&gt;</code></li>
+<li><code>haystack</code> 和 <code>needle</code> 仅由小写英文字符组成</li>
+</ul>
+</blockquote>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>首先，想想暴力解法的大致思路。<br>可以用两个指针分别在两字符串上游走，让p和s一个一个字符遍历匹配。<br>匹配过程中，s被看作分成四个区域：<code>已放弃匹配</code>，<code>完成匹配</code>，<code>正在匹配</code>，<code>未匹配</code>。tips: 正在匹配区域是1个字符。<br>p被看作分成两个区域：<code>匹配</code>，<code>未匹配（包括正在匹配）</code>。<br>如果发现字符匹配失败，就s要丢弃掉此次匹配情况，进入下一个匹配情况：<br>即完成匹配区域清0，已放弃匹配区域+1，正在匹配区域回退至已放弃匹配区域末端+1，剩下就是被增大的未匹配区域。<br>此时相应的，指针也都要回退： s回退到上次完成匹配区间的开始字符的下一个，p回退到开始，再遍历一个个匹配。</p>
+<p><strong>kmp其实是对回退过程的优化。</strong><br>在发生匹配失败的时候，它能够通过观察p的当前<code>匹配区域</code>，看其前后<strong>两端</strong>是否具备镜像字符串。<br>记下最长的镜像字符串，p要回退到前边的最长镜像字符串末端+1，s不用回退<br>也就是说，要在p的匹配前缀的区域内，找<strong>最长相等前后缀</strong>，p上指针回退到最长相等前缀的末端+1，s不用回退；</p>
+<hr>
+<p><strong>Q:为什么找p匹配的两端镜像字符串（找最长相等前后缀）能够优化回退过程？</strong><br><strong>A：</strong> p匹配区的末端部分与s匹配区的末端部分原本确定是匹配吻合；<br>如果找到镜像字符串后，即p匹配区的前端镜像字符串部分=p匹配区的末端镜像字符串部分，也就可以确定p匹配区的前端镜像字符串部分与s匹配区末端部分也能匹配吻合。<br><code>tips：这里说s匹配区不包括正在匹配的字符，是指s匹配前缀。</code><br>那么在回退时，就可以巧妙地跳过这一已知吻合部分的比对匹配操作，直接从p匹配区的前端镜像字符串部分末尾+1与s当前匹配字符进行比对，节省时间。若比对匹配失败再回退。</p>
+<p><strong>Q: 回退过程如何找到跳跃落地点？</strong><br><strong>A:</strong> 这需要提前完成模式串p前缀表的初始化，我们会定义一个next数组，记下每一段的最长相等前后缀长度。<br><code>tips：其实该值真正的表示是：最长相等前缀末尾+1元素的下标。</code><br>匹配失败时，找p当前匹配区末端的对应的next元素值进行跳跃，则回退到正在匹配字符能够匹配成功的情况，没有就回到p的开始。</p>
+<hr>
+<p>以上简单地理解了kmp的思想，至于如何实现，具体细节要回到代码当中。</p>
+<hr>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><ol>
+<li>要初始化前缀表，记下每一段的最长相等前后缀长度，存入next数组，其实该长度值真正的表示是：最长相等前缀末尾+1元素的下标<br>1.1 定义左右指针，右指针递增<br>1.2 如果左右字符不相等，则回退到相等的情况，没有相等就回到p的开始<br>1.3 相等则最长相等前后缀长度增加，左指针负责增加，右指针负责记录</li>
+<li>文本串s和模式串p匹配<br>2.1 定义两个指针i，j分别在两字符串中游走<br>2.2 当匹配失败时，p通过next数组进行回退到匹配相等的情况<br>2.3 否则，逐个匹配，增加匹配长度，一直到完全匹配成功</li>
+<li>完全匹配不了，返回-1</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">strStr</span><span class="params">(String haystack, String needle)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = needle.length();</span><br><span class="line">        <span class="keyword">if</span>(len == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span>[] s = haystack.toCharArray();</span><br><span class="line">        <span class="keyword">char</span>[] p = needle.toCharArray();</span><br><span class="line">        <span class="keyword">int</span>[] next = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="comment">// next 初始化</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> left=<span class="number">0</span>, right=<span class="number">1</span>;right&lt;len;right++)&#123; <span class="comment">//right go forward</span></span><br><span class="line">            <span class="comment">//left 回退</span></span><br><span class="line">            <span class="keyword">while</span>(left&gt;<span class="number">0</span> &amp;&amp; p[left] != p[right])&#123;</span><br><span class="line">                left= next[left-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//匹配长度增加</span></span><br><span class="line">            <span class="keyword">if</span>(p[left] == p[right])&#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            next[right] = left;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>;i&lt;s.length;i++)&#123; <span class="comment">//s go forward</span></span><br><span class="line">            <span class="comment">//p回退</span></span><br><span class="line">            <span class="keyword">while</span>(j&gt;<span class="number">0</span> &amp;&amp; s[i] != p[j])&#123;</span><br><span class="line">                j= next[j-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//匹配长度增加</span></span><br><span class="line">            <span class="keyword">if</span>(s[i] == p[j])&#123;</span><br><span class="line">                j++;   </span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//完全匹配</span></span><br><span class="line">            <span class="keyword">if</span>(j == len) <span class="keyword">return</span> i-len+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2022-01-12T15:41:55.445Z" itemprop="dateUpdated">2022-01-12 23:41:55</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2021/12/12/kmp-algorithm/" target="_blank" rel="external">https://github.com/missionOdd/2021/12/12/kmp-algorithm/</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kmp/">kmp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双串题/">双串题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2021/12/12/kmp-algorithm/&title=《双串题 | kmp算法的简单理解 （java）》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2021/12/12/kmp-algorithm/&title=《双串题 | kmp算法的简单理解 （java）》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/12/14/majority-element-ii/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">求众数II （摩尔投票法）用类似俄罗斯方块消除的游戏例子讲解</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2021/12/08/kafka-notes/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">消息队列| kafka中间件原理 &amp;&amp; 知识点</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#题目"><span class="post-toc-number">1.</span> <span class="post-toc-text">题目</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#解题思路"><span class="post-toc-number">2.</span> <span class="post-toc-text">解题思路</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#代码"><span class="post-toc-number">3.</span> <span class="post-toc-text">代码</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2022
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2021/12/12/kmp-algorithm/&title=《双串题 | kmp算法的简单理解 （java）》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2021/12/12/kmp-algorithm/&title=《双串题 | kmp算法的简单理解 （java）》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJ0lEQVR42u3aUY7DIBAEUd//0t4TmK1u7EhA8RVFGPOy0uwww3XhcT8MPmc8/+mbl4cMGTKWZdzDQV7An5pZYfwjypAh4wTG09LjORw5nsnD9OP3MmTIkDH8TDbBA7EMGTJkvMXgB04SrNNAL0OGjDMZaejkpbcv3iVDhozTGLzq/vvPn/Q3ZMiQsRTjDsdbQZM3MtGuZMiQsTWDBzieonX47mAsQ4aM0xgzidq4ZJYW9fizF4ncMmTI2IiRvoAEx64wl6abMmTIOIHBgy8JxzxZ5E+lbVEZMmTsxOg2xINpl1DGh2QZMmQcwBgHNZIgdukjCe5lIihDhoyNGN0DZTkMXLBIVy7/PjJkyFiKMRPsumsWvLgWsGXIkLE1g5e6+OduZnfEjSt2MmTIWJDRHUq7VmV3SH6hmyFDhozFGV37sBu8JcnTxDg1lCFDxoKM9Aja1fN4e6AM1jJkyNia8VZZn2xuJiUNjrIyZMjYlMEbAOnM7qeJc1sZMmQcwEi3Tq698oYlX/mfoC9DhowDGOSx7hoE32JXqpMhQ8Y5jPSY2oXmtKxW/t+QIUPGRow7HB01LdulyaIMGTL2ZnTJGW9qzlwySxNQGTJk7M2YCbK8bdClm8E6MmTIOIAxf7VivjHZhX4ZMmTImMku+dUxXsiLXyZDhozjGd2VVr4mKcnJkCHjHEZ6nWsqjcPB95NymwwZMhZkpE3HNPmb38RrDVQZMmSsx/gDlw0Ny5UotfoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+    
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/plugins/fireworks.js?v=1.4.4"></script>
+
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ab84488547116c4d03e6764e6ced5433";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="60" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+</body>
+</html>
