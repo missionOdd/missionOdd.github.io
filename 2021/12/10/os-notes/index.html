@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>操作系统 | 硬核图文讲解 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="技术,原理,操作系统">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="🎉 Missionary's Blog 😆" type="application/atom+xml">
+</head>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>操作系统 | 硬核图文讲解</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">操作系统 | 硬核图文讲解</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2021-12-10T05:50:37.000Z" itemprop="datePublished" class="page-time">
+  2021-12-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-os-notes"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">操作系统 | 硬核图文讲解</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2021-12-10 13:50:37" datetime="2021-12-10T05:50:37.000Z"  itemprop="datePublished">2021-12-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2021/12/10/os-notes/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2021/12/10/os-notes/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2021/12/10/os-notes/#comment">
+            <span class="valine-comment-count" data-xid="/2021/12/10/os-notes/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h1 id="1-冯诺伊曼体系"><a href="#1-冯诺伊曼体系" class="headerlink" title="1 冯诺伊曼体系"></a>1 冯诺伊曼体系</h1><h3 id="1-1-冯诺伊曼体系简介"><a href="#1-1-冯诺伊曼体系简介" class="headerlink" title="1.1 冯诺伊曼体系简介"></a>1.1 冯诺伊曼体系简介</h3><p>现代计算机之父<code>冯诺伊曼</code>最先提出程序存储的思想，并成功将其运用在计算机的设计之中，该思想约定了用二进制进行计算和存储，还定义计算机基本结构为 5 个部分，分别是<strong>中央处理器（CPU）、内存、输入设备、输出设备、总线</strong>。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105256415.png" title="image-20220208105256415" data-fancybox="images"><img src="image-20220208105256415.png" alt="image-20220208105256415" title class></a>
+                <p>image-20220208105256415</p>
+            </figure>
+<ol>
+<li><strong>存储器</strong>：代码跟数据在RAM跟ROM中是线性存储， 数据存储的单位是一个二进制位。最小的存储单位是字节。</li>
+<li><strong>总线</strong>：总线是用于 CPU 和内存以及其他设备之间的通信，总线主要有三种：</li>
+</ol>
+<blockquote>
+<ol>
+<li><code>地址总线</code>：用于指定 CPU 将要操作的内存地址。</li>
+<li><code>数据总线</code>：用于读写内存的数据。</li>
+<li><code>控制总线</code>：用于发送和接收信号，比如中断、设备复位等信号，CPU 收到信号后响应，这时也需要控制总线。</li>
+</ol>
+</blockquote>
+<ol>
+<li><strong>输入/输出设备</strong>：输入设备向计算机输入数据，计算机经过计算后，把数据输出给输出设备。比如键盘按键时需要和 CPU 进行交互，这时就需要用到控制总线。</li>
+<li><strong>CPU</strong>：中央处理器，类比人脑，作为计算机系统的运算和控制核心，是信息处理、程序运行的最终执行单元。CPU用寄存器存储计算时所需数据，寄存器一般有三种：</li>
+</ol>
+<blockquote>
+<ol>
+<li><code>通用寄存器</code>：用来存放需要进行运算的数据，比如需进行加法运算的两个数据。</li>
+<li><code>程序计数器</code>：用来存储 CPU 要执行下一条指令所在的内存地址。</li>
+<li><code>指令寄存器</code>：用来存放程序计数器指向的指令本身。</li>
+</ol>
+</blockquote>
+<p><strong>在冯诺伊曼体系下电脑指令执行的过程</strong>：</p>
+<ol>
+<li>CPU读取程序计数器获得指令内存地址，CPU控制单元操作地址总线从内存地址拿到数据，数据通过数据总线到达CPU被存入指令寄存器。</li>
+<li>CPU分析指令寄存器中的指令，如果是计算类型的指令交给逻辑运算单元，如果是存储类型的指令交给控制单元执行。</li>
+<li>CPU 执行完指令后程序计数器的值通过自增指向下个指令，比如32位CPU会自增4。</li>
+<li>自增后开始顺序执行下一条指令，不断循环执行直到程序结束。</li>
+</ol>
+<p><strong>CPU位宽</strong>：32位CPU一次可操作计算4个字节，64位CPU一次可操作计算8个字节，这个是硬件级别的。平常我们说的32位或64位操作系统指的是软件级别的，指的是程序中指令多少位。<br><strong>线路位宽</strong>：CPU操作指令数据通过高低电压变化进行数据传输，传输时候可以串行传输，也可以并行传输，多少个并行等于多少个位宽。</p>
+<h3 id="1-2-CPU-简介"><a href="#1-2-CPU-简介" class="headerlink" title="1.2 CPU 简介"></a>1.2 CPU 简介</h3><p><code>Central Processing Unit 中央处理器，作为计算机系统的运算和控制核心，是信息处理、程序运行的最终执行单元</code>。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105332463.png" title="cpu" data-fancybox="images"><img src="image-20220208105332463.png" alt="cpu" title class></a>
+                <p>cpu</p>
+            </figure>CPU<br><br>1. <code>CPU核心</code>：一般一个CPU会有多个CPU核心，平常说的多核是指在一枚处理器中集成两个或多个完整的计算引擎。核跟CPU的关系是：核属于CPU的一部分。<br><br>2. <code>寄存器</code>：最靠近CPU对存储单元，32位CPU寄存器可存储4字节，64位寄存器可存储8字节。寄存器访问速度一般是半个CPU时钟周期，属于纳秒级别，<br><br>3. <code>L1缓存</code>：每个CPU核心都有，用来缓存数据跟指令，访问空间大小一般在32～256KB，访问速度一般是2～4个CPU时钟周期。<br><br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index0/size # L1 数据缓存</span><br><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index1/size # L1 指令缓存</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p><code>L2缓存</code>：每个CPU核心都有，访问空间大小在128KB～2MB，访问速度一般是10～20个CPU时钟周期。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index2/size # L2 缓存容量大小</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>L3缓存</code>：多个CPU核心共用，访问空间大小在2MB～64MB，访问速度一般是20～60个CPU时钟周期。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index3/size # L3 缓存容量大小</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>内存</code>：多个CPU共用，现在一般是4G～512G，访问速度一般是200～300个CPU时钟周期。</p>
+</li>
+<li><p><code>固体硬盘SSD</code>：现在台式机主流都会配备，上述的寄存器、缓存、内存都是断电数据立马丢失的，而SSD里不会丢失，大小一般是128G～1T，比内存慢10～1000倍。</p>
+</li>
+<li><p><code>机械盘HDD</code>：很早以前流行的硬盘了，容量可在512G～8T不等，访问速度比内存慢10W倍不等。</p>
+</li>
+<li><p><code>访问数据顺序</code>：CPU在拿数据处理的时候几乎也是按照上面说得流程来操纵的，只有上面一层找不到才会找下一层。</p>
+</li>
+<li><p><code>Cache Line</code> :  CPU读取数据时会按照 Cache Line 方式把数据加载到缓存中，每个Cacheline = 64KB，因为L1、L2是每个核独有到可能会触发<strong>伪共享</strong>，就是 所以可能会将数据划分到不同到CacheLine中来避免伪共享，比如在JDK8 新增加的 LongAdder 就涉及到此知识点。</p>
+</li>
+</ol>
+<blockquote>
+<ol>
+<li><strong>伪共享</strong>：缓存系统中是以缓存行（cache line）为单位存储的，当多线程修改互相独立的变量时，如果这些变量共享同一个缓存行，就会无意中影响彼此的性能，这就是伪共享。</li>
+</ol>
+</blockquote>
+<ol>
+<li><code>JMM</code>: 数据经过种种分层会导致访问速度在不断提升，同时也带来了各种问题，多个CPU同时操作相同数据可能会造成各种BU个，需要加锁，这里在<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247489439&amp;idx=1&amp;sn=df404e70a8e55b4019317ef2036fbe7d&amp;chksm=ebdef6a7dca97fb1e1a0dfd2eab194fa87f4971cd6b88645db072bcc9c98614b0ad30dc43399&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">JUC</a>并发已详细探讨过。</li>
+</ol>
+<h3 id="1-3-CPU-访问方式"><a href="#1-3-CPU-访问方式" class="headerlink" title="1.3 CPU 访问方式"></a>1.3 CPU 访问方式</h3><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105404666.png" title="image-20220208105404666" data-fancybox="images"><img src="image-20220208105404666.png" alt="image-20220208105404666" title class></a>
+                <p>image-20220208105404666</p>
+            </figure>CPU访问方式<br><br><br>内存数据映射到CPU Cache 时通过公式<code>Block N % CacheLineMax</code>决定内存Block数据放到那个CPU Cache Line 里。CPU Cache 主要有4部分组成。<br><br><br><br>1. <strong>Cache Line Index</strong> ：CPU缓存读取数据时不是按照字节来读取的，而是按照CacheLine方式存储跟读取数据的。<br>2. <strong>Valid Bit</strong> : 有效位标志符，值为0时表示无论 CPU Line 中是否有数据，CPU 都会直接访问内存，重新加载数据。<br>3. <strong>Tag</strong>：组标记，用来标记内存中不同BLock映射到相同CacheLine，用Tag来区分不同的内存Block。<br>4. <strong>Data</strong>：真实到内存数据信息。<br><br>CPU真实访问内存数据时只需要指定三个部分即可。<br><br>1. <strong>Cache Line Index</strong> ：要访问到Cache Line 位置。<br>2. <strong>Tag</strong>：表示用那个数据块。<br>3. <strong>Offset</strong>：CPU从CPU Cache 读取数据时不是直接读取Cache Line整个数据块，而是读取CPU所需的数据片段，称为Word。如何找到Word就需要个偏移量Offset。<br><br>### 1.4 CPU 访问速度<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105417253.png" title="image-20220208105417253" data-fancybox="images"><img src="image-20220208105417253.png" alt="image-20220208105417253" title class></a>
+                <p>image-20220208105417253</p>
+            </figure>访问耗时对比<br><br><br>如上图所示，CPU访问速度是逐步变慢，所以CPU访问数据时需尽量在距离CPU近的高速缓存区访问，根据摩尔定律CPU访问速度每18个月就会翻倍，而内存的访问每18个月也就增长10% 左右，导致的结果就是CPU跟内存访问性能差距逐步变大，那如何尽可能提高CPU缓存命中率呢？<br><br><br>\1. <code>数据缓存</code>：遍历数据时候按照内存布局顺序访问，因为CPU Cache是根据Cache Line批量操作数据的，所以你顺序读取数据会提速，道理跟磁盘顺序写一样。<br><br>1. <code>指令缓存</code>：尽可能的提供有规律的条件分支语句，让 CPU 的分支预测器发挥作用，进一步提高执行的效率，因为CPU是自带<code>分支预测器</code>，自动提前将可能需要的指令放到指令缓存区。<br>2. <code>线程绑定到CPU</code>：一个任务A在前一个时间片用CPU核心1 运行，后一个时间片用CPU核心2 运行，这样缓存L1、L2就浪费了。因此操作系统提供了将进程或者线程绑定到某一颗 CPU 上运行的能力。如 Linux 上提供了 sched_setaffinity 方法实现这一功能，其他操作系统也有类似功能的 API 可用。当多线程同时执行密集计算，且 CPU 缓存命中率很高时，如果将每个线程分别绑定在不同的 CPU 核心上，性能便会获得非常可观的提升。<br><br>### 1.5  操作系统<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105427891.png" title="image-20220208105427891" data-fancybox="images"><img src="image-20220208105427891.png" alt="image-20220208105427891" title class></a>
+                <p>image-20220208105427891</p>
+            </figure>
+<p>有了冯诺伊曼计算机体系后，电脑想要为用户提供便捷的服务还需要安装个操作系统<code>Operation System</code>，操作系统是覆盖在硬件上的一层特殊软件，它管理计算机的硬件和软件资源，为其他应用程序提供大量服务。可以理解为操作系统是日常应用程序跟硬件之间的接口。日常你经常在用Windows/Linux 系统，操作系统给我们提供了超级大的便利，但是你了解操作系统么？操作系统是如何进行<strong>内存管理</strong>、<strong>进程管理</strong>、<strong>文件管理</strong>、<strong>输入输出管理</strong>的呢？</p>
+<h1 id="2-内存管理"><a href="#2-内存管理" class="headerlink" title="2 内存管理"></a>2 内存管理</h1><p>你的电脑是32位操作系统，那可支持的最大内存就是4G，你有没有好奇为什么可以同时运行2个以上的2G内存的程序。应用程序不是直接使用的物理地址，操作系统为每个运行的进程分配了一套<code>虚拟地址</code>，每个进程都有自己的<code>虚拟内存地址</code>，进程是无法直接进行<code>物理内存地址</code>的访问的。至于虚拟地址跟物理地址的映射，进程是感知不到的！<code>操作系统自身会提供一套机制将不同进程的虚拟地址和不同内存的物理地址进行映射</code>。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105446194.png" title="image-20220208105446194" data-fancybox="images"><img src="image-20220208105446194.png" alt="image-20220208105446194" title class></a>
+                <p>image-20220208105446194</p>
+            </figure>
+<h3 id="2-1-MMU"><a href="#2-1-MMU" class="headerlink" title="2.1  MMU"></a>2.1  MMU</h3><p><code>Memory Management Unit 内存管理单元</code>是一种负责处理CPU内存访问请求的计算机硬件。它的功能包括<strong>虚拟地址到物理地址的转换、内存保护、中央处理器高速缓存的控制</strong>。现代 CPU 基本上都选择了使用 MMU。</p>
+<p>当进程持有虚拟内存地址的时候，CPU执行该进程时会操作虚拟内存，而MMU会自动的将虚拟内存的操作映射到物理内存上。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105504831.png" title="image-20220208105504831" data-fancybox="images"><img src="image-20220208105504831.png" alt="image-20220208105504831" title class></a>
+                <p>image-20220208105504831</p>
+            </figure>
+<p>这里提一下，Java操作的时候你看到的地址是<code>JVM地址</code>，不是真正的物理地址。</p>
+<h3 id="2-2-内存管理方式"><a href="#2-2-内存管理方式" class="headerlink" title="2.2  内存管理方式"></a>2.2  内存管理方式</h3><p>操作系统主要采用<code>内存分段</code>和<code>内存分页</code>来管理虚拟地址与物理地址之间的关系，其中分段是很早前的方法了，现在大部分用的是分页，不过分页也不是完全的分页，是在分段的基础上再分页。</p>
+<h5 id="2-2-1-内存分段"><a href="#2-2-1-内存分段" class="headerlink" title="2.2.1 内存分段"></a>2.2.1 内存分段</h5><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105534576.png" title="image-20220208105534576" data-fancybox="images"><img src="image-20220208105534576.png" alt="image-20220208105534576" title class></a>
+                <p>image-20220208105534576</p>
+            </figure>
+<p>我们以上图的<a href="https://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247489183&amp;idx=1&amp;sn=02ab3551c473bd2c8429862e3689a94b&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">JVM</a>内存模型举例，程序员会认为我们的代码是由代码段、数据段、栈段、堆段组成。不同的段是有不同的属性的，用户并不关心这些元素所在内存的位置，而分段就是支持这种用户视图的内存管理方案。逻辑地址空间是由一组段构成。每个段都有名称和长度。地址指定了段名称和段内偏移。因此用户<code>段编号</code>和<code>段偏移</code>来指定不同属性的地址。而虚拟内存地址跟物理内存地址中间是通过段表进行映射的，口说无凭，看图吧。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105557349.png" title="image-20220208105557349" data-fancybox="images"><img src="image-20220208105557349.png" alt="image-20220208105557349" title class></a>
+                <p>image-20220208105557349</p>
+            </figure>
+<p>如上虚拟地址有 5 个段，各段按如图所示来存储。每个段都在段表中有一个条目，它包括段在物理内存内的开始的基地址和该段的界限长度。例如段 2 为 400 字节长，开始于位置 4300。因此对段 2 字节 53 的引用映射成位置 4300 + 53 = 4353。对段 3 字节 852 的引用映射成位置 3200 + 852 = 4052。</p>
+<p>分段映射很简单，但是会导致<code>内存碎片</code>跟<code>内存交互效率低</code>。这里先普及下在内存管理中主要有<code>内部内存碎片</code>跟<code>外部内存碎片</code>。</p>
+<ol>
+<li><strong>内部碎片</strong>：已经被分配出去的的内存空间不经常使用，并且分配出去的内存空间大于请求所需的内存空间。</li>
+<li><strong>外部碎片</strong>：指可用空间还没有分配出去，但是可用空间由于大小太小而无法分配给申请空间的新进程的内存空间空闲块。</li>
+</ol>
+<p>以上图为例，现在系统空闲是1400 +  800 + 600 = 2800。那如果有个程序想要连续的使用2000，内存分段模式下提供不了啊！上述三个是<code>外部内存碎片</code>。当然可以使用系统的<code>Swap</code>空间，先把段0写入到磁盘，然后再重新给段0分配空间。这样可以实现最终可用，可是但凡涉及到磁盘读写就会导致<code>内存交互效率低</code>。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105626772.png" title="image-20220208105626772" data-fancybox="images"><img src="image-20220208105626772.png" alt="image-20220208105626772" title class></a>
+                <p>image-20220208105626772</p>
+            </figure>swap空间利用<br><br>##### 2.2.2 内存分页<br><br>内存分页，<code>整个虚拟内存和物理内存切成一段段固定尺寸的大小</code>。每个固定大小的尺寸称之为<code>页Page</code>，在 Linux 系统中Page = 4KB。然后虚拟内存跟物理内存之间通过<code>页表</code>来实现映射。<br><br>采用<strong>内存分页</strong>时内存的释放跟使用都是以页为单位的，也就不会产生内存碎片了。当空间还不够时根据操作系统调度算法，可能将最少用的内存页面 swap-out换出到磁盘，用时候再swap-in换入，尽可能的减少磁盘刷写量，提高内存交互效率。<br><br>分页模式下虚拟地址主要有<code>页号</code>跟<code>页内偏移量</code>两部分组成。通过页号查询页表找到物理内存地址，然后再配合页内偏移量就找到了真正的物理内存地址。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105654323.png" title="image-20220208105654323" data-fancybox="images"><img src="image-20220208105654323.png" alt="image-20220208105654323" title class></a>
+                <p>image-20220208105654323</p>
+            </figure>
+<p>32位操作系统环境下进程可操作的虚拟地址是4GB，假设一个虚拟页大小为4KB，那需要4GB/4KB = <code>2^20</code> 个页信息。一行页表记录为4字节，<code>2^20</code>等价于4MB页表存储信息。这只是一个进程需要的，如果10个、100个、1000个呢？仅仅是页表存储都占据超大内存了。</p>
+<p>为了解决这个问题就需要用到 <code>多级页表</code>，核心思想就是<strong>局部性</strong>分配。在32位的操作系统中将将4G空间分为 1024 行页目录项目(4KB)，每个页目录项又对应1024行页表项。如下图所示：</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105706021.png" title="image-20220208105706021" data-fancybox="images"><img src="image-20220208105706021.png" alt="image-20220208105706021" title class></a>
+                <p>image-20220208105706021</p>
+            </figure>
+<p>控制寄存器cr3中存放了页目录的物理地址，通过cr3寄存器可以找到页目录，而32位线性地址中的Directory部分决定页目录中的目录项，而页目录项中存放了要找的页表的物理基地址，再结合线性地址中的中间10位页表项，就可以找到页框的页表项。线性地址中的Offset部分占12位，因此页框的物理地址 + 线性地址Offset部分 = 页框中的任何一个字节。</p>
+<p>分页后一级页就等价于4G虚拟地址空间，并且如果一级页表中那些地址没有就不需要再创建二级页表了！核心思想就是按需创建，当系统给每个进程分配4G空间，进程不可能占据全部内存的，如果一级目录页只有10%用到了，此时页表空间 = 一级页表4KB + 0.1 * 4MB  。这比单独的每个进程占据4M好用多了！</p>
+<p>多层分页的弊端就是访问时间的<strong>增加</strong>。</p>
+<ol>
+<li>使用页表时读取内存中一页内容需要2次访问内存，访问页表项 + 并读取的一页数据。</li>
+<li>使用二级页表的话需要三次访问，访问页目录项 + 访问页表项 + 访问并读取的一页数据。访存次数的增加也就意味着访问数据所花费的总时间增加。</li>
+</ol>
+<p>而对于64位系统，二级分页就无法满足了，Linux 从2.6.11开始采用四级分页模型。</p>
+<ol>
+<li>Page Global Directory 全局页目录项</li>
+<li>Page Upper Directory 上层页目录项</li>
+<li>Page Middle Directory 中间页目录项</li>
+<li>Page Table Entry 页表项</li>
+<li>Offset 偏移量。</li>
+</ol>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105725267.png" title="image-20220208105725267" data-fancybox="images"><img src="image-20220208105725267.png" alt="image-20220208105725267" title class></a>
+                <p>image-20220208105725267</p>
+            </figure>
+<h5 id="2-2-2-TLB"><a href="#2-2-2-TLB" class="headerlink" title="2.2.2 TLB"></a>2.2.2 TLB</h5><p>Translation Lookaside Buffer 可翻译为<code>地址转换后援缓冲器</code>，简称为<code>快表</code>，属于CPU内部的一个模块，TLB是MMU的一部分，实质是cache，它所缓存的是最近使用的数据的页表项（虚拟地址到物理地址的映射）。他的出现是为了加快访问数据（内存）的速度，减少重复的页表查找。当然它不是必须要有的，但有它，速度就更快。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105732620.png" title="image-20220208105732620" data-fancybox="images"><img src="image-20220208105732620.png" alt="image-20220208105732620" title class></a>
+                <p>image-20220208105732620</p>
+            </figure>
+<p>TLB很小，因此缓存的东西也不多。主要缓存最近使用的数据的数据映射。TLB结构如下图：</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105743431.png" title="image-20220208105743431" data-fancybox="images"><img src="image-20220208105743431.png" alt="image-20220208105743431" title class></a>
+                <p>image-20220208105743431</p>
+            </figure>
+<p>如果一个需要访问内存中的一个数据，给定这个数据的虚拟地址，查询TLB，发现有hit，直接得到物理地址，在内存根据物理地址取数据。如果TLB没有这个虚拟地址miss，那么只能费力的通过页表来查找了。日常CPU读取一个数据的流程如下：</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105753365.png" title="image-20220208105753365" data-fancybox="images"><img src="image-20220208105753365.png" alt="image-20220208105753365" title class></a>
+                <p>image-20220208105753365</p>
+            </figure>
+<p>当进程地址空间进行了<code>上下文切换</code>时，比如现在是进程1运行，TLB中放的是进程1的相关数据的地址，突然切换到进程2，TLB中原有的数据不是进程2相关的，此时TLB刷新数据有两种办法。</p>
+<ol>
+<li><strong>全部刷新</strong>：很简单，但花销大，很多不必刷新的数据也进行刷新，增加了无畏的花销。</li>
+<li><strong>部分刷新</strong>：根据标志位，刷新需要刷新的数据，保留不需要刷新的数据。</li>
+</ol>
+<h5 id="2-2-3-段页式管理"><a href="#2-2-3-段页式管理" class="headerlink" title="2.2.3 段页式管理"></a>2.2.3 段页式管理</h5><p><code>内存分段</code>跟<code>内存分页</code>不是对立的，这俩可以组合起来在同一个系统中使用的，那么组合起来后通常称为<code>段页式内存管理</code>。段页式内存管理实现的方式：</p>
+<ol>
+<li>先对数据不同划分出不同的段，也就是前面说的分段机制。</li>
+<li>然后再把每一个段进行分页操作，也就是前面说的分页机制。</li>
+<li>此时 地址结构 = 段号 + 段内页号 + 页内位移。</li>
+</ol>
+<p>每一个进程有一张段表，每个段又建立一张页表，段表中的地址是页表的起始地址，而页表中的地址则为某页的物理页号。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105806478.png" title="image-20220208105806478" data-fancybox="images"><img src="image-20220208105806478.png" alt="image-20220208105806478" title class></a>
+                <p>image-20220208105806478</p>
+            </figure>段页式管理<br><br><br>同时我们经常看到两个专业词<code>逻辑地址</code>跟<code>线性地址</code>。<br><br><br><br>1. <code>逻辑地址</code>：指的是没被段式内存管理映射的地址。<br>2. <code>线性地址</code>：通过段式内存管理映射且页式内存管理转换前的地址，俗称虚拟地址。<br><br>目前 Intel X86 CPU 采用的是内存分段 +  内存分页的管理方式，其中分页的意思是在由段式内存管理所映射而成的的地址上再加上一层地址映射。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105815982.png" title="image-20220208105815982" data-fancybox="images"><img src="image-20220208105815982.png" alt="image-20220208105815982" title class></a>
+                <p>image-20220208105815982</p>
+            </figure>
+<h5 id="2-2-4-Linux-内存管理"><a href="#2-2-4-Linux-内存管理" class="headerlink" title="2.2.4 Linux 内存管理"></a>2.2.4 Linux 内存管理</h5><p>先说结论：Linux系统基于X86 CPU 而做的操作系统，所以也是用的段页式内存管理方式。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105825019.png" title="image-20220208105825019" data-fancybox="images"><img src="image-20220208105825019.png" alt="image-20220208105825019" title class></a>
+                <p>image-20220208105825019</p>
+            </figure>
+<p>我们知道32位的操作系统可寻址范围是4G，操作系统会将4G的可访问内存空间分为<strong>用户空间</strong>跟<strong>内核空间</strong>。</p>
+<ol>
+<li><code>内核空间</code>：操作系统内核访问的区域，独立于普通的应用程序，是受保护的内存空间。内核态下CPU可执行任何指令，可自由访问任何有效地址。</li>
+<li><code>用户空间</code>：普通应用程序可访问的内存区域。被执行代码会受到CPU众多限制，进程只能访问映射其地址空间的页表项中规定的在用户态下可访问页面的虚拟地址。</li>
+</ol>
+<p>那为啥要搞俩空间呢?现在嵌入式环境跟以前的WIN98系统是没有区分俩空间的，须知俩空间是CPU分的，而操作系统是在上面运行的，单一用户、单一任务服务的操作系统，是没有分所谓用户态和内核态的必要。用户态和内核态是因为有多用户，多任务的需求，然后在CPU硬件厂商配合之后，产生的一个操作系统解决多用户多任务需求的方案。方案就是<strong>限制</strong>，通过硬件手段（也只能硬件手段才能做到），限制某些代码，使其无法控制整个物理硬件，进而使各个不同用户，不同任务的代码，无权修改整个物理硬件，再进而保护操作系统的核心底层代码和其他用户的数据不被无意或者有意地破坏和盗取。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105839460.png" title="image-20220208105839460" data-fancybox="images"><img src="image-20220208105839460.png" alt="image-20220208105839460" title class></a>
+                <p>image-20220208105839460</p>
+            </figure>
+<p>后来研究者根据<strong>CPU</strong>的运行级别，分成了Ring0~Ring3四个级别。Ring0是最高级别，Ring1次之，Rng2更次之，拿Linux+x86来说，  操作系统内核的代码运行在最高运行级别Ring0上，可以使用特权指令，控制中断、修改页表、访问设备等。 应用程序的代码运行在最低运行级别上Ring3上，不能做受控操作，只能访问用户被分配的空间。如果要做访问磁盘跟写文件等操作，那就要通过执行系统调用函数，执行系统调用的时候，CPU的运行级别会发生从Ring3到Ring0的切换，并跳转到系统调用对应的内核代码位置执行，这样内核就为你完成了设备访问，完成之后再从Ring0返回Ring3。这个过程也称作<strong>用户态和内核态的切换</strong>。</p>
+<p>用户态想要使用计算机设备或IO需通过系统调用完成sys call，系统调用就是让内核来做这些操作。而系统调用是影响整个当前进程上下文的，ＣＰＵ提供了个软中断来是实现保护线程，获取系统调用号跟参数，交给内核对应系统调用函数执行。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105855383.png" title="image-20220208105855383" data-fancybox="images"><img src="image-20220208105855383.png" alt="image-20220208105855383" title class></a>
+                <p>image-20220208105855383</p>
+            </figure>
+<p>可以看到每个应用程序都各自有独立的虚拟内存地址，但每个虚拟内存中对应的内核地址其实是相同的一大块，这样当进程切换到内核态后可以很方便地访问内核空间内存。比如Java代码创建线程<code>new Thread</code>调用<code>start</code>方法后跟踪<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247489183&amp;idx=1&amp;sn=02ab3551c473bd2c8429862e3689a94b&amp;chksm=ebdef7a7dca97eb17194c3d935c86ade240d3d96bbeaf036233a712832fb94af07adeafa098b&amp;scene=21#wechat_redirect" target="_blank" rel="noopener"><code>JVM</code></a>源码你会发现是调用<code>pthread_create</code>来创建线程的，这就涉及到了用户态到内核态的切换。</p>
+<h1 id="3-进程管理"><a href="#3-进程管理" class="headerlink" title="3 进程管理"></a>3 进程管理</h1><h3 id="3-1-进程基础知识"><a href="#3-1-进程基础知识" class="headerlink" title="3.1 进程基础知识"></a>3.1 进程基础知识</h3><p>进程是程序的一次执行，是一个程序及其数据在机器上顺序执行时所发生的活动，是具有独立功能的程序在一个数据集合上的一次运行过程，是系统进行资源分配和调度的一个基本单位。进程的<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247489439&amp;idx=1&amp;sn=df404e70a8e55b4019317ef2036fbe7d&amp;chksm=ebdef6a7dca97fb1e1a0dfd2eab194fa87f4971cd6b88645db072bcc9c98614b0ad30dc43399&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">调度状态</a>如下：</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="640.png" title="图片" data-fancybox="images"><img src="640.png" alt="图片" title class></a>
+                <p>图片</p>
+            </figure>状态变化图<br><br><br>重点说下<code>挂起</code>跟<code>阻塞</code>：<br><br><br><br>1. 阻塞一般是当系统执行IO操作时，此时进程进入阻塞状态，等待某个事件的返回。<br>2. 挂起是指进程没有占有物理内存，被写到磁盘上了。这时进程状态是挂起状态。<br><br>&gt; 1. <code>阻塞挂起</code>：进程被写入硬盘并等待某个事件的出现。<br>&gt; 2. <code>就绪挂起</code>：进程被写入硬盘，进入内存可直接进入就绪状态。<br><br>### 3.2 PCB<br><br>为了描述跟控制进程的运行，系统为每个进程定义了一个数据结构——<code>进程控制块 Process Control Block</code>，它是进程实体的一部分，是操作系统中最重要的记录型数据结构。<br><br>PCB 的作用是<strong>使一个在多道程序环境下不能独立运行的程序，成为一个能独立运行的基本单位，一个能与其它进程并发执行的进程</strong> :<br><br>1. 作为独立运行基本单位的标志<br>2. 实现间断性的运行方式<br>3. 提供进程管理所需要的信息<br>4. 提供进程调度所需要的信息<br>5. 实现与其他进程的同步与通信<br><br>##### 3.2.1 PCB 信息<br><br>PCB为实现上述功能，内部包含众多信息：<br><br>1. <strong>进程标识符</strong>：用于唯一地标识一个进程，一个进程通常有两种标识符：<br><br>&gt; 1. <code>内部进程标识符</code>：标识各个进程，每个进程都有一个并且唯一的标识符，设置内部标识符主要是为了方便系统使用。<br>&gt; 2. <code>外部进程标识符</code>：它由创建者提供，可设置用户标识，以指示拥有该进程的用户。往往是由用户进程在访问该进程时使用。一般为了描述进程的家族关系，还应设置父进程标识及子进程标识。<br><br>1. <strong>处理机状态</strong>：由各种寄存器组成。包含许多信息都放在寄存器中，方便程序restart。<br><br>&gt; 1. 通用寄存器、指令计数器、程序状态字PSW、用户栈指针等信息。<br><br>1. <strong>进程调度信息</strong><br><br>&gt; 1. 进程状态：指明进程的当前状态，作为进程调度和对换时的依据。<br>&gt; 2. 进程优先级：用于描述进程使用处理机的优先级别的一个整数，优先级高的进程应优先获得处理机<br>&gt; 3. 进程调度所需的其它信息：与所采用的进程调度算法有关，如进程已等待CPU的时间总和、进程已执行的时间总和等。<br>&gt; 4. 事件：指进程由执行状态转变为阻塞状态所等待发生的事件，即阻塞原因。<br><br>1. <strong>资源清单</strong><br><br>&gt; 有关内存地址空间或虚拟地址空间的信息，所打开文件的列表和所使用的 I/O 设备信息。<br><br>##### 3.2.2 PCB 组织方式<br><br>操作系统中有太多 PCB，如何管理是个问题，一般有如下方式。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105914468.png" title="image-20220208105914468" data-fancybox="images"><img src="image-20220208105914468.png" alt="image-20220208105914468" title class></a>
+                <p>image-20220208105914468</p>
+            </figure>
+<ol>
+<li><strong>线性方式</strong>：</li>
+</ol>
+<blockquote>
+<ol>
+<li>将系统所有PCB都组织在一张线性表中，将该表首地址存在内存的一个专用区域</li>
+<li>实现简单，开销小，但是每次都需要扫描整张表，适合进程数目不多的系统</li>
+</ol>
+</blockquote>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105928416.png" title="image-20220208105928416" data-fancybox="images"><img src="image-20220208105928416.png" alt="image-20220208105928416" title class></a>
+                <p>image-20220208105928416</p>
+            </figure>索引方式<br><br>1. <strong>索引方式</strong>：<br><br>&gt; 1. 将同一状态的进程组织在一个索引表中，索引表项指向相应的 PCB，不同状态对应不同的索引表。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208105942343.png" title="image-20220208105942343" data-fancybox="images"><img src="image-20220208105942343.png" alt="image-20220208105942343" title class></a>
+                <p>image-20220208105942343</p>
+            </figure>
+<ol>
+<li><strong>链接方式</strong>：</li>
+</ol>
+<blockquote>
+<ol>
+<li>把同一状态的PCB链接成一个队列，形成就绪队列、阻塞队列、空白队列等。对其中的就绪队列常按进程优先级的高低排列，优先级高排在队前。</li>
+<li>因为进程创建、销毁、调度频繁，所以<strong>一般采用此模式</strong>。</li>
+</ol>
+</blockquote>
+<h3 id="3-3-进程控制"><a href="#3-3-进程控制" class="headerlink" title="3.3 进程控制"></a>3.3 进程控制</h3><p>进程控制是进程管理最基本的功能，主要包括<code>创建新进程</code>，<code>终止已完成的进程</code>，<code>将发生异常的进程置于阻塞状态</code>，<code>将进程唤醒</code>等。</p>
+<h5 id="3-3-1-进程创建"><a href="#3-3-1-进程创建" class="headerlink" title="3.3.1 进程创建"></a>3.3.1 进程创建</h5><p>父进程可创建子进程，父进程终止后子进程也会被终止。子进程可继承父进程所有资源，子进程终止需将自己所继承的资源归还父进程。接下来看下创建的大致流程。</p>
+<ol>
+<li>为新进程分配唯一进件标识号，然后创建一个空白PCB，需注意PCB数量是有限的，所以可能会创建失败。</li>
+<li>尝试为新进程分配所需资源，如果资源不足进程会进入等待状态。</li>
+<li>初始化PCB，有如下几个操作。</li>
+</ol>
+<blockquote>
+<ol>
+<li>标识信息：将系统分配的标识符和父进程标识符填入新PCB</li>
+<li>处理机状态信息：使程序计数器指向程序入口地址，使栈指针指向栈顶</li>
+<li>处理机控制信息：将进程设为就绪/静止状态，通常设为最低优先级</li>
+</ol>
+</blockquote>
+<ol>
+<li>如果进程调度队列能接纳新进程，就将进程插入到就绪队列，等待被调度运行。</li>
+</ol>
+<h5 id="3-3-2-进程终止"><a href="#3-3-2-进程终止" class="headerlink" title="3.3.2 进程终止"></a>3.3.2 进程终止</h5><p>进程终止情况一般分为正常结束、异常结束、外界干预三种。</p>
+<ol>
+<li>正常结束</li>
+<li>异常结束</li>
+</ol>
+<blockquote>
+<ol>
+<li>越界错：访问的存储区越出该进程的区域</li>
+<li>保护错：试图访问不允许访问的资源，或以不适当的方式访问（写只读）</li>
+<li>非法指令：试图执行不存在的指令（可能是程序错误地转移到数据区，数据当成了指令）</li>
+<li>特权指令出错：用户进程试图执行一条只允许OS执行的指令</li>
+<li>运行超时：执行时间超过指定的最大值</li>
+<li>等待超时：进程等待某件事超过指定的最大值</li>
+<li>算数运算错：试图执行被禁止的运算（被0除）</li>
+<li>I/O故障</li>
+</ol>
+</blockquote>
+<ol>
+<li>外界干预</li>
+</ol>
+<blockquote>
+<ol>
+<li>操作员或OS干预（死锁）</li>
+<li>父进程请求，子进程完成父进程指定的任务时</li>
+<li>父进程终止，所有子进程都应该结束</li>
+</ol>
+</blockquote>
+<p><strong>终止过程</strong>：</p>
+<ol>
+<li>根据被终止进程的标识符，从PCB集合中检索出该PCB，读取进程状态</li>
+<li>若处于执行状态则立即终止执行，将CPU资源分配给其他进程。</li>
+<li>若进程有子孙进程则将其所有子孙进程终止。</li>
+<li>全部资源还给父进程或操作系统。</li>
+<li>该进程的PCB从所在队列/链表中移出。</li>
+</ol>
+<h5 id="3-3-3-进程阻塞"><a href="#3-3-3-进程阻塞" class="headerlink" title="3.3.3 进程阻塞"></a>3.3.3 进程阻塞</h5><p>意思是该进程执行半路被阻塞，必须由某个事件进程唤醒该进程。常见的就是IO读取操作。常见阻塞时机/事件如下：</p>
+<ol>
+<li>请求共享资源失败，系统无足够资源分配</li>
+<li>等待某种操作完成</li>
+<li>新数据尚未到达（相互合作的进程）</li>
+<li>等待新任务</li>
+</ol>
+<p><strong>阻塞流程</strong>：</p>
+<ol>
+<li>找到要被阻塞进程标识号对应的 PCB。</li>
+<li>将该进程由运行状态转换为阻塞状态。</li>
+<li>将该 进程PCB 插入的阻塞队列中去。</li>
+</ol>
+<h5 id="3-3-4-进程唤醒"><a href="#3-3-4-进程唤醒" class="headerlink" title="3.3.4 进程唤醒"></a>3.3.4 进程唤醒</h5><p>唤醒 原语 wake up，一般和阻塞成对使用。唤醒过程如下：</p>
+<ol>
+<li>从阻塞队列找到所需PCB。</li>
+<li>PCB从阻塞队列溢出，然后变为就绪状态。</li>
+<li>从阻塞队列溢出该PCB然后插入到就绪状态队列等待被分配CPU资源。</li>
+</ol>
+<h3 id="3-4-进程调度"><a href="#3-4-进程调度" class="headerlink" title="3.4 进程调度"></a>3.4 进程调度</h3><p>进程数一般会大于CPU个数，进程状态切换主要由调度程序进行调度。一般情况下CPU调度时主要分为<code>抢占式调度</code>跟<code>非抢占式调度</code>。</p>
+<ol>
+<li><code>非抢占式</code>：让进程运行直到结束或阻塞的调度方式， 容易实现，适合专用系统。</li>
+<li><code>抢占式</code>：每个进程获得时间片才可以被CPU调度运行， 可防止单一进程长时间独占CPU 系统开销大。</li>
+</ol>
+<h5 id="3-4-1-进程调度原则"><a href="#3-4-1-进程调度原则" class="headerlink" title="3.4.1 进程调度原则"></a>3.4.1 进程调度原则</h5><ol>
+<li><strong>CPU 利用率</strong></li>
+</ol>
+<blockquote>
+<ol>
+<li>CPU利用率 = 忙碌时间 / 总时间。</li>
+<li>调度程序应该尽量让 CPU 始终处于忙碌的状态，这可提高 CPU 的利用率。比如当发生IO读取时候，不要傻傻等待，去执行下别的进程。</li>
+</ol>
+</blockquote>
+<ol>
+<li><strong>系统吞吐量</strong></li>
+</ol>
+<blockquote>
+<ol>
+<li>系统吞吐量 = 总共完成多少个作业 / 总共花费时间。</li>
+<li>长作业的进程会占用较长的 CPU 资源导致降低吞吐量，相反短作业的进程会提升系统吞吐量。</li>
+</ol>
+</blockquote>
+<ol>
+<li><strong>周转时间</strong></li>
+</ol>
+<blockquote>
+<ol>
+<li>周转时间 = 作业完成时间 - 作业提交时间。</li>
+<li>平均周转时间 = 各作业周转时间和 / 作业数</li>
+<li>带权周转时间 = 作业周转时间 / 作业实际运行时间</li>
+<li>平均带权周转时间 = 各作业带权周转时间之和 / 作业数</li>
+<li>尽可能使周转时间降低。</li>
+</ol>
+</blockquote>
+<ol>
+<li><strong>等待时间</strong></li>
+</ol>
+<blockquote>
+<ol>
+<li>指的是进程在等待队列中等待的时间，一般也需要尽可能短。</li>
+<li><strong>响应时间</strong><br>响应时间 = 系统第一次响应时间 - 用户提交时间，在交互式系统中响应时间是衡量调度算法好坏的主要标准。</li>
+</ol>
+</blockquote>
+<h5 id="3-4-2-调度算法"><a href="#3-4-2-调度算法" class="headerlink" title="3.4.2 调度算法"></a>3.4.2 调度算法</h5><p><strong>FCFS 算法</strong></p>
+<ol>
+<li>First Come First Severd 先来先服务算法，遵循先来后端原则，每次从就绪队列拿等待时间最久的，运行完毕后再拿下一个。</li>
+<li>该模式对长作业有利，适用 CPU 繁忙型作业的系统，不适用 I/O 型作业，因为会导致进程CPU利用率很低。</li>
+</ol>
+<p><strong>SJF 算法</strong></p>
+<ol>
+<li>Shortest Job First 最短作业优先算法，该算法会优先选择运行所需时间最短的进程执行，可提高吞吐量。</li>
+<li>跟FCFS正好相反，对长作业很不利。</li>
+</ol>
+<p><strong>SRTN 算法</strong></p>
+<ol>
+<li>Shortest Remaining Time Next 最短剩余时间优先算法，可以认为是SJF的抢占式版本，当一个新就绪的进程比当前运行进程具有更短完成时间时，系统抢占当前进程，选择新就绪的进程执行。</li>
+<li>有最短的平均周转时间，但不公平，源源不断的短任务到来，可能使长的任务长时间得不到运行。</li>
+</ol>
+<p><strong>HRRN 算法</strong></p>
+<ol>
+<li>Highest Response Ratio Next 最高响应比优先算法，为了平衡前面俩而生，按照响应优先权从高到低依次执行。属于前面俩的折中权衡。</li>
+<li>优先权 = (等待时间 + 要求服务时间) / 要求服务时间</li>
+</ol>
+<p><strong>RR 算法</strong></p>
+<ol>
+<li>Round Robin 时间片轮转算法，操作系统设定了个时间片Quantum，时间片导致每个进程只有在该时间片内才可以运行，这种方式导致每个进程都会均匀的获得执行权。</li>
+<li>时间片一般20ms~50ms，如果太小会导致系统频繁进行上下文切换，太大又可能引起对短的交互请求的响应变差。</li>
+</ol>
+<p><strong>HPF 算法</strong></p>
+<ol>
+<li>Highest Priority First 最高优先级调度算法，从就绪队列中选择最高优先级的进程先执行。</li>
+<li>优先级的设置有初始化固定死的那种，也有在代码运转过程中根据等待时间或性能动态调整 这两种思路。</li>
+<li>缺点是可能导致低优先级的一直无法被执行。</li>
+</ol>
+<p><strong>MFQ 算法</strong></p>
+<ol>
+<li><p>Multilevel Feedback Queue 多级反馈队列调度算法 ，可以认为是 RR 算法 跟 HPF 算法 的综合体。</p>
+</li>
+<li><p>系统会同时存在多个就绪队列，每个队列优先级从高到低排列，同时优先级越高获得是时间片越短。</p>
+</li>
+<li><p>新进程会先加入到最高优先级队列，如果新进程优先级高于当前在执行的进程，会停止当前进程转而去执行新进程。新进程如果在时间片内没执行完毕需下移到次优先级队列。</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110001762.png" title="image-20220208110001762" data-fancybox="images"><img src="image-20220208110001762.png" alt="image-20220208110001762"></a>多级反馈队列调度算法</p>
+</li>
+</ol>
+<h3 id="3-5-线程"><a href="#3-5-线程" class="headerlink" title="3.5 线程"></a>3.5 线程</h3><h5 id="3-5-1-线程定义"><a href="#3-5-1-线程定义" class="headerlink" title="3.5.1 线程定义"></a>3.5.1 线程定义</h5><p>早期操作系统是没有线程概念的，线程是后来加进来的。为啥会有线程呢？那是因为以前在多进程阶段，经常会涉及到进程之间如何通讯，如何共享数据的问题。并且进程关联到PCB的生命周期，管理起来开销较大。为了解决这个问题引入了线程。</p>
+<p>线程是进程当中的一个执行流程。同一个进程内的多个线程之间可以共享进程的代码段、数据段、打开的文件等资源。同时每个线程又都有一套独立的寄存器和栈来确保线程的控制流是独立的。</p>
+<p>进程有个<code>PCB</code>来管理，同理操作系统通过 <code>Thread Control Block</code>线程控制块来实现线程的管控。</p>
+<h5 id="3-5-2-线程优缺点"><a href="#3-5-2-线程优缺点" class="headerlink" title="3.5.2 线程优缺点"></a>3.5.2 线程优缺点</h5><p><strong>优点</strong></p>
+<ol>
+<li>一个进程中可以同时存在1~N个线程，这些线程可以并发的执行。</li>
+<li>各个线程之间可以共享地址空间和文件等资源。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ol>
+<li>当进程中的一个线程奔溃时，会导致其所属进程的所有线程奔溃。</li>
+<li>多线程编程，让人头大的东西。</li>
+<li>线程执行开销小，但不利于资源的隔离管理和保护，而进程正相反。</li>
+</ol>
+<h5 id="3-5-3-进程跟线程关联"><a href="#3-5-3-进程跟线程关联" class="headerlink" title="3.5.3 进程跟线程关联"></a>3.5.3 进程跟线程关联</h5><p><strong>进程</strong>：</p>
+<ol>
+<li>是系统进行资源分配和调度的一个独立单位.</li>
+<li>是程序的一次执行，每个进程都有自己的地址空间、内存、数据栈及其他辅助记录运行轨迹的数据</li>
+</ol>
+<p><strong>线程</strong>：</p>
+<ol>
+<li>是进程的一个实体，是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位</li>
+<li>所有的线程运行在同一个进程中，共享相同的运行资源和环境</li>
+<li>线程一般是并发执行的，使得实现了多任务的并行和数据共享。</li>
+</ol>
+<p><strong>进程线程区别</strong>：</p>
+<ol>
+<li>一个线程只能属于一个进程，而一个进程可以有多个线程，但至少有一个线程。</li>
+<li>线程的划分尺度小于进程(资源比进程少)，使得多线程程序的并发性高。</li>
+<li>进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率。</li>
+<li>资源分配给进程，同一进程的所有线程共享该进程的所有资源。</li>
+<li>CPU分配资源给进程，但真正在CPU上运行的是线程。</li>
+<li>线程不能够独立执行，必须依存在进程中。</li>
+</ol>
+<p><strong>线程快在哪儿</strong>？</p>
+<ol>
+<li>线程创建的时有些资源不需要自己管理，直接从进程拿即可，线程管理寄存器跟栈的生命周期即可。</li>
+<li>同进程内多线程共享数据，所以进程数据传输可以用zero copy技术，不需要经过内核了。</li>
+<li>进程使用一个虚拟内存跟页表，然后多线程共用这些虚拟内存，如果同进程内两个线程进行上下文切换比进程提速很多。</li>
+</ol>
+<h5 id="3-5-4-线程实现"><a href="#3-5-4-线程实现" class="headerlink" title="3.5.4 线程实现"></a>3.5.4 线程实现</h5><p>在前面的内存管理中说到了内核态跟用户态。相对应的线程的创建也分为<code>用户态线程</code>跟<code>内核态线程</code>。</p>
+<h6 id="3-5-4-1-用户态线程"><a href="#3-5-4-1-用户态线程" class="headerlink" title="3.5.4.1 用户态线程"></a>3.5.4.1 用户态线程</h6><p>在用户空间实现的线程，由用户态的线程库来完成线程的管理。操作系统按进程维度进行调度，<strong>当线程在用户态创建时应用程序在用户空间内要实现线程的创建、维护和调度。操作系统对线程的存在一无所知</strong>！操作系统只能看到进程看不到线程。所有的线程都是在用户空间实现。在操作系统看来，每一个进程只有一个线程。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110024780.png" title="image-20220208110024780" data-fancybox="images"><img src="image-20220208110024780.png" alt="image-20220208110024780" title class></a>
+                <p>image-20220208110024780</p>
+            </figure>用户态线程<br><br><strong>好处</strong>：<br><br>1. 及时操作系统不支持线程模式也可以通过用户层库函数来支持线程模式，TCB 由用户级线程库函数来维护。<br>2. 使用库函数模式实现线程可以避免用户态到内核态的切换。<br><br><strong>坏处</strong>：<br><br>1. CPU不知道线程存在，CPU的时间片切换是以进程为维度的，某个线程因为IO等操作导致线程阻塞，操作系统会阻塞整个进程，即使这个进程中其它线程还在工作。<br>2. 用户态线程没法打断正在运行中的线程，除非线程主动交出CPU使用权。<br><br>###### 3.5.4.2 内核态线程<br><br>在内核中实现的线程，是由内核管理的线程，线程对应的 TCB 在操作系统里，这样线程的创建、终止和管理都是由操作系统负责。内线程模式下一个用户线程对应一个内核线程。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110103377.png" title="image-20220208110103377" data-fancybox="images"><img src="image-20220208110103377.png" alt="image-20220208110103377" title class></a>
+                <p>image-20220208110103377</p>
+            </figure>内核态线程<br><br><br><strong>注意</strong>：Linux中的JVM从1.2版以后是基于pthread实现的，<code>所以现在Java中线程的本质就是操作系统中的线程</code>。<br><br><strong>优点</strong>：<br><br>1. 一个进程中某个线程阻塞不会影响其他内核线程运行。<br>2. 用户态模式一个时间片分给多个线程，内核态模式直接分配给线程的时间片增加。<br><br><strong>缺点</strong>：<br><br>1. 内核级线程调度开销较大。调度内核线程的代价可能和调度进程差不多昂贵，代价要比用户级线程大很多。一个线程默认栈=1M，线程多了会导致内存消耗很大。<br>2. 线程表是存放在操作系统固定的表格空间或者堆栈空间里，所以内核级线程的数量是有限的。<br><br>###### 3.4.4.3 轻量级进程<br><br>最初的进程定义都包含程序、资源及其执行三部分，其中程序通常指代码，资源在操作系统层面上通常包括内存资源、IO资源、信号处理等部分，而程序的执行通常理解为执行上下文，包括对CPU的占用，后来发展为线程。在线程概念出现以前，为了减小进程切换的开销，操作系统设计者逐渐修正进程的概念，逐渐允许将进程所占有的资源从其主体剥离出来，允许某些进程共享一部分资源，例如文件、信号，数据内存，甚至代码，这就发展出轻量进程的概念。<br><br>Light-weight process <strong>轻量级进程是内核支持的用户线程</strong>，它是基于内核线程的高级抽象，系统只有先支持内核线程才能有 LWP。一个进程可有1~N个LWP，每个 LWP 是跟内核线程一对一映射的，也就是 LWP 都是由一个内核线程支持。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110121188.png" title="image-20220208110121188" data-fancybox="images"><img src="image-20220208110121188.png" alt="image-20220208110121188" title class></a>
+                <p>image-20220208110121188</p>
+            </figure>LWP模式<br><br><strong>轻量级进程本质还是进程</strong>，只是跟普通进程相比LWP跟其他进程共享大部分逻辑地址空间跟系统资源，LWP轻量体现在它只有一个最小的执行上下文和调度程序所需的统计信息。他是进程的执行部分，只带有执行相关的信息。<br><br><strong>Linux特性</strong>：<br><br>1. Linux中没有真正的线程，因为Linux并没有为线程准备特定的数据结构。在内核看来只有进程而没有线程，在调度时也是当做进程来调度。Linux所谓的线程其实是与其他进程共享资源的进程。但windows中确实有线程。<br>2. Linux中没有的线程，线程是由进程来模拟实现的。<br>3. 所以在Linux中在CPU角度看，进程被称作轻量级进程LWP。<br><br>##### 3.5.5 协程<br><br>###### 3.5.5.1 协程定义<br><br>大多数web服务跟互联网服务本质上大部分都是 IO 密集型服务，IO 密集型服务的瓶颈不在CPU处理速度，而在于尽可能快速的完成高并发、多连接下的数据读写。以前有两种解决方案：<br><br>1. <code>多进程</code>：存在频繁调度切换问题，同时还会存在每个进程资源不共享的问题，需要额外引入进程间通信机制来解决。<br>2. <code>多线程</code>：高并发场景的大量 IO 等待会导致多线程被频繁挂起和切换，非常消耗系统资源，同时多线程访问共享资源存在竞争问题。<br><br>此时协程出现了，协程 Coroutines 是一种比线程更加轻量级的微线程。类比一个进程可以拥有多个线程，一个线程也可以拥有多个协程。可以简单的把协程理解成子程序调用，每个子程序都可以在一个单独的协程内执行。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110132404.png" title="image-20220208110132404" data-fancybox="images"><img src="image-20220208110132404.png" alt="image-20220208110132404" title class></a>
+                <p>image-20220208110132404</p>
+            </figure>
+<p>协程运行在线程之上，当一个协程执行完成后，可以选择主动让出，让另一个协程运行在当前线程之上。<strong>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程</strong>，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多，一般在Python、Go中会涉及到协程的知识，尤其是现在高性能的脚本Go。</p>
+<h6 id="3-5-5-2-协程注意事项"><a href="#3-5-5-2-协程注意事项" class="headerlink" title="3.5.5.2 协程注意事项"></a>3.5.5.2 协程注意事项</h6><p>协程运行在线程之上，并且协程调用了一个阻塞IO操作，此时操作系统并不知道协程的存在，它只知道线程，因此在协程调用阻塞IO操作时，操作系统会让线程进入阻塞状态，当前的协程和其它绑定在该线程之上的协程都会陷入阻塞而得不到调度。</p>
+<p>因此在协程中不能调用导致线程阻塞的操作，比如打印、读取文件、Socket接口等。<code>协程只有和异步IO结合</code>起来才能发挥最大的威力。并且<strong>协程只有在IO密集型的任务中才会发挥作用</strong>。</p>
+<h3 id="3-6-进程通信"><a href="#3-6-进程通信" class="headerlink" title="3.6 进程通信"></a>3.6 进程通信</h3><p>进程的用户地址空间是相互独立的，不可以互相访问，但内核空间是进程都共享的，所以进程之间要通信必须通过内核。<strong>进程间通信主要通过管道、消息队列、共享内存、信号量、信号、Socket编程</strong>。</p>
+<h5 id="3-6-1-管道"><a href="#3-6-1-管道" class="headerlink" title="3.6.1 管道"></a>3.6.1 管道</h5><p>管道主要分为匿名管道跟命名管道两种，可以实现数据的单向流动性。<strong>使用起来很简单，但是管道这种通信方式效率低，不适合进程间频繁地交换数据</strong>。</p>
+<p><strong>匿名管道</strong>：</p>
+<ol>
+<li>日常Linux系统中的<code>|</code>就是匿名管道。指令的前一个输入是后一个指令的输出。</li>
+</ol>
+<p><strong>命名管道</strong>：</p>
+<ol>
+<li>一般通过<code>mkfifo SoWhatPipe</code>创建管道。通过<code>echo &quot;sw&quot; &gt; SoWhatPipe</code>跟<code>cat &lt; SoWhatPipe</code> 实现输入跟输出。</li>
+</ol>
+<p>匿名管道的实现依赖<code>int pipe(int fd[2])</code>函数，其中<code>fd[0]</code>是读取断描述符，<code>fd[1]</code>是管道写入端描述符。它的本质就是在内核中创建个属于内存的缓存，从一端输入无格式数据一端输出无格式数据，需注意管道传输大小是有限的。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110149376.png" title="image-20220208110149376" data-fancybox="images"><img src="image-20220208110149376.png" alt="image-20220208110149376" title class></a>
+                <p>image-20220208110149376</p>
+            </figure>管道通信底层<br><br><br>匿名管道的通信范围是存在父子关系的进程。由于管道没有实体，也就是没有管道文件，不会涉及到文件系统。只能通过<code>fork</code>子进程来复制父进程 fd 文件描述符，父子进程通过共用特殊的管道文件实现跨进程通信，并且因为管道只能一端写入，另一端读出，所以通常父子进程遵从如下要求：<br><br><br><br>1. 父进程关闭读取的 fd[0]，只保留写入的 fd[1]。<br>2. 子进程关闭写入的 fd[1]，只保留读取的 fd[0]。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110206417.png" title="image-20220208110206417" data-fancybox="images"><img src="image-20220208110206417.png" alt="image-20220208110206417" title class></a>
+                <p>image-20220208110206417</p>
+            </figure>shell管道通信<br><br><br>需注意Shell执行匿名管道 a | b其实是通过Shell父进程fork出了两个子进程来实现通信的，而ab之间是不存在父子进程关系的。而命名管道是可以直接在不想关进程间通信的，因为有管道文件。<br><br>##### 3.6.2 消息队列<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110230770.png" title="image-20220208110230770" data-fancybox="images"><img src="image-20220208110230770.png" alt="image-20220208110230770" title class></a>
+                <p>image-20220208110230770</p>
+            </figure>消息队列<br><br>消息队列是保存在<strong>内核</strong>中的消息链表，<strong>会涉及到用户态跟内核态到来回切换</strong>，双方约定好消息体到数据结构，然后发送数据时将数据分成一个个独立的数据单元消息体，需注意消息队列及单个消息都有上限，日常我们到<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247490325&amp;idx=1&amp;sn=ab7cfedc7b8f2361cc1fab9418b314b8&amp;chksm=ebdefa2ddca9733b76cffbcba2d5f8c0c61bd36d5ebba20aaecb07148aa0fd7a5781e16ab03e&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">RabbitMQ</a>、<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247488832&amp;idx=1&amp;sn=5999893d7fe773f54f7d097ac1c2074d&amp;chksm=ebdef478dca97d6e2433abdeecf600669ffbb1b68eb2b744e7ed72aac4cd5c4cabf19b0d8f19&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">Redis </a>都涉及到消息队列。<br><br>##### 3.6.3 共享内存<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110245494.png" title="image-20220208110245494" data-fancybox="images"><img src="image-20220208110245494.png" alt="image-20220208110245494" title class></a>
+                <p>image-20220208110245494</p>
+            </figure>共享空间<br><br><br>现代操作系统对内存管理采用的是虚拟内存技术，也就是每个进程都有自己独立的虚拟内存空间，不同进程的虚拟内存映射到不同的物理内存中。所以，即使进程A和进程B虚拟地址是一样的，真正访问的也是不同的物理内存地址，该模式不涉及到用户态跟内核态来回切换，JVM 就是用的共享内存模式。并且并发编程也是个难点。<br><br>##### 3.6.4 信号量<br><br>既然共享内存容易造成数据紊乱，那为了简单的实现共享数据在任意时刻只能被一个进程访问，此时需要信号量。<br><br><strong>信号量其实是一个整型的计数器，主要用于实现进程间的互斥与同步，而不是用于缓存进程间通信的数据</strong>。<br><br>信号量表示资源的数量，核心点在于原子性的控制一个数据的值，控制信号量的方式有<strong>PV两种原子操作</strong>：<br><br>1. P 操作会把信号量减去 -1，相减后如果信号量 &lt; 0，则表明资源已被占用，进程需阻塞等待。相减后如果信号量 &gt;= 0，则表明还有资源可使用，进程可正常继续执行。<br>2. V 操作会把信号量加上 1，相加后如果信号量 &lt;= 0，则表明当前有阻塞中的进程，于是会将该进程唤醒运行。相加后如果信号量 &gt; 0，则表明当前没有阻塞中的进程。<br><br>##### 3.6.5 信号<br><br>对于异常状态下进程工作模式需要用到信号工作方式来通知进程。比如Linux系统为了响应各种事件提供了很多异常信号<code>kill -l</code>，<strong>信号是进程间通信机制中唯一的异步通信机制</strong>，可以在任何时候发送信号给某一进程。比如：<br><br>1. kill -9 1412 ，表示给 PID 为 1412 的进程发送 SIGKILL 信号，用来立即结束该进程。<br>2. 键盘 Ctrl+C 产生 SIGINT 信号，表示终止该进程。<br>3. 键盘 Ctrl+Z 产生 SIGTSTP 信号，表示停止该进程，但还未结束。<br><br>有信号发生时，进程一般有三种方式响应信号：<br><br>1. 执行默认操作：Linux操作系统为众多信号配备了专门的处理操作。<br>2. 捕捉信号：给捕捉到的信号配备专门的信号处理函数。<br>3. 忽略信号：专门用来忽略某些信号，但 SIGKILL 和 SEGSTOP是无法被忽略的，为了能在任何时候结束或停止某个进程而存在。<br><br>##### 3.6.6 Socket编程<br><br>前面提到的管道、消息队列、共享内存、信号量和信号都是在同一台主机上进行进程间通信，<strong>那要想跨网络与不同主机上的进程之间通信，就需要 Socket 通信</strong>。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int domain, int type, int protocal)</span><br></pre></td></tr></table></figure>
+<p>上面是socket编程的核心函数，可以指定IPV4或IPV6类型，TCP或UDP类型。比如<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247490719&amp;idx=1&amp;sn=9590fea26b75698ddb37b24ef34e0c8c&amp;chksm=ebdefda7dca974b16ac1e3ae78ff0222c4ad4bd181a70a233df8683cb3fb6199395e14bd65e6&amp;scene=21#wechat_redirect" target="_blank" rel="noopener"><strong>TCP</strong></a>协议通信的 socket 编程模型如下：</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110306777.png" title="image-20220208110306777" data-fancybox="images"><img src="image-20220208110306777.png" alt="image-20220208110306777" title class></a>
+                <p>image-20220208110306777</p>
+            </figure>Socket编程<br><br>1. 服务端和客户端初始化 <code>socket</code>，得到文件描述符。<br>2. 服务端调用<code>bind</code>，将绑定在 IP 地址和端口。<br>3. 服务端调用 <code>listen</code>，进行监听。<br>4. 服务端调用 <code>accept</code>，等待客户端连接。<br>5. 客户端调用 <code>connect</code>，向服务器端的地址和端口发起连接请求。<br>6. 服务端 <code>accept</code> 返回用于传输的 <code>socket</code> 的文件描述符。<br>7. 客户端调用 <code>write</code> 写入数据，服务端调用 <code>read</code> 读取数据。<br>8. 客户端断开连接时，会调用 <code>close</code>，那么服务端 <code>read</code> 读取数据的时候，就会读取到了<code>EOF</code>，待处理完数据后，服务端调用 close，表示连接关闭。<br>9. 服务端调用 <code>accept</code>时，连接成功会返回一个已完成连接的 <code>socket</code>，后续用来传输数据。服务端有俩<code>socket</code>，一个叫作监听 <code>socket</code>，一个叫作已完成连接 <code>socket</code>。<br>10. 成功连接建立之后双方开始通过 read 和 write 函数来读写数据。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110319666.png" title="image-20220208110319666" data-fancybox="images"><img src="image-20220208110319666.png" alt="image-20220208110319666" title class></a>
+                <p>image-20220208110319666</p>
+            </figure>UDP传输<br><br><br>UDP比较简单，属于类似广播性质的传输，不需要维护连接。但也需要 bind，每次通信时调用 sendto 和 recvfrom 都要传入目标主机的 IP 地址和端口。<br><br>### 3.7 多线程编程<br><br>既然多进程开销过大，那平常我们经常使用到的就是多线程编程了。期间可能涉及到内存模型、JMM、Volatile、临界区等等。这些在<a href="https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&amp;album_id=1663052626025840644&amp;__biz=MzI4NjI1OTI4Nw==&amp;uin=&amp;key=&amp;devicetype=Windows+7+x64&amp;version=63010043&amp;lang=zh_CN&amp;ascene=7&amp;fontgear=2" target="_blank" rel="noopener">Java并发编程专栏</a>有讲。<br><br># 4 文件管理<br><br>### 4.1 VFS 虚拟文件系统<br><br>文件系统在操作系统中主要负责将文件数据信息存储到磁盘中，起到持久化文件的作用。文件系统的基本组成单元就是文件，文件组成方式不同就会形成不同的文件系统。<br><br>文件系统有很多种而不同的文件系统应用到操作系统后需要提供统一的对外接口，此时用到了一个设计理念<code>没有什么是加一层解决不了的</code>，在用户层跟不同的文件系统之间加入一个虚拟文件系统层 <code>Virtual File System</code>。<br><br>虚拟文件系统层<code>定义了一组所有文件系统都支持的数据结构和标准接口</code>，这样程序员不需要了解文件系统的工作原理，只需要了解 VFS 提供的统一接口即可。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110333436.png" title="image-20220208110333436" data-fancybox="images"><img src="image-20220208110333436.png" alt="image-20220208110333436" title class></a>
+                <p>image-20220208110333436</p>
+            </figure>虚拟文件系统<br><br><br>日常的文件系统一般有如下三种：<br><br><br><br>1. <code>磁盘文件系统</code>：就是我们常见的EXT 2/3/4系列。<br>2. <code>内存文件系统</code>：数据没存储到磁盘，占用内存数据，比如<code>/sys</code>、<code>/proc</code>。进程中的一些数据映射到/proc中了。<br>3. <code>网络文件系统</code>：常见的网盘挂载NFS等，通过访问其他主机数据实现。<br><br>### 4.2 文件组成<br><br>以Linux系统为例，在Linux系统中一切皆文件，Linux文件系统会为每个文件分配<code>索引节点 inode</code>跟<code>目录项directory entry</code>来记录文件内容跟目录层次结构。<br><br>##### 4.2.1 inode<br><br>要理解<code>inode</code>要从文件储存说起。文件存储在硬盘上，硬盘的最小存储单位叫做扇区。每个扇区储存512字节。操作系统读取硬盘的时候，不会一个个扇区的读取，这样效率太低，一般一次性连续读取8个扇区(4KB)来当做一块，这种由多个扇区组成的<strong>块</strong>，是文件存取的最小单位。<br><br>文件数据都储存在块中，我们还必须找到一个地方储存文件的元信息，比如inode编号、文件大小、创建时间、修改时间、磁盘位置、访问权限等。几乎除了文件名以为的所有文件元数据信息都存储在一个叫叫索引节点inode的地方。可通过<code>stat 文件名</code>查看 inode 信息<br><br>每个inode都有一个号码，操作系统用inode号码来识别不同的文件。Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件，用户可通过<code>ls -i</code>查看每个文件对应编号。对于系统来说文件名只是inode号码便于识别的别称或者绰号。特殊名字的文件不好删除时可以尝试用inode号删除，移动跟重命名不会导致文件inode变化，当用户尝试根据文件名打开文件时，实际上系统内部将这个过程分成三步：<br><br>1. 系统找到这个文件名对应的inode号码。<br>2. 通过inode号码，获取inode信息，进行权限验证等操作。<br>3. 根据inode信息，找到文件数据所在的block，读出数据。<br><br>需注意 inode也会消耗硬盘空间，硬盘格式化后会被分成<strong>超级块</strong>、<strong>索引节点区</strong>和<strong>数据块区</strong>三个区域：<br><br>1. <code>超级块区</code>：用来存储文件系统的详细信息，比如块大小，块个数等信息。一般文件系统挂载后就会将数据信息同步到内存。<br><br>2. <code>索引节点区</code>：用来存储索引节点 inode  table。每个inode一般为128字节或256字节，一般每1KB或2KB数据就需设置一个inode。一般为了加速查询会把索引数据缓存到内存。<br><br>3. <code>数据块区</code>：真正存储磁盘数据的地方。<br><br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df -i # 查看每个硬盘分区的inode总数和已经使用的数量</span><br><span class="line">sudo dumpe2fs -h /dev/hda | grep &quot;Inode size&quot; # 查看每个inode节点的大小</span><br></pre></td></tr></table></figure>
+<h5 id="4-2-2-目录"><a href="#4-2-2-目录" class="headerlink" title="4.2.2 目录"></a>4.2.2 目录</h5><p>Unix/Linux系统中<strong>目录directory也是一种文件</strong>，打开目录实际上就是打开目录文件。目录文件内容就是一系列目录项的列，目录项的内容包含<strong>文件的名字、文件类型、索引节点指针以及与其他目录项的层级关系</strong>。</p>
+<p>为避免频繁读取磁盘里的目录文件，内核会把已经读过的目录文件用<code>目录项</code>这个数据结构缓存在内存，方便用户下次读取目录信息，目录项可包含目录或文件，不要惊讶于可以保存目录，目录格式的目录项里面保存的是目录里面一项一项的文件信息。</p>
+<h5 id="4-2-3-软连接跟硬链接"><a href="#4-2-3-软连接跟硬链接" class="headerlink" title="4.2.3 软连接跟硬链接"></a>4.2.3 软连接跟硬链接</h5><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110345265.png" title="image-20220208110345265" data-fancybox="images"><img src="image-20220208110345265.png" alt="image-20220208110345265" title class></a>
+                <p>image-20220208110345265</p>
+            </figure>软连接跟硬链接<br><br><br><strong>硬链接</strong>：老文件A被创建若干个硬链接B、C后。A、B、C三个文件的inode是相同的，所以不能跨文件系统。同时只有ABC全部删除，系统才会删除源文件。<br><strong>软链接</strong>：相当于基于老文件A新建了个文件B，该文件B有新的inode，不过文件B内容是老文件A的路径。所以软链接可以跨文件系统。当老文件A删除后，文件B仍然存在，不过找不到指定文件了。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[sowhat@localhost ~]$ ln [选项] 源文件 目标文件</span><br><span class="line">选项：</span><br><span class="line">-s：建立软链接文件。如果不加 &quot;-s&quot; 选项，则建立硬链接文件；</span><br><span class="line">-f：强制。如果目标文件已经存在，则删除目标文件后再建立链接文件；</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-文件存储"><a href="#4-3-文件存储" class="headerlink" title="4.3 文件存储"></a>4.3 文件存储</h3><p>说文件存储前需了解<strong>文件系统操作基本单位是数据块</strong>，而平常用户操作字节到数据块之间是需要转换的，当然这些文件系统都帮我们对接好了。接下来看文件系统是如何按照数据块， 文件在磁盘中存储时候主要分为<code>连续空间存储</code>跟<code>非连续空间存储</code></p>
+<h5 id="4-3-1-连续空间存储"><a href="#4-3-1-连续空间存储" class="headerlink" title="4.3.1 连续空间存储"></a>4.3.1 连续空间存储</h5><ol>
+<li><p><code>实现</code>：连续空间存储的意思就跟数组存储一样，找个连续的空间一次性把数据存储进去，<strong>文件头</strong>存储起始位置跟数据长度即可。</p>
+</li>
+<li><p><code>优势</code>：读写效率高，磁盘寻址一次即可。</p>
+</li>
+<li><p><code>劣势</code>：容易产生空间碎片，并且文件扩容不方便。</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110358288.png" title="image-20220208110358288" data-fancybox="images"><img src="image-20220208110358288.png" alt="image-20220208110358288"></a>连续存储</p>
+</li>
+</ol>
+<h5 id="4-3-2-非连续空间存储之链表"><a href="#4-3-2-非连续空间存储之链表" class="headerlink" title="4.3.2 非连续空间存储之链表"></a>4.3.2 非连续空间存储之链表</h5><p><strong>隐式链表</strong></p>
+<ol>
+<li><code>实现</code>：文件头包含StartBlock、EndBlock。每个BLock有隐藏的next指针，跟单向链表一样。</li>
+<li><code>缺点</code>：只能通过链式不断往下查找数据，不支持快速直接访问。</li>
+</ol>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110410511.png" title="image-20220208110410511" data-fancybox="images"><img src="image-20220208110410511.png" alt="image-20220208110410511" title class></a>
+                <p>image-20220208110410511</p>
+            </figure>
+<p><strong>显式链表</strong></p>
+<ol>
+<li><p><code>实现</code>：把每个Block中的next指针存储到内存<code>文件分配表</code>中，通过遍历数组方式实现拿到全部数据。</p>
+</li>
+<li><p><code>缺点</code>：前面说1KB就有个inode指针，如果磁盘数据很大那就需要很大的<strong>文件分配表</strong>来存储映射关系了，</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110425596.png" title="image-20220208110425596" data-fancybox="images"><img src="image-20220208110425596.png" alt="image-20220208110425596"></a>显示链表</p>
+</li>
+</ol>
+<h5 id="4-3-3-非连续空间存储之索引"><a href="#4-3-3-非连续空间存储之索引" class="headerlink" title="4.3.3 非连续空间存储之索引"></a>4.3.3 非连续空间存储之索引</h5><ol>
+<li><code>实现</code>：整个文件类型一本新华字典，真实的数据块在词典实际位置存储着，但文件所需数据块的索引位置会被汇总起来形成目录索引放在字典前头。</li>
+<li><code>优势</code>：不会产生碎片，文件可动态扩容，并且支持顺序跟随机读写。</li>
+<li><code>劣势</code>：可能一个小文件都要占用一个目录索引，文件过大导致索引指针一个容不下，可能还需要有<code>多级索引</code>或<code>索引+链表</code>模式。</li>
+</ol>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110436521.png" title="image-20220208110436521" data-fancybox="images"><img src="image-20220208110436521.png" alt="image-20220208110436521" title class></a>
+                <p>image-20220208110436521</p>
+            </figure>索引存储<br><br><br>这些存储方式各有利弊，所以操作系统才存储的时候一般是根据文件的大小进行动态的变化存储方式的，跟STL中的快排底层 = 快排 + 插入排序 + 堆排 一样的道理。<br><br>##### 4.3.4 空闲空间管理<br><br>为了避免用户存储数据时候遍历全部磁盘空间来寻找可以数据块，一般有如下几种记录方法。<br><br>1. <code>空闲表</code>：动态的维护一个空闲数据块列表，每行存储空闲块的开始位置跟空闲长度。适合少量有少量空闲数据块时。<br><br>   <a rel=操作系统 | 硬核图文讲解 href="image-20220208110452631.png" title="image-20220208110452631" data-fancybox="images"><img src="image-20220208110452631.png" alt="image-20220208110452631"></a>空闲表<br><br>2. <code>空闲链表</code>：将空闲的数据库用next指针串联起来，缺点是不能随机访问。<br><br>   <a rel=操作系统 | 硬核图文讲解 href="image-20220208110504160.png" title="image-20220208110504160" data-fancybox="images"><img src="image-20220208110504160.png" alt="image-20220208110504160"></a>空闲链表<br><br>3. <code>位图法</code>：利用Bit的 01 表示数据块可用跟不可用，简单方便，<strong>inode跟空闲数据库都用的此方法</strong>。<br><br>   <a rel=操作系统 | 硬核图文讲解 href="image-20220208110514002.png" title="image-20220208110514002" data-fancybox="images"><img src="image-20220208110514002.png" alt="image-20220208110514002"></a>位图法<br><br># 5  输入输出管理<br><br>### 5.1 设备控制器跟驱动程序<br><br>##### 5.1.1 设备控制器<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110525266.png" title="image-20220208110525266" data-fancybox="images"><img src="image-20220208110525266.png" alt="image-20220208110525266" title class></a>
+                <p>image-20220208110525266</p>
+            </figure>设备控制器<br><br><br>操作系统为统一管理众多的设备并且屏蔽设备之间的差异，给每个设备都安装了个小CPU叫<strong>设备控制器</strong>。每个设备控制器都知道自己对应外设的功能跟用法，并且每个<strong>设备控制器</strong>都有独有的寄存器用来跟CPU通信。<br><br><br><br>1. 读设备寄存器值了解设备状态，是否可以接收新指令。<br>2. 操作系统给设备寄存器写入一些指令可以实现发送数据、接收数据等等操作。<br><br>控制器一般分为<strong>数据寄存器、命令寄存器跟状态寄存器</strong>，CPU 通过读、写设备控制器中的寄存器来便捷的控制设备：<br><br>1. <code>数据寄存器</code>：CPU 向 I/O 设备写入需要传输的数据，比如打印what，CPU 就要先发送一个w字符给到对应的 I/O 设备。<br>2. <code>命令寄存器</code>：CPU 发送命令来告诉 I/O 设备要进行输入/输出操作，于是就会交给 I/O 设备去工作，任务完成后，会把状态寄存器里面的状态标记为完成。<br>3. <code>状态寄存器</code>：用来告诉 CPU 现在已经在工作或工作已经完成，只有状态寄存标记成已完成，CPU 才能发送下一个字符和命令。<br><br>同时输入输出设备可分为<code>块设备</code>跟<code>字符设备</code>。<br><br>1. <code>块设备</code>：用来把数据存储在固定大小的块中，每个块有自己的地址，硬盘、U盘等是常见的块设备。块设备一般数据传输较大为避免频繁IO，控制器中有个可读写等<strong>数据缓冲区</strong>。Linux操作系统为屏蔽不同块设备带来的差异引入了<strong>通用块层</strong>，<strong>通用块层</strong>是处于文件系统和磁盘驱动中间的一个块设备抽象层，主要提供如下俩功能：<br><br>&gt; 1. 向上为文件系统和应用程序，提供访问块设备的标准接口，向下把各种不同的磁盘设备抽象为统一的块设备，并在内核层面提供一个框架来管理这些设备的驱动程序。<br>&gt; 2. 通用层还会给文件系统和应用程序发来的 I/O进行<strong>调度</strong>，主要目的是为了提高磁盘读写的效率。<br><br>1. <code>字符设备</code>：以字符为单位发送或接收一个字符流，字符设备是不可寻址的，也没有任何寻道操作，鼠标是常见的字符设备。<br><br>CPU一般通过<strong>IO端口</strong>跟<strong>内存映射IO</strong>来跟设备的控制寄存器和数据缓冲区进行通信<br><br>1. <code>IO端口</code>：每个控制寄存器被分配一个 I/O 端口，可以通过特殊的汇编指令操作这些寄存器，比如 in/out 类似的指令。<br>2. <code>内存映射IO</code>：将所有控制寄存器映射到内存空间中，这样就可以像读写内存一样读写数据缓冲区。<br><br>##### 5.1.2 驱动接口<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110540638.png" title="image-20220208110540638" data-fancybox="images"><img src="image-20220208110540638.png" alt="image-20220208110540638" title class></a>
+                <p>image-20220208110540638</p>
+            </figure>驱动程序<br><br>设备控制器屏蔽了设备细节，但每种设备的控制器的寄存器、缓冲区等使用模式都是不同的，它属于硬件。在操作系统图范畴内为了屏蔽设备控制器的差异，引入了<strong>设备驱动程序</strong>，<strong>不同设备到驱动程序会提供统一接口给操作系统来调用</strong>，这样操作系统内核会像调用本地代码一样使用设备驱动程序接口。<br><br>设备发出IO请求就是在<strong>设备驱动程序</strong>中来响应到，它会根据中断类型调用响应到中断处理程序进行处理。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110624410.png" title="image-20220208110624410" data-fancybox="images"><img src="image-20220208110624410.png" alt="image-20220208110624410" title class></a>
+                <p>image-20220208110624410</p>
+            </figure>中断请求流程<br><br>### 5.2 IO 控制<br><br>CPU发送指令让那个设备控制器去读写数据，完毕后如何通知CPU呢？<br><br>##### 5.2.1 轮询模式<br><br>控制器中有个<strong>状态寄存器</strong>，CPU不断<strong>轮</strong>询查看寄存器状态，该模式会傻瓜式的一直占用CPU。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110635167.png" title="image-20220208110635167" data-fancybox="images"><img src="image-20220208110635167.png" alt="image-20220208110635167" title class></a>
+                <p>image-20220208110635167</p>
+            </figure>轮询模式<br><br>##### 5.2.2 IO 中断请求<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110646262.png" title="image-20220208110646262" data-fancybox="images"><img src="image-20220208110646262.png" alt="image-20220208110646262" title class></a>
+                <p>image-20220208110646262</p>
+            </figure>中断模式<br><br><br>控制器有个中断控制器，当设备完成任务后触发中断到中断控制器，中断控制器就通知 CPU来处理中断请求。中断有两种，一种是<strong>软中断</strong>，比如代码调用 INT 指令触发。一种是<strong>硬件中断</strong>，硬件通过中断控制器触发的。但中断方式对于频繁读写磁盘数据的操作就不太友好了，会频繁打断CPU。<br><br>这里说下磁盘高速缓存 <strong>PageCache</strong>，它是用来缓存最近被CPU访问的数据到内存中，并且还具有预读功能，可能你读前16KB数据，已经把后16KB数据给你缓存好了。<br><br>&gt; 1. <strong>pagecache</strong> : 页缓存，当进程需读取磁盘文件时，linux先分配一些内存，将数据从磁盘读区到内存中，然后再将数据传给进程。当进程需写数据到磁盘时，linux先分配内存接收用户数据，然后再将数据从内存写到磁盘。同时pagecache由于大小受限，所以一般只缓存最近被访问的数据，数据不足时还需访问磁盘。<br><br>##### 5.2.3 DMA 模式<br><br><code>Direct Memory Access</code> 直接内存访问，在硬件DMA控制器的支持下，<strong>在进行 I/O 设备和内存的数据传输的时候，数据搬运的工作全部交给 DMA 控制器，而 CPU 不再参与任何与数据搬运相关的事情，让CPU 去处理别的事</strong>。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110700883.png" title="image-20220208110700883" data-fancybox="images"><img src="image-20220208110700883.png" alt="image-20220208110700883" title class></a>
+                <p>image-20220208110700883</p>
+            </figure>DMA模式<br><br>可以发现整个数据传输过程中CPU是不会直接参与数据搬运工作，由DMA来直接负责数据读取工作，现如今每个IO设备一般都自带DMA控制器。读数据时候仅仅在传送开始跟结束时需要CPU干预。<br><br>##### 5.2.4 Zero Copy<br><br>Zero Copy 全程不会通过 CPU 来搬运数据，所有的数据都是通过 DMA 来进行传输的，中间只需要经过2次上下文切换跟2次DMA数据拷贝，相比最原始读写方式至少速度翻倍。其实在Kafka中已经讲过Zero Copy了。<br><br>###### 5.2.4.1 老版本读写<br><br>老版本的简单读写操作中间不对数据做任何操作。期间会发生<strong>4次用户态跟内核态的切换。2次DMA数据拷贝，2次CPU数据拷贝</strong>。<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110717472.png" title="image-20220208110717472" data-fancybox="images"><img src="image-20220208110717472.png" alt="image-20220208110717472" title class></a>
+                <p>image-20220208110717472</p>
+            </figure>老式读写<br><br><br>提速方法就是需减少用户态与内核态的上下文切换和内存拷贝的次数。数据传输时从内核的读缓冲区拷贝到用户的缓冲区，再从用户缓冲区拷贝到 socket 缓冲区的这个过程是没有必要的。接下来<br><br>接下来按照三个版本说下Zero Copy 发展史。<br><br>###### 5.2.4.2  mmap 跟 write<br><br><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110728516.png" title="image-20220208110728516" data-fancybox="images"><img src="image-20220208110728516.png" alt="image-20220208110728516" title class></a>
+                <p>image-20220208110728516</p>
+            </figure>mmap + write<br><br><br>思路就是用<strong>mmap</strong>替代read函数，mmap调用时会<strong>直接把内核缓冲区里的数据映射到用户空间</strong>，此时减少了一次数据拷贝，但仍然需要通过 CPU 把内核缓冲区的数据拷贝到 socket 缓冲区里，而且仍然需要 4 次上下文切换，因为系统调用还是 2 次。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">buf = mmap(file, len);</span><br><span class="line">write(sockfd, buf, len);</span><br></pre></td></tr></table></figure>
+<h6 id="5-2-4-3-sendfile"><a href="#5-2-4-3-sendfile" class="headerlink" title="5.2.4.3 sendfile"></a>5.2.4.3 sendfile</h6><p>Linux 内核版本 2.1版本提供了函数 <strong>sendfile()</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssize_t sendfile(int out_fd, int in_fd, off_t *offset, size_t count);</span><br><span class="line">out_fd : 目的文件描述符</span><br><span class="line">in_fd:源文件描述符</span><br><span class="line">offset:源文件内偏移量</span><br><span class="line">count:打算复制数据长度</span><br><span class="line">ssize_t:实际上复制数据的长度</span><br></pre></td></tr></table></figure>
+<p>可以发现一个 sendfile = read + write，避免了2次用户态跟内核态来回切换，并且可以直接把内核缓冲区里的数据拷贝到 socket 缓冲区里，这样就只有 2 次上下文切换，和 3 次数据拷贝。</p>
+<figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110742002.png" title="image-20220208110742002" data-fancybox="images"><img src="image-20220208110742002.png" alt="image-20220208110742002" title class></a>
+                <p>image-20220208110742002</p>
+            </figure>sendfile模式<br><br>###### 5.2.4.4 真正的零拷贝<br><br>Linux 内核 2.4如果网卡支持SG-DMA 技术，可以减少通过 CPU 把内核缓冲区里的数据拷贝到 socket 缓冲区的过程。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ethtool -k eth0 | grep scatter-gather</span><br><span class="line">scatter-gather: on</span><br></pre></td></tr></table></figure>
+<p>SG-DMA 技术可以直接将内核缓存中的数据拷贝到网卡的缓冲区里，此过程不需要将数据从操作系统内核缓冲区拷贝到 socket 缓冲区中，这样就减少了一次数据拷贝。</p>
+<p><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110800158.png" title="image-20220208110800158" data-fancybox="images"><img src="image-20220208110800158.png" alt="image-20220208110800158" title class></a>
+                <p>image-20220208110800158</p>
+            </figure>ZeroCopy</p>
+<h6 id="5-2-4-5-文件传输规则"><a href="#5-2-4-5-文件传输规则" class="headerlink" title="5.2.4.5 文件传输规则"></a>5.2.4.5 文件传输规则</h6><p>不要以为会了Zero Copy后，无论大小文件都用Zero Copy。实际工作中一般小文件采用Zero Copy技术，而大文件会用异步IO。至于为啥，且看如下分析：</p>
+<p>前面说的数据从磁盘读到内核缓冲区就是读到PageCache中，PageCache具有缓存跟预读功能。但当传输超大文件时PageCache会不失效，因为大文件会快速占满PageCache区，但这些文件又只是一次访问，会造成其他热点小文件无法使用PageCache，所以索性不用PageCache，使用异步IO的了。至于异步IO是啥呢？下文在说。</p>
+<h3 id="5-3-IO分层"><a href="#5-3-IO分层" class="headerlink" title="5.3 IO分层"></a>5.3 IO分层</h3><p><figure class="image-box">
+                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110811235.png" title="image-20220208110811235" data-fancybox="images"><img src="image-20220208110811235.png" alt="image-20220208110811235" title class></a>
+                <p>image-20220208110811235</p>
+            </figure>IO分层</p>
+<p>Linux 存储系统的 I/O 由上到下可以分为<strong>文件系统层</strong>、<strong>通用块层</strong>、<strong>设备层</strong>。</p>
+<ol>
+<li>文件系统层向上为应用程序统一提供了标准的文件访问接口，向下会通过通用块层来存储和管理磁盘数据。</li>
+<li>通用块层包括块设备的 I/O 队列和 I/O 调度器，通过IO调度器处理IO请求。</li>
+<li>设备层包括硬件设备、设备控制器和驱动程序，负责最终物理设备的 I/O 操作。</li>
+</ol>
+<p>Linux系统中的IO<strong>读取提速</strong>：</p>
+<ol>
+<li>为提高文件访问效率会使用页缓存、索引节点缓存、目录项缓存等多种缓存机制，目的是为了减少对块设备的直接调用。</li>
+<li>为了提高块设备的访问效率， 会使用缓冲区，来缓存块设备的数据。</li>
+</ol>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2022-02-08T03:28:42.198Z" itemprop="dateUpdated">2022-02-08 11:28:42</time>
+</span><br>
+
+
+        
+        转载自：<a href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4NjI1OTI4Nw==&action=getalbum&album_id=1765429172031520778&scene=173&from_msgid=2247491968&from_itemidx=1&count=3&nolastread=1#wechat_redirect">SoWhat1412</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/操作系统/">操作系统</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2021/12/10/os-notes/&title=《操作系统 | 硬核图文讲解》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2021/12/10/os-notes/&title=《操作系统 | 硬核图文讲解》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/12/12/kmp-algorithm/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">双串题 | kmp算法的简单理解 （java）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2021/12/08/kafka-notes/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">消息队列| kafka中间件原理 &amp;&amp; 知识点</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-冯诺伊曼体系"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 冯诺伊曼体系</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-冯诺伊曼体系简介"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1.1 冯诺伊曼体系简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-CPU-简介"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">1.2 CPU 简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-CPU-访问方式"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">1.3 CPU 访问方式</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-内存管理"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 内存管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-MMU"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">2.1  MMU</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-内存管理方式"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">2.2  内存管理方式</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-进程管理"><span class="post-toc-number">3.</span> <span class="post-toc-text">3 进程管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-进程基础知识"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">3.1 进程基础知识</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3-进程控制"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">3.3 进程控制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-4-进程调度"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">3.4 进程调度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-5-线程"><span class="post-toc-number">3.0.4.</span> <span class="post-toc-text">3.5 线程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-6-进程通信"><span class="post-toc-number">3.0.5.</span> <span class="post-toc-text">3.6 进程通信</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-文件存储"><span class="post-toc-number">3.0.6.</span> <span class="post-toc-text">4.3 文件存储</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-3-IO分层"><span class="post-toc-number">3.0.7.</span> <span class="post-toc-text">5.3 IO分层</span></a></li></ol></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2022
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2021/12/10/os-notes/&title=《操作系统 | 硬核图文讲解》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2021/12/10/os-notes/&title=《操作系统 | 硬核图文讲解》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3aS27DMAwFwNz/0ukBAtuPlFxA0ngVtIGs6YLl7/OJn+/P8/vz5JtXZ179ZPKDgYGxLON7+1Sv+3vy/Qn5n+nhjRgYGAcwkkvkF0qi4v1F87thYGBg5KT7c65Sw/wzBgYGRo/RSwd7oRwDAwMjT9HuQ2fSE+sVz9NqcQwMjAUZvdf/z+dX5hsYGBhLMb7FJx9tzgqp0a0wMDC2ZuQBLj8ub8yNLFtgYGCcw7gPkb2FsKSJVl0Le4BhYGAcwMjTwWqCWKUmp10GXAwMjE0Z1UFmHqbzQnfkzE/+CwwMjMUZyYpDL7HLk8KRFh4GBsYJjLyATNpn1cSxOqNsfhUDA2NxRi8pbAbEqY22aL6BgYGxOKM3bqw25ppVdT5swMDAOIaRp4lJolZt61fL5sJ/DAwMjC0YvWFhNQTnIXXCsgUGBsZGjF74670mTxCb6SYGBsamjF6ZmgffatO/mXpiYGAcwxhv3FdL1mkDUQwMjK0ZvUPHm2i9gvkhxcTAwDiAkW9Y3fOqQTlPQB/KaQwMjAMY1XFmFZa35Ho9fwwMjBMYyQCgMFAsJpH5E22OYGBgbMSYNRio1pLVMcPDezEwMLZmTIjW8epYdS3jlZCNgYGxLKMaZKsla6+UzdfIMDAwzmEUWvDFweesQFyoxTEwMI5n9Npw1fy0TMXAwMCIFzKScJynm3m4x8DAOIFRXfl6e7H1xXYbBgbGgoyRtYnxEnd8aQMDA2Nrxh/m5mC+QSUn9AAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+    
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/plugins/fireworks.js?v=1.4.4"></script>
+
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ab84488547116c4d03e6764e6ced5433";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="60" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+</body>
+</html>

@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>Tomcat架构原理解析到架构设计借鉴 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="技术,原理,tomcat">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="🎉 Missionary's Blog 😆" type="application/atom+xml">
+</head>
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>Tomcat架构原理解析到架构设计借鉴</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">Tomcat架构原理解析到架构设计借鉴</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2021-12-06T05:50:37.000Z" itemprop="datePublished" class="page-time">
+  2021-12-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-tomcat-architecture"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">Tomcat架构原理解析到架构设计借鉴</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2021-12-06 13:50:37" datetime="2021-12-06T05:50:37.000Z"  itemprop="datePublished">2021-12-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2021/12/06/tomcat-architecture/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2021/12/06/tomcat-architecture/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2021/12/06/tomcat-architecture/#comment">
+            <span class="valine-comment-count" data-xid="/2021/12/06/tomcat-architecture/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h1 id="Tomcat-架构原理解析到架构设计借鉴"><a href="#Tomcat-架构原理解析到架构设计借鉴" class="headerlink" title="Tomcat 架构原理解析到架构设计借鉴"></a>Tomcat 架构原理解析到架构设计借鉴</h1><blockquote>
+<p>Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快』的时代，Tomcat 作为 Java Web 开发必备的工具似乎变成了『熟悉的陌生人』，难道说如今就没有必要深入学习它了么？学习它我们又有什么收获呢？</p>
+</blockquote>
+<p><strong>静下心来，细细品味经典的开源作品</strong> 。提升我们的「内功」，具体来说就是学习大牛们如何设计、架构一个中间件系统，并且让这些经验为我所用。</p>
+<p>美好的事物往往是整洁而优雅的。但这并不等于简单，而是要将复杂的系统分解成一个个小模块，并且各个模块的职责划分也要清晰合理。</p>
+<p>与此相反的是凌乱无序，比如你看到城中村一堆互相纠缠在一起的电线，可能会感到不适。维护的代码一个类几千行、一个方法好几百行。方法之间相互耦合糅杂在一起，你可能会说 what the f*k！</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="1f3cb57ab959b4592513f10ba9cbd1ed.webp" title="img" data-fancybox="images"><img src="1f3cb57ab959b4592513f10ba9cbd1ed.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<h2 id="学习目的"><a href="#学习目的" class="headerlink" title="学习目的"></a>学习目的</h2><h3 id="掌握-Tomcat-架构设计与原理提高内功"><a href="#掌握-Tomcat-架构设计与原理提高内功" class="headerlink" title="掌握 Tomcat 架构设计与原理提高内功"></a>掌握 Tomcat 架构设计与原理提高内功</h3><p><strong>宏观上看</strong></p>
+<p>Tomcat 作为一个 「<code>Http</code> 服务器 + <code>Servlet</code> 容器」，对我们屏蔽了应用层协议和网络通信细节，给我们的是标准的 <code>Request</code> 和 <code>Response</code> 对象；对于具体的业务逻辑则作为变化点，交给我们来实现。我们使用了<code>SpringMVC</code> 之类的框架，可是却从来不需要考虑 <code>TCP</code> 连接、 <code>Http</code> 协议的数据处理与响应。就是因为 Tomcat 已经为我们做好了这些，我们只需要关注每个请求的具体业务逻辑。</p>
+<p><strong>微观上看</strong></p>
+<p><code>Tomcat</code> 内部也隔离了变化点与不变点，使用了组件化设计，目的就是为了实现「俄罗斯套娃式」的高度定制化（组合模式），而每个组件的生命周期管理又有一些共性的东西，则被提取出来成为接口和抽象类，让具体子类实现变化点，也就是模板方法设计模式。</p>
+<p>当今流行的微服务也是这个思路，按照功能将单体应用拆成「微服务」，拆分过程要将共性提取出来，而这些共性就会成为核心的基础服务或者通用库。「中台」思想亦是如此。</p>
+<p>设计模式往往就是封装变化的一把利器，合理的运用设计模式能让我们的代码与系统设计变得优雅且整洁。</p>
+<p>这就是学习优秀开源软件能获得的「内功」，从不会过时，其中的设计思想与哲学才是根本之道。从中借鉴设计经验，合理运用设计模式封装变与不变，更能从它们的源码中汲取经验，提升自己的系统设计能力。</p>
+<h3 id="宏观理解一个请求如何与-Spring-联系起来"><a href="#宏观理解一个请求如何与-Spring-联系起来" class="headerlink" title="宏观理解一个请求如何与 Spring 联系起来"></a>宏观理解一个请求如何与 Spring 联系起来</h3><p>在工作过程中，我们对 Java 语法已经很熟悉了，甚至「背」过一些设计模式，用过很多 Web 框架，但是很少有机会将他们用到实际项目中，让自己独立设计一个系统似乎也是根据需求一个个 Service 实现而已。脑子里似乎没有一张 Java Web 开发全景图，比如我并不知道浏览器的请求是怎么跟 Spring 中的代码联系起来的。</p>
+<p>为了突破这个瓶颈，为何不站在巨人的肩膀上学习优秀的开源系统，看大牛们是如何思考这些问题。</p>
+<p>学习 Tomcat 的原理，我发现 <code>Servlet</code> 技术是 Web 开发的原点，几乎所有的 Java Web 框架（比如 Spring）都是基于 <code>Servlet</code> 的封装，Spring 应用本身就是一个 <code>Servlet</code>（<code>DispatchSevlet</code>），而 Tomcat 和 Jetty 这样的 Web 容器，负责加载和运行 <code>Servlet</code>。如图所示：</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="fb04017c2304f79fd043ed4a9e90190f.webp" title="img" data-fancybox="images"><img src="fb04017c2304f79fd043ed4a9e90190f.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<h3 id="提升自己的系统设计能力"><a href="#提升自己的系统设计能力" class="headerlink" title="提升自己的系统设计能力"></a>提升自己的系统设计能力</h3><p>学习 Tomcat ，我还发现用到不少 Java 高级技术，比如 Java 多线程并发编程、Socket 网络编程以及反射等。之前也只是了解这些技术，为了面试也背过一些题。但是总感觉「知道」与会用之间存在一道沟壑，通过对 Tomcat 源码学习，我学会了什么场景去使用这些技术。</p>
+<p>还有就是系统设计能力，比如面向接口编程、组件化组合模式、骨架抽象类、一键式启停、对象池技术以及各种设计模式，比如模板方法、观察者模式、责任链模式等，之后我也开始模仿它们并把这些设计思想运用到实际的工作中。</p>
+<h2 id="整体架构设计"><a href="#整体架构设计" class="headerlink" title="整体架构设计"></a>整体架构设计</h2><p>今天咱们就来一步一步分析 Tomcat 的设计思路，一方面我们可以学到 Tomcat 的总体架构，学会从宏观上怎么去设计一个复杂系统，怎么设计顶层模块，以及模块之间的关系；另一方面也为我们深入学习 Tomcat 的工作原理打下基础。</p>
+<p>Tomcat 启动流程：<code>startup.sh -&gt; catalina.sh start -&gt;java -jar org.apache.catalina.startup.Bootstrap.main()</code></p>
+<p>Tomcat 实现的 2 个核心功能：</p>
+<ul>
+<li>处理 <code>Socket</code> 连接，负责网络字节流与 <code>Request</code> 和 <code>Response</code> 对象的转化。</li>
+<li>加载并管理 <code>Servlet</code> ，以及处理具体的 <code>Request</code> 请求。</li>
+</ul>
+<p><strong>所以 Tomcat 设计了两个核心组件连接器（Connector）和容器（Container）。连接器负责对外交流，容器负责内部 处理</strong></p>
+<p><code>Tomcat</code>为了实现支持多种 <code>I/O</code> 模型和应用层协议，一个容器可能对接多个连接器，就好比一个房间有多个门。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="4e76498e3179b855b480be0924de5da5.webp" title="img" data-fancybox="images"><img src="4e76498e3179b855b480be0924de5da5.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>Tomcat整体架构<br><br>- Server 对应的就是一个 Tomcat 实例。<br>- Service 默认只有一个，也就是一个 Tomcat 实例默认一个 Service。<br>- Connector：一个 Service 可能多个 连接器，接受不同连接协议。<br>- Container: 多个连接器对应一个容器，顶层容器其实就是 Engine。<br><br><strong>每个组件都有对应的生命周期，需要启动，同时还要启动自己内部的子组件，比如一个 Tomcat 实例包含一个 Service，一个 Service 包含多个连接器和一个容器。而一个容器包含多个 Host， Host 内部可能有多个 Contex t 容器，而一个 Context 也会包含多个 Servlet，所以 Tomcat 利用组合模式管理组件每个组件，对待过个也想对待单个组一样对待</strong>。整体上每个组件设计就像是「俄罗斯套娃」一样。<br><br>### 连接器<br><br>在开始讲连接器前，我先铺垫一下 <code>Tomcat</code>支持的多种 <code>I/O</code> 模型和应用层协议。<br><br><code>Tomcat</code>支持的 <code>I/O</code> 模型有：<br><br>- <code>NIO</code>：非阻塞 <code>I/O</code>，采用 <code>Java NIO</code> 类库实现。<br>- <code>NIO2</code>：异步<code>I/O</code>，采用 <code>JDK 7</code> 最新的 <code>NIO2</code> 类库实现。<br>- <code>APR</code>：采用 <code>Apache</code>可移植运行库实现，是 <code>C/C++</code> 编写的本地库。<br><br>Tomcat 支持的应用层协议有：<br><br>- <code>HTTP/1.1</code>：这是大部分 Web 应用采用的访问协议。<br>- <code>AJP</code>：用于和 Web 服务器集成（如 Apache）。<br>- <code>HTTP/2</code>：HTTP 2.0 大幅度的提升了 Web 性能。<br><br>所以一个容器可能对接多个连接器。连接器对 <code>Servlet</code> 容器屏蔽了网络协议与 <code>I/O</code> 模型的区别，无论是 <code>Http</code> 还是 <code>AJP</code>，在容器中获取到的都是一个标准的 <code>ServletRequest</code> 对象。<br><br>细化连接器的功能需求就是：<br><br>- 监听网络端口。<br>- 接受网络连接请求。<br>- 读取请求网络字节流。<br>- 根据具体应用层协议（<code>HTTP/AJP</code>）解析字节流，生成统一的 <code>Tomcat Request</code> 对象。<br>- 将 <code>Tomcat Request</code> 对象转成标准的 <code>ServletRequest</code>。<br>- 调用 <code>Servlet</code>容器，得到 <code>ServletResponse</code>。<br>- 将 <code>ServletResponse</code>转成 <code>Tomcat Response</code> 对象。<br>- 将 <code>Tomcat Response</code> 转成网络字节流。<br>- 将响应字节流写回给浏览器。<br><br>需求列清楚后，我们要考虑的下一个问题是，连接器应该有哪些子模块？优秀的模块化设计应该考虑<strong>高内聚、低耦合</strong>。<br><br>- <strong>高内聚</strong>是指相关度比较高的功能要尽可能集中，不要分散。<br>- <strong>低耦合</strong>是指两个相关的模块要尽可能减少依赖的部分和降低依赖的程度，不要让两个模块产生强依赖。<br><br>我们发现连接器需要完成 3 个<strong>高内聚</strong>的功能：<br><br>- 网络通信。<br>- 应用层协议解析。<br>- <code>Tomcat Request/Response</code> 与 <code>ServletRequest/ServletResponse</code> 的转化。<br><br>因此 Tomcat 的设计者设计了 3 个组件来实现这 3 个功能，分别是 <code>EndPoint、Processor 和 Adapter</code>。<br><br>网络通信的 I/O 模型是变化的, 应用层协议也是变化的，但是整体的处理逻辑是不变的，<code>EndPoint</code> 负责提供字节流给 <code>Processor</code>，<code>Processor</code>负责提供 <code>Tomcat Request</code> 对象给 <code>Adapter</code>，<code>Adapter</code>负责提供 <code>ServletRequest</code>对象给容器。<br><br><strong>封装变与不变</strong><br><br>因此 Tomcat 设计了一系列抽象基类来<strong>封装这些稳定的部分</strong>，抽象基类 <code>AbstractProtocol</code>实现了 <code>ProtocolHandler</code>接口。每一种应用层协议有自己的抽象基类，比如 <code>AbstractAjpProtocol</code>和 <code>AbstractHttp11Protocol</code>，具体协议的实现类扩展了协议层抽象基类。<br><br>这就是模板方法设计模式的运用。<br><br><figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="30457ee2c65903a81f033e32c5e60251.webp" title="img" data-fancybox="images"><img src="30457ee2c65903a81f033e32c5e60251.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>应用层协议抽象<br><br>总结下来，连接器的三个核心组件 <code>Endpoint</code>、<code>Processor</code>和 <code>Adapter</code>来分别做三件事情，其中 <code>Endpoint</code>和 <code>Processor</code>放在一起抽象成了 <code>ProtocolHandler</code>组件，它们的关系如下图所示。<br><br><figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="88f9b28eb4cef2749e180bc4517d470d.webp" title="img" data-fancybox="images"><img src="88f9b28eb4cef2749e180bc4517d470d.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>连接器<br><br>#### ProtocolHandler 组件<br><br>主要处理 <strong>网络连接</strong> 和 <strong>应用层协议</strong> ，包含了两个重要部件 EndPoint 和 Processor，两个组件组合形成 ProtocoHandler，下面我来详细介绍它们的工作原理。<br><br>##### EndPoint<br><br><code>EndPoint</code>是通信端点，即通信监听的接口，是具体的 Socket 接收和发送处理器，是对传输层的抽象，因此 <code>EndPoint</code>是用来实现 <code>TCP/IP</code> 协议数据读写的，本质调用操作系统的 socket 接口。<br><br><code>EndPoint</code>是一个接口，对应的抽象实现类是 <code>AbstractEndpoint</code>，而 <code>AbstractEndpoint</code>的具体子类，比如在 <code>NioEndpoint</code>和 <code>Nio2Endpoint</code>中，有两个重要的子组件：<code>Acceptor</code>和 <code>SocketProcessor</code>。<br><br>其中 Acceptor 用于监听 Socket 连接请求。<code>SocketProcessor</code>用于处理 <code>Acceptor</code> 接收到的 <code>Socket</code>请求，它实现 <code>Runnable</code>接口，在 <code>Run</code>方法里调用应用层协议处理组件 <code>Processor</code> 进行处理。为了提高处理能力，<code>SocketProcessor</code>被提交到线程池来执行。<br><br>我们知道，对于 Java 的多路复用器的使用，无非是两步：<br><br>1. 创建一个 Seletor，在它身上注册各种感兴趣的事件，然后调用 select 方法，等待感兴趣的事情发生。<br>2. 感兴趣的事情发生了，比如可以读了，这时便创建一个新的线程从 Channel 中读数据。<br><br>在 Tomcat 中 <code>NioEndpoint</code> 则是 <code>AbstractEndpoint</code> 的具体实现，里面组件虽然很多，但是处理逻辑还是前面两步。它一共包含 <code>LimitLatch</code>、<code>Acceptor</code>、<code>Poller</code>、<code>SocketProcessor</code>和 <code>Executor</code> 共 5 个组件，分别分工合作实现整个 TCP/IP 协议的处理。<br><br>- LimitLatch 是连接控制器，它负责控制最大连接数，NIO 模式下默认是 10000，达到这个阈值后，连接请求被拒绝。<br>- <code>Acceptor</code>跑在一个单独的线程里，它在一个死循环里调用 <code>accept</code>方法来接收新连接，一旦有新的连接请求到来，<code>accept</code>方法返回一个 <code>Channel</code> 对象，接着把 <code>Channel</code>对象交给 Poller 去处理。<br>- <code>Poller</code> 的本质是一个 <code>Selector</code>，也跑在单独线程里。<code>Poller</code>在内部维护一个 <code>Channel</code>数组，它在一个死循环里不断检测 <code>Channel</code>的数据就绪状态，一旦有 <code>Channel</code>可读，就生成一个 <code>SocketProcessor</code>任务对象扔给 <code>Executor</code>去处理。<br>- SocketProcessor 实现了 Runnable 接口，其中 run 方法中的 <code>getHandler().process(socketWrapper, SocketEvent.CONNECT_FAIL);</code> 代码则是获取 handler 并执行处理 socketWrapper，最后通过 socket 获取合适应用层协议处理器，也就是调用 Http11Processor 组件来处理请求。Http11Processor 读取 Channel 的数据来生成 ServletRequest 对象，Http11Processor 并不是直接读取 Channel 的。这是因为 Tomcat 支持同步非阻塞 I/O 模型和异步 I/O 模型，在 Java API 中，相应的 Channel 类也是不一样的，比如有 AsynchronousSocketChannel 和 SocketChannel，为了对 Http11Processor 屏蔽这些差异，Tomcat 设计了一个包装类叫作 SocketWrapper，Http11Processor 只调用 SocketWrapper 的方法去读写数据。<br>- <code>Executor</code>就是线程池，负责运行 <code>SocketProcessor</code>任务类，<code>SocketProcessor</code> 的 <code>run</code>方法会调用 <code>Http11Processor</code> 来读取和解析请求数据。我们知道，<code>Http11Processor</code>是应用层协议的封装，它会调用容器获得响应，再把响应通过 <code>Channel</code>写出。<br><br>工作流程如下所示：<br><br><figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="3c0b315759fc82801d7ddc156969113e.webp" title="img" data-fancybox="images"><img src="3c0b315759fc82801d7ddc156969113e.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>NioEndPoint<br><br>##### Processor<br><br>Processor 用来实现 HTTP 协议，Processor 接收来自 EndPoint 的 Socket，读取字节流解析成 Tomcat Request 和 Response 对象，并通过 Adapter 将其提交到容器处理，Processor 是对应用层协议的抽象。<br><br><figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="9bcbb1ffd832ab7098eb70981a0e368f.webp" title="img" data-fancybox="images"><img src="9bcbb1ffd832ab7098eb70981a0e368f.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p><strong>从图中我们看到，EndPoint 接收到 Socket 连接后，生成一个 SocketProcessor 任务提交到线程池去处理，SocketProcessor 的 Run 方法会调用 HttpProcessor 组件去解析应用层协议，Processor 通过解析生成 Request 对象后，会调用 Adapter 的 Service 方法，方法内部通过 以下代码将请求传递到容器中。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Calling the container</span></span><br><span class="line">connector.getService().getContainer().getPipeline().getFirst().invoke(request, response);</span><br></pre></td></tr></table></figure>
+<h4 id="Adapter-组件"><a href="#Adapter-组件" class="headerlink" title="Adapter 组件"></a>Adapter 组件</h4><p>由于协议的不同，Tomcat 定义了自己的 <code>Request</code> 类来存放请求信息，这里其实体现了面向对象的思维。但是这个 Request 不是标准的 <code>ServletRequest</code> ，所以不能直接使用 Tomcat 定义 Request 作为参数直接容器。</p>
+<p>Tomcat 设计者的解决方案是引入 <code>CoyoteAdapter</code>，这是适配器模式的经典运用，连接器调用 <code>CoyoteAdapter</code> 的 <code>Sevice</code> 方法，传入的是 <code>Tomcat Request</code> 对象，<code>CoyoteAdapter</code>负责将 <code>Tomcat Request</code> 转成 <code>ServletRequest</code>，再调用容器的 <code>Service</code>方法。</p>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><p>连接器负责外部交流，容器负责内部处理。具体来说就是，连接器处理 Socket 通信和应用层协议的解析，得到 <code>Servlet</code>请求；而容器则负责处理 <code>Servlet</code>请求。</p>
+<p>容器：顾名思义就是拿来装东西的， 所以 Tomcat 容器就是拿来装载 <code>Servlet</code>。</p>
+<p>Tomcat 设计了 4 种容器，分别是 <code>Engine</code>、<code>Host</code>、<code>Context</code>和 <code>Wrapper</code>。<code>Server</code> 代表 Tomcat 实例。</p>
+<p>要注意的是这 4 种容器不是平行关系，属于父子关系，如下图所示：</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="4e5eb57d725c843208604aa7369cb4c2.webp" title="img" data-fancybox="images"><img src="4e5eb57d725c843208604aa7369cb4c2.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>容器<br><br>你可能会问，为啥要设计这么多层次的容器，这不是增加复杂度么？其实这背后的考虑是，<strong>Tomcat 通过一种分层的架构，使得 Servlet 容器具有很好的灵活性。因为这里正好符合一个 Host 多个 Context， 一个 Context 也包含多个 Servlet，而每个组件都需要统一生命周期管理，所以组合模式设计这些容器</strong><br><br><code>Wrapper</code> 表示一个 <code>Servlet</code> ，<code>Context</code> 表示一个 Web 应用程序，而一个 Web 程序可能有多个 <code>Servlet</code> ；<code>Host</code> 表示一个虚拟主机，或者说一个站点，一个 Tomcat 可以配置多个站点（Host）；一个站点（ Host） 可以部署多个 Web 应用；<code>Engine</code> 代表 引擎，用于管理多个站点（Host），一个 Service 只能有 一个 <code>Engine</code>。<br><br>可通过 Tomcat 配置文件加深对其层次关系理解。<br><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Server</span> <span class="attr">port</span>=<span class="string">"8005"</span> <span class="attr">shutdown</span>=<span class="string">"SHUTDOWN"</span>&gt;</span> // 顶层组件，可包含多个 Service，代表一个 Tomcat 实例</span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">Service</span> <span class="attr">name</span>=<span class="string">"Catalina"</span>&gt;</span>  // 顶层组件，包含一个 Engine ，多个连接器</span><br><span class="line">    <span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span></span></span><br><span class="line"><span class="tag">               <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8009"</span> <span class="attr">protocol</span>=<span class="string">"AJP/1.3"</span> <span class="attr">redirectPort</span>=<span class="string">"8443"</span> /&gt;</span>  // 连接器</span><br><span class="line"></span><br><span class="line"> // 容器组件：一个 Engine 处理 Service 所有请求，包含多个 Host</span><br><span class="line">    <span class="tag">&lt;<span class="name">Engine</span> <span class="attr">name</span>=<span class="string">"Catalina"</span> <span class="attr">defaultHost</span>=<span class="string">"localhost"</span>&gt;</span></span><br><span class="line">   // 容器组件：处理指定Host下的客户端请求， 可包含多个 Context</span><br><span class="line">      <span class="tag">&lt;<span class="name">Host</span> <span class="attr">name</span>=<span class="string">"localhost"</span>  <span class="attr">appBase</span>=<span class="string">"webapps"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">unpackWARs</span>=<span class="string">"true"</span> <span class="attr">autoDeploy</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">   // 容器组件：处理特定 Context Web应用的所有客户端请求</span><br><span class="line">   <span class="tag">&lt;<span class="name">Context</span>&gt;</span>Context&gt;</span><br><span class="line">      Host&gt;</span><br><span class="line">    Engine&gt;</span><br><span class="line">  Service&gt;</span><br><span class="line">Server&gt;</span><br></pre></td></tr></table></figure>
+<p>如何管理这些容器？我们发现容器之间具有父子关系，形成一个树形结构，是不是想到了设计模式中的 <strong>组合模式</strong> 。</p>
+<p>Tomcat 就是用组合模式来管理这些容器的。具体实现方法是，<strong>所有容器组件都实现了 <code>Container</code>接口，因此组合模式可以使得用户对单容器对象和组合容器对象的使用具有一致性</strong>。这里单容器对象指的是最底层的 <code>Wrapper</code>，组合容器对象指的是上面的 <code>Context</code>、<code>Host</code>或者 <code>Engine</code>。<code>Container</code> 接口定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public interface Container extends Lifecycle &#123;</span><br><span class="line">    public void setName(String name);</span><br><span class="line">    public Container getParent();</span><br><span class="line">    public void setParent(Container container);</span><br><span class="line">    public void addChild(Container child);</span><br><span class="line">    public void removeChild(Container child);</span><br><span class="line">    public Container findChild(String name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看到了<code>getParent</code>、<code>SetParent</code>、<code>addChild</code>和 <code>removeChild</code>等方法，这里正好验证了我们说的组合模式。我们还看到 <code>Container</code>接口拓展了 <code>Lifecycle</code> ，Tomcat 就是通过 <code>Lifecycle</code> 统一管理所有容器的组件的生命周期。通过组合模式管理所有容器，拓展 <code>Lifecycle</code> 实现对每个组件的生命周期管理 ，<code>Lifecycle</code> 主要包含的方法<code>init()、start()、stop() 和 destroy()</code>。</p>
+<h4 id="请求定位-Servlet-的过程"><a href="#请求定位-Servlet-的过程" class="headerlink" title="请求定位 Servlet 的过程"></a>请求定位 Servlet 的过程</h4><p>一个请求是如何定位到让哪个 <code>Wrapper</code> 的 <code>Servlet</code> 处理的？答案是，Tomcat 是用 Mapper 组件来完成这个任务的。</p>
+<p><code>Mapper</code> 组件的功能就是将用户请求的 <code>URL</code> 定位到一个 <code>Servlet</code>，它的工作原理是：<code>Mapper</code>组件里保存了 Web 应用的配置信息，其实就是<strong>容器组件与访问路径的映射关系</strong>，比如 <code>Host</code>容器里配置的域名、<code>Context</code>容器里的 <code>Web</code>应用路径，以及 <code>Wrapper</code>容器里 <code>Servlet</code> 映射的路径，你可以想象这些配置信息就是一个多层次的 <code>Map</code>。</p>
+<p>当一个请求到来时，<code>Mapper</code> 组件通过解析请求 URL 里的域名和路径，再到自己保存的 Map 里去查找，就能定位到一个 <code>Servlet</code>。请你注意，一个请求 URL 最后只会定位到一个 <code>Wrapper</code>容器，也就是一个 <code>Servlet</code>。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="c7c4351fa0f7cdfacb2d2dd1d531b863.webp" title="img" data-fancybox="images"><img src="c7c4351fa0f7cdfacb2d2dd1d531b863.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p>假如有用户访问一个 URL，比如图中的<code>http://user.shopping.com:8080/order/buy</code>，Tomcat 如何将这个 URL 定位到一个 Servlet 呢？</p>
+<ol>
+<li><strong>首先根据协议和端口号确定 Service 和 Engine</strong>。Tomcat 默认的 HTTP 连接器监听 8080 端口、默认的 AJP 连接器监听 8009 端口。上面例子中的 URL 访问的是 8080 端口，因此这个请求会被 HTTP 连接器接收，而一个连接器是属于一个 Service 组件的，这样 Service 组件就确定了。我们还知道一个 Service 组件里除了有多个连接器，还有一个容器组件，具体来说就是一个 Engine 容器，因此 Service 确定了也就意味着 Engine 也确定了。</li>
+<li><strong>根据域名选定 Host。</strong> Service 和 Engine 确定后，Mapper 组件通过 URL 中的域名去查找相应的 Host 容器，比如例子中的 URL 访问的域名是<code>user.shopping.com</code>，因此 Mapper 会找到 Host2 这个容器。</li>
+<li><strong>根据 URL 路径找到 Context 组件。</strong> Host 确定以后，Mapper 根据 URL 的路径来匹配相应的 Web 应用的路径，比如例子中访问的是 /order，因此找到了 Context4 这个 Context 容器。</li>
+<li><strong>根据 URL 路径找到 Wrapper（Servlet）。</strong> Context 确定后，Mapper 再根据 web.xml 中配置的 Servlet 映射路径来找到具体的 Wrapper 和 Servlet。</li>
+</ol>
+<p>连接器中的 Adapter 会调用容器的 Service 方法来执行 Servlet，最先拿到请求的是 Engine 容器，Engine 容器对请求做一些处理后，会把请求传给自己子容器 Host 继续处理，依次类推，最后这个请求会传给 Wrapper 容器，Wrapper 会调用最终的 Servlet 来处理。那么这个调用过程具体是怎么实现的呢？答案是使用 Pipeline-Valve 管道。</p>
+<p><code>Pipeline-Valve</code> 是责任链模式，责任链模式是指在一个请求处理的过程中有很多处理者依次对请求进行处理，每个处理者负责做自己相应的处理，处理完之后将再调用下一个处理者继续处理，Valve 表示一个处理点（也就是一个处理阀门），因此 <code>invoke</code>方法就是来处理请求的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Valve</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Valve <span class="title">getNext</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNext</span><span class="params">(Valve valve)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invoke</span><span class="params">(Request request, Response response)</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>继续看 Pipeline 接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Pipeline</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addValve</span><span class="params">(Valve valve)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Valve <span class="title">getBasic</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBasic</span><span class="params">(Valve valve)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Valve <span class="title">getFirst</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Pipeline</code>中有 <code>addValve</code>方法。Pipeline 中维护了 <code>Valve</code>链表，<code>Valve</code>可以插入到 <code>Pipeline</code>中，对请求做某些处理。我们还发现 Pipeline 中没有 invoke 方法，因为整个调用链的触发是 Valve 来完成的，<code>Valve</code>完成自己的处理后，调用 <code>getNext.invoke()</code> 来触发下一个 Valve 调用。</p>
+<p>其实每个容器都有一个 Pipeline 对象，只要触发了这个 Pipeline 的第一个 Valve，这个容器里 <code>Pipeline</code>中的 Valve 就都会被调用到。但是，不同容器的 Pipeline 是怎么链式触发的呢，比如 Engine 中 Pipeline 需要调用下层容器 Host 中的 Pipeline。</p>
+<p>这是因为 <code>Pipeline</code>中还有个 <code>getBasic</code>方法。这个 <code>BasicValve</code>处于 <code>Valve</code>链表的末端，它是 <code>Pipeline</code>中必不可少的一个 <code>Valve</code>，负责调用下层容器的 Pipeline 里的第一个 Valve。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="ebb0f141d836202a2f7f9a174b40e584.webp" title="img" data-fancybox="images"><img src="ebb0f141d836202a2f7f9a174b40e584.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p>整个过程分是通过连接器中的 <code>CoyoteAdapter</code> 触发，它会调用 Engine 的第一个 Valve：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(org.apache.coyote.Request req, org.apache.coyote.Response res)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 省略其他代码</span></span><br><span class="line">    <span class="comment">// Calling the container</span></span><br><span class="line">    connector.getService().getContainer().getPipeline().getFirst().invoke(</span><br><span class="line">        request, response);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Wrapper 容器的最后一个 Valve 会创建一个 Filter 链，并调用 <code>doFilter()</code> 方法，最终会调到 <code>Servlet</code>的 <code>service</code>方法。</p>
+<p>前面我们不是讲到了 <code>Filter</code>，似乎也有相似的功能，那 <code>Valve</code> 和 <code>Filter</code>有什么区别吗？它们的区别是：</p>
+<ul>
+<li><code>Valve</code>是 <code>Tomcat</code>的私有机制，与 Tomcat 的基础架构 <code>API</code>是紧耦合的。<code>Servlet API</code>是公有的标准，所有的 Web 容器包括 Jetty 都支持 Filter 机制。</li>
+<li>另一个重要的区别是 <code>Valve</code>工作在 Web 容器级别，拦截所有应用的请求；而 <code>Servlet Filter</code> 工作在应用级别，只能拦截某个 <code>Web</code> 应用的所有请求。如果想做整个 <code>Web</code>容器的拦截器，必须通过 <code>Valve</code>来实现。</li>
+</ul>
+<h4 id="Lifecycle-生命周期"><a href="#Lifecycle-生命周期" class="headerlink" title="Lifecycle 生命周期"></a>Lifecycle 生命周期</h4><p>前面我们看到 <code>Container</code>容器 继承了 <code>Lifecycle</code> 生命周期。如果想让一个系统能够对外提供服务，我们需要创建、组装并启动这些组件；在服务停止的时候，我们还需要释放资源，销毁这些组件，因此这是一个动态的过程。也就是说，Tomcat 需要动态地管理这些组件的生命周期。</p>
+<p>如何统一管理组件的创建、初始化、启动、停止和销毁？如何做到代码逻辑清晰？如何方便地添加或者删除组件？如何做到组件启动和停止不遗漏、不重复？</p>
+<h5 id="一键式启停：LifeCycle-接口"><a href="#一键式启停：LifeCycle-接口" class="headerlink" title="一键式启停：LifeCycle 接口"></a>一键式启停：LifeCycle 接口</h5><p>设计就是要找到系统的变化点和不变点。这里的不变点就是每个组件都要经历创建、初始化、启动这几个过程，这些状态以及状态的转化是不变的。而变化点是每个具体组件的初始化方法，也就是启动方法是不一样的。</p>
+<p>因此，Tomcat 把不变点抽象出来成为一个接口，这个接口跟生命周期有关，叫作 LifeCycle。LifeCycle 接口里定义这么几个方法：<code>init()、start()、stop() 和 destroy()</code>，每个具体的组件（也就是容器）去实现这些方法。</p>
+<p>在父组件的 <code>init()</code> 方法里需要创建子组件并调用子组件的 <code>init()</code> 方法。同样，在父组件的 <code>start()</code>方法里也需要调用子组件的 <code>start()</code> 方法，因此调用者可以无差别的调用各组件的 <code>init()</code> 方法和 <code>start()</code> 方法，这就是<strong>组合模式</strong>的使用，并且只要调用最顶层组件，也就是 Server 组件的 <code>init()</code>和<code>start()</code> 方法，整个 Tomcat 就被启动起来了。所以 Tomcat 采取组合模式管理容器，容器继承 LifeCycle 接口，这样就可以向针对单个对象一样一键管理各个容器的生命周期，整个 Tomcat 就启动起来。</p>
+<h5 id="可扩展性：LifeCycle-事件"><a href="#可扩展性：LifeCycle-事件" class="headerlink" title="可扩展性：LifeCycle 事件"></a>可扩展性：LifeCycle 事件</h5><p>我们再来考虑另一个问题，那就是系统的可扩展性。因为各个组件<code>init()</code> 和 <code>start()</code> 方法的具体实现是复杂多变的，比如在 Host 容器的启动方法里需要扫描 webapps 目录下的 Web 应用，创建相应的 Context 容器，如果将来需要增加新的逻辑，直接修改<code>start()</code> 方法？这样会违反开闭原则，那如何解决这个问题呢？开闭原则说的是为了扩展系统的功能，你不能直接修改系统中已有的类，但是你可以定义新的类。</p>
+<p><strong>组件的 <code>init()</code> 和 <code>start()</code> 调用是由它的父组件的状态变化触发的，上层组件的初始化会触发子组件的初始化，上层组件的启动会触发子组件的启动，因此我们把组件的生命周期定义成一个个状态，把状态的转变看作是一个事件。而事件是有监听器的，在监听器里可以实现一些逻辑，并且监听器也可以方便的添加和删除</strong>，这就是典型的<strong>观察者模式</strong>。</p>
+<p>以下就是 <code>Lyfecycle</code> 接口的定义:</p>
+<p><a rel=Tomcat架构原理解析到架构设计借鉴 href="6c0d1f851e590155176af9ad27f92a6f.webp" title="img" data-fancybox="images"><img src="6c0d1f851e590155176af9ad27f92a6f.webp" alt="img"></a><code>Lyfecycle</code></p>
+<h5 id="重用性：LifeCycleBase-抽象基类"><a href="#重用性：LifeCycleBase-抽象基类" class="headerlink" title="重用性：LifeCycleBase 抽象基类"></a>重用性：LifeCycleBase 抽象基类</h5><p>再次看到抽象模板设计模式。</p>
+<p>有了接口，我们就要用类去实现接口。一般来说实现类不止一个，不同的类在实现接口时往往会有一些相同的逻辑，如果让各个子类都去实现一遍，就会有重复代码。那子类如何重用这部分逻辑呢？其实就是定义一个基类来实现共同的逻辑，然后让各个子类去继承它，就达到了重用的目的。</p>
+<p>Tomcat 定义一个基类 LifeCycleBase 来实现 LifeCycle 接口，把一些公共的逻辑放到基类中去，比如生命状态的转变与维护、生命事件的触发以及监听器的添加和删除等，而子类就负责实现自己的初始化、启动和停止等方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public abstract class LifecycleBase implements Lifecycle&#123;</span><br><span class="line">    // 持有所有的观察者</span><br><span class="line">    private final List lifecycleListeners = new CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">    /**</span><br><span class="line">     * 发布事件</span><br><span class="line">     *</span><br><span class="line">     * @param type  Event type</span><br><span class="line">     * @param data  Data associated with event.</span><br><span class="line">     */</span><br><span class="line">    protected void fireLifecycleEvent(String type, Object data) &#123;</span><br><span class="line">        LifecycleEvent event = new LifecycleEvent(this, type, data);</span><br><span class="line">        for (LifecycleListener listener : lifecycleListeners) &#123;</span><br><span class="line">            listener.lifecycleEvent(event);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // 模板方法定义整个启动流程，启动所有容器</span><br><span class="line">    @Override</span><br><span class="line">    public final synchronized void init() throws LifecycleException &#123;</span><br><span class="line">        //1. 状态检查</span><br><span class="line">        if (!state.equals(LifecycleState.NEW)) &#123;</span><br><span class="line">            invalidTransition(Lifecycle.BEFORE_INIT_EVENT);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            //2. 触发 INITIALIZING 事件的监听器</span><br><span class="line">            setStateInternal(LifecycleState.INITIALIZING, null, false);</span><br><span class="line">            // 3. 调用具体子类的初始化方法</span><br><span class="line">            initInternal();</span><br><span class="line">            // 4. 触发 INITIALIZED 事件的监听器</span><br><span class="line">            setStateInternal(LifecycleState.INITIALIZED, null, false);</span><br><span class="line">        &#125; catch (Throwable t) &#123;</span><br><span class="line">            ExceptionUtils.handleThrowable(t);</span><br><span class="line">            setStateInternal(LifecycleState.FAILED, null, false);</span><br><span class="line">            throw new LifecycleException(</span><br><span class="line">                    sm.getString(&quot;lifecycleBase.initFail&quot;,toString()), t);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Tomcat 为了实现一键式启停以及优雅的生命周期管理，并考虑到了可扩展性和可重用性，将面向对象思想和设计模式发挥到了极致，<code>Containaer</code>接口维护了容器的父子关系，<code>Lifecycle</code> 组合模式实现组件的生命周期维护，生命周期每个组件有变与不变的点，运用模板方法模式。分别运用了<strong>组合模式、观察者模式、骨架抽象类和模板方法</strong>。</p>
+<p>如果你需要维护一堆具有父子关系的实体，可以考虑使用组合模式。</p>
+<p>观察者模式听起来 “高大上”，其实就是当一个事件发生后，需要执行一连串更新操作。实现了低耦合、非侵入式的通知与更新机制。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="844ce454077ebe51f60e86504dde3f8f.webp" title="img" data-fancybox="images"><img src="844ce454077ebe51f60e86504dde3f8f.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p><code>Container</code> 继承了 LifeCycle，StandardEngine、StandardHost、StandardContext 和 StandardWrapper 是相应容器组件的具体实现类，因为它们都是容器，所以继承了 ContainerBase 抽象基类，而 ContainerBase 实现了 Container 接口，也继承了 LifeCycleBase 类，它们的生命周期管理接口和功能接口是分开的，这也符合设计中<strong>接口分离的原则</strong>。</p>
+<h3 id="Tomcat-为何打破双亲委派机制"><a href="#Tomcat-为何打破双亲委派机制" class="headerlink" title="Tomcat 为何打破双亲委派机制"></a>Tomcat 为何打破双亲委派机制</h3><h4 id="双亲委派"><a href="#双亲委派" class="headerlink" title="双亲委派"></a>双亲委派</h4><p>我们知道 <code>JVM</code>的类加载器加载 Class 的时候基于双亲委派机制，也就是会将加载交给自己的父加载器加载，如果 父加载器为空则查找<code>Bootstrap</code> 是否加载过，当无法加载的时候才让自己加载。JDK 提供一个抽象类 <code>ClassLoader</code>，这个抽象类中定义了三个关键方法。对外使用<code>loadClass(String name) 用于子类重写打破双亲委派：loadClass(String name, boolean resolve)</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Class <span class="title">loadClass</span><span class="params">(String name)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> loadClass(name, <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">protected</span> Class <span class="title">loadClass</span><span class="params">(String name, <span class="keyword">boolean</span> resolve)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> ClassNotFoundException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;</span><br><span class="line">        <span class="comment">// 查找该 class 是否已经被加载过</span></span><br><span class="line">        Class c = findLoadedClass(name);</span><br><span class="line">        <span class="comment">// 如果没有加载过</span></span><br><span class="line">        <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 委托给父加载器去加载，递归调用</span></span><br><span class="line">            <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">                c = parent.loadClass(name, <span class="keyword">false</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果父加载器为空，查找 Bootstrap 是否加载过</span></span><br><span class="line">                c = findBootstrapClassOrNull(name);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 若果依然加载不到，则调用自己的 findClass 去加载</span></span><br><span class="line">            <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;</span><br><span class="line">                c = findClass(name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (resolve) &#123;</span><br><span class="line">            resolveClass(c);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">protected</span> Class <span class="title">findClass</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">    <span class="comment">//1. 根据传入的类名 name，到在特定目录下去寻找类文件，把.class 文件读入内存</span></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 调用 defineClass 将字节数组转成 Class 对象</span></span><br><span class="line">        <span class="keyword">return</span> defineClass(buf, off, len)；</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将字节码数组解析成一个 Class 对象，用 native 方法实现</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> Class <span class="title">defineClass</span><span class="params">(<span class="keyword">byte</span>[] b, <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JDK 中有 3 个类加载器，另外你也可以自定义类加载器，它们的关系如下图所示。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="bfaaa526706997606a0cb622dfc35396.webp" title="img" data-fancybox="images"><img src="bfaaa526706997606a0cb622dfc35396.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>类加载器<br><br>- <code>BootstrapClassLoader</code>是启动类加载器，由 C 语言实现，用来加载 <code>JVM</code>启动时所需要的核心类，比如<code>rt.jar</code>、<code>resources.jar</code>等。<br>- <code>ExtClassLoader</code>是扩展类加载器，用来加载<code>\jre\lib\ext</code>目录下 JAR 包。<br>- <code>AppClassLoader</code>是系统类加载器，用来加载 <code>classpath</code>下的类，应用程序默认用它来加载类。<br>- 自定义类加载器，用来加载自定义路径下的类。<br><br>这些类加载器的工作原理是一样的，区别是它们的加载路径不同，也就是说 <code>findClass</code>这个方法查找的路径不同。双亲委托机制是为了保证一个 Java 类在 JVM 中是唯一的，假如你不小心写了一个与 JRE 核心类同名的类，比如 <code>Object</code>类，双亲委托机制能保证加载的是 <code>JRE</code>里的那个 <code>Object</code>类，而不是你写的 <code>Object</code>类。这是因为 <code>AppClassLoader</code>在加载你的 Object 类时，会委托给 <code>ExtClassLoader</code>去加载，而 <code>ExtClassLoader</code>又会委托给 <code>BootstrapClassLoader</code>，<code>BootstrapClassLoader</code>发现自己已经加载过了 <code>Object</code>类，会直接返回，不会去加载你写的 <code>Object</code>类。我们最多只能 获取到 <code>ExtClassLoader</code>这里注意下。<br><br>#### Tomcat 热加载<br><br>Tomcat 本质是通过一个后台线程做周期性的任务，定期检测类文件的变化，如果有变化就重新加载类。我们来看 <code>ContainerBackgroundProcessor</code>具体是如何实现的。<br><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="class"><span class="keyword">class</span> <span class="title">ContainerBackgroundProcessor</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 请注意这里传入的参数是 " 宿主类 " 的实例</span></span><br><span class="line">        processChildren(ContainerBase.<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">processChildren</span><span class="params">(Container container)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//1. 调用当前容器的 backgroundProcess 方法。</span></span><br><span class="line">            container.backgroundProcess();</span><br><span class="line"></span><br><span class="line">            <span class="comment">//2. 遍历所有的子容器，递归调用 processChildren，</span></span><br><span class="line">            <span class="comment">// 这样当前容器的子孙都会被处理</span></span><br><span class="line">            Container[] children = container.findChildren();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; children.length; i++) &#123;</span><br><span class="line">            <span class="comment">// 这里请你注意，容器基类有个变量叫做 backgroundProcessorDelay，如果大于 0，表明子容器有自己的后台线程，无需父容器来调用它的 processChildren 方法。</span></span><br><span class="line">                <span class="keyword">if</span> (children[i].getBackgroundProcessorDelay() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                    processChildren(children[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable t) &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<p>Tomcat 的热加载就是在 Context 容器实现，主要是调用了 Context 容器的 reload 方法。抛开细节从宏观上看主要完成以下任务：</p>
+<ol>
+<li>停止和销毁 Context 容器及其所有子容器，子容器其实就是 Wrapper，也就是说 Wrapper 里面 Servlet 实例也被销毁了。</li>
+<li>停止和销毁 Context 容器关联的 Listener 和 Filter。</li>
+<li>停止和销毁 Context 下的 Pipeline 和各种 Valve。</li>
+<li>停止和销毁 Context 的类加载器，以及类加载器加载的类文件资源。</li>
+<li>启动 Context 容器，在这个过程中会重新创建前面四步被销毁的资源。</li>
+</ol>
+<p>在这个过程中，类加载器发挥着关键作用。一个 Context 容器对应一个类加载器，类加载器在销毁的过程中会把它加载的所有类也全部销毁。Context 容器在启动过程中，会创建一个新的类加载器来加载新的类文件。</p>
+<h4 id="Tomcat-的类加载器"><a href="#Tomcat-的类加载器" class="headerlink" title="Tomcat 的类加载器"></a>Tomcat 的类加载器</h4><p>Tomcat 的自定义类加载器 <code>WebAppClassLoader</code>打破了双亲委托机制，它<strong>首先自己尝试去加载某个类，如果找不到再代理给父类加载器</strong>，其目的是优先加载 Web 应用自己定义的类。具体实现就是重写 <code>ClassLoader</code>的两个方法：<code>findClass</code>和 <code>loadClass</code>。</p>
+<h5 id="findClass-方法"><a href="#findClass-方法" class="headerlink" title="findClass 方法"></a>findClass 方法</h5><p><code>org.apache.catalina.loader.WebappClassLoaderBase#findClass</code>;为了方便理解和阅读，我去掉了一些细节：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Class <span class="title">findClass</span><span class="params">(String name)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    Class clazz = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//1. 先在 Web 应用目录下查找类</span></span><br><span class="line">            clazz = findClassInternal(name);</span><br><span class="line">    &#125;  <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">           <span class="keyword">throw</span> e;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (clazz == <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//2. 如果在本地目录没有找到，交给父加载器去查找</span></span><br><span class="line">            clazz = <span class="keyword">super</span>.findClass(name);</span><br><span class="line">    &#125;  <span class="keyword">catch</span> (RuntimeException e) &#123;</span><br><span class="line">           <span class="keyword">throw</span> e;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3. 如果父类也没找到，抛出 ClassNotFoundException</span></span><br><span class="line">    <span class="keyword">if</span> (clazz == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> clazz;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>先在 Web 应用本地目录下查找要加载的类。</li>
+<li>如果没有找到，交给父加载器去查找，它的父加载器就是上面提到的系统类加载器 <code>AppClassLoader</code>。</li>
+<li>如何父加载器也没找到这个类，抛出 <code>ClassNotFound</code>异常。</li>
+</ol>
+<h5 id="loadClass-方法"><a href="#loadClass-方法" class="headerlink" title="loadClass 方法"></a>loadClass 方法</h5><p>再来看 Tomcat 类加载器的 <code>loadClass</code>方法的实现，同样我也去掉了一些细节：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Class <span class="title">loadClass</span><span class="params">(String name, <span class="keyword">boolean</span> resolve)</span> <span class="keyword">throws</span> ClassNotFoundException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;</span><br><span class="line"></span><br><span class="line">        Class clazz = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1. 先在本地 cache 查找该类是否已经加载过</span></span><br><span class="line">        clazz = findLoadedClass0(name);</span><br><span class="line">        <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (resolve)</span><br><span class="line">                resolveClass(clazz);</span><br><span class="line">            <span class="keyword">return</span> clazz;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2. 从系统类加载器的 cache 中查找是否加载过</span></span><br><span class="line">        clazz = findLoadedClass(name);</span><br><span class="line">        <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (resolve)</span><br><span class="line">                resolveClass(clazz);</span><br><span class="line">            <span class="keyword">return</span> clazz;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 尝试用 ExtClassLoader 类加载器类加载，为什么？</span></span><br><span class="line">        ClassLoader javaseLoader = getJavaseClassLoader();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clazz = javaseLoader.loadClass(name);</span><br><span class="line">            <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (resolve)</span><br><span class="line">                    resolveClass(clazz);</span><br><span class="line">                <span class="keyword">return</span> clazz;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            <span class="comment">// Ignore</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. 尝试在本地目录搜索 class 并加载</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            clazz = findClass(name);</span><br><span class="line">            <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (resolve)</span><br><span class="line">                    resolveClass(clazz);</span><br><span class="line">                <span class="keyword">return</span> clazz;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            <span class="comment">// Ignore</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5. 尝试用系统类加载器 (也就是 AppClassLoader) 来加载</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                clazz = Class.forName(name, <span class="keyword">false</span>, parent);</span><br><span class="line">                <span class="keyword">if</span> (clazz != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (resolve)</span><br><span class="line">                        resolveClass(clazz);</span><br><span class="line">                    <span class="keyword">return</span> clazz;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                <span class="comment">// Ignore</span></span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//6. 上述过程都加载失败，抛出异常</span></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主要有六个步骤：</p>
+<ol>
+<li>先在本地 Cache 查找该类是否已经加载过，也就是说 Tomcat 的类加载器是否已经加载过这个类。</li>
+<li>如果 Tomcat 类加载器没有加载过这个类，再看看系统类加载器是否加载过。</li>
+<li>如果都没有，就让<strong>ExtClassLoader</strong>去加载，这一步比较关键，目的 <strong>防止 Web 应用自己的类覆盖 JRE 的核心类</strong>。因为 Tomcat 需要打破双亲委托机制，假如 Web 应用里自定义了一个叫 Object 的类，如果先加载这个 Object 类，就会覆盖 JRE 里面的那个 Object 类，这就是为什么 Tomcat 的类加载器会优先尝试用 <code>ExtClassLoader</code>去加载，因为 <code>ExtClassLoader</code>会委托给 <code>BootstrapClassLoader</code>去加载，<code>BootstrapClassLoader</code>发现自己已经加载了 Object 类，直接返回给 Tomcat 的类加载器，这样 Tomcat 的类加载器就不会去加载 Web 应用下的 Object 类了，也就避免了覆盖 JRE 核心类的问题。</li>
+<li>如果 <code>ExtClassLoader</code>加载器加载失败，也就是说 <code>JRE</code>核心类中没有这类，那么就在本地 Web 应用目录下查找并加载。</li>
+<li>如果本地目录下没有这个类，说明不是 Web 应用自己定义的类，那么由系统类加载器去加载。这里请你注意，Web 应用是通过<code>Class.forName</code>调用交给系统类加载器的，因为<code>Class.forName</code>的默认加载器就是系统类加载器。</li>
+<li>如果上述加载过程全部失败，抛出 <code>ClassNotFound</code>异常。</li>
+</ol>
+<h4 id="Tomcat-类加载器层次"><a href="#Tomcat-类加载器层次" class="headerlink" title="Tomcat 类加载器层次"></a>Tomcat 类加载器层次</h4><p>Tomcat 作为 <code>Servlet</code>容器，它负责加载我们的 <code>Servlet</code>类，此外它还负责加载 <code>Servlet</code>所依赖的 JAR 包。并且 <code>Tomcat</code>本身也是也是一个 Java 程序，因此它需要加载自己的类和依赖的 JAR 包。首先让我们思考这一下这几个问题：</p>
+<ol>
+<li>假如我们在 Tomcat 中运行了两个 Web 应用程序，两个 Web 应用中有同名的 <code>Servlet</code>，但是功能不同，Tomcat 需要同时加载和管理这两个同名的 <code>Servlet</code>类，保证它们不会冲突，因此 Web 应用之间的类需要隔离。</li>
+<li>假如两个 Web 应用都依赖同一个第三方的 JAR 包，比如 <code>Spring</code>，那 <code>Spring</code>的 JAR 包被加载到内存后，<code>Tomcat</code>要保证这两个 Web 应用能够共享，也就是说 <code>Spring</code>的 JAR 包只被加载一次，否则随着依赖的第三方 JAR 包增多，<code>JVM</code>的内存会膨胀。</li>
+<li>跟 JVM 一样，我们需要隔离 Tomcat 本身的类和 Web 应用的类。</li>
+</ol>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="bc3f88a879d635e79609c0f7e1ddb640.webp" title="img" data-fancybox="images"><img src="bc3f88a879d635e79609c0f7e1ddb640.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<h5 id="1-WebAppClassLoader"><a href="#1-WebAppClassLoader" class="headerlink" title="1. WebAppClassLoader"></a>1. WebAppClassLoader</h5><p>Tomcat 的解决方案是自定义一个类加载器 <code>WebAppClassLoader</code>， 并且给每个 Web 应用创建一个类加载器实例。我们知道，Context 容器组件对应一个 Web 应用，因此，每个 <code>Context</code>容器负责创建和维护一个 <code>WebAppClassLoader</code>加载器实例。这背后的原理是，<strong>不同的加载器实例加载的类被认为是不同的类</strong>，即使它们的类名相同。这就相当于在 Java 虚拟机内部创建了一个个相互隔离的 Java 类空间，每一个 Web 应用都有自己的类空间，Web 应用之间通过各自的类加载器互相隔离。</p>
+<h5 id="2-SharedClassLoader"><a href="#2-SharedClassLoader" class="headerlink" title="2.SharedClassLoader"></a>2.SharedClassLoader</h5><p>本质需求是两个 Web 应用之间怎么共享库类,并且不能重复加载相同的类。在双亲委托机制里，各个子加载器都可以通过父加载器去加载类，那么把需要共享的类放到父加载器的加载路径下不就行了吗。</p>
+<p>因此 Tomcat 的设计者又加了一个类加载器 <code>SharedClassLoader</code>，作为 <code>WebAppClassLoader</code>的父加载器，专门来加载 Web 应用之间共享的类。如果 <code>WebAppClassLoader</code>自己没有加载到某个类，就会委托父加载器 <code>SharedClassLoader</code>去加载这个类，<code>SharedClassLoader</code>会在指定目录下加载共享类，之后返回给 <code>WebAppClassLoader</code>，这样共享的问题就解决了。</p>
+<h5 id="3-CatalinaClassloader"><a href="#3-CatalinaClassloader" class="headerlink" title="3. CatalinaClassloader"></a>3. CatalinaClassloader</h5><p>如何隔离 Tomcat 本身的类和 Web 应用的类？</p>
+<p>要共享可以通过父子关系，要隔离那就需要兄弟关系了。兄弟关系就是指两个类加载器是平行的，它们可能拥有同一个父加载器，基于此 Tomcat 又设计一个类加载器 <code>CatalinaClassloader</code>，专门来加载 Tomcat 自身的类。</p>
+<p>这样设计有个问题，那 Tomcat 和各 Web 应用之间需要共享一些类时该怎么办呢？</p>
+<p>老办法，还是再增加一个 <code>CommonClassLoader</code>，作为 <code>CatalinaClassloader</code>和 <code>SharedClassLoader</code>的父加载器。<code>CommonClassLoader</code>能加载的类都可以被 <code>CatalinaClassLoader</code>和 <code>SharedClassLoader</code>使用</p>
+<h2 id="整体架构设计解析收获总结"><a href="#整体架构设计解析收获总结" class="headerlink" title="整体架构设计解析收获总结"></a>整体架构设计解析收获总结</h2><p>通过前面对 Tomcat 整体架构的学习，知道了 Tomcat 有哪些核心组件，组件之间的关系。以及 Tomcat 是怎么处理一个 HTTP 请求的。下面我们通过一张简化的类图来回顾一下，从图上你可以看到各种组件的层次关系，图中的虚线表示一个请求在 Tomcat 中流转的过程。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="3eea333acf49278cb00d07818fa5d0f8.webp" title="img" data-fancybox="images"><img src="3eea333acf49278cb00d07818fa5d0f8.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p>Tomcat 整体组件关系</p>
+<h3 id="连接器"><a href="#连接器" class="headerlink" title="连接器"></a>连接器</h3><p>Tomcat 的整体架构包含了两个核心组件连接器和容器。连接器负责对外交流，容器负责内部处理。连接器用 <code>ProtocolHandler</code>接口来封装通信协议和 <code>I/O</code>模型的差异，<code>ProtocolHandler</code>内部又分为 <code>EndPoint</code>和 <code>Processor</code>模块，<code>EndPoint</code>负责底层 <code>Socket</code>通信，<code>Proccesor</code>负责应用层协议解析。连接器通过适配器 <code>Adapter</code>调用容器。</p>
+<p>对 Tomcat 整体架构的学习，我们可以得到一些设计复杂系统的基本思路。<strong>首先要分析需求，根据高内聚低耦合的原则确定子模块，然后找出子模块中的变化点和不变点，用接口和抽象基类去封装不变点，在抽象基类中定义模板方法，让子类自行实现抽象方法，也就是具体子类去实现变化点。</strong></p>
+<h3 id="容器-1"><a href="#容器-1" class="headerlink" title="容器"></a>容器</h3><p>运用了<strong>组合模式 管理容器、通过 观察者模式 发布启动事件达到解耦、开闭原则。骨架抽象类和模板方法抽象变与不变，变化的交给子类实现，从而实现代码复用，以及灵活的拓展</strong>。使用责任链的方式处理请求，比如记录日志等。</p>
+<h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><p>Tomcat 的自定义类加载器 <code>WebAppClassLoader</code>为了隔离 Web 应用打破了双亲委托机制，它<strong>首先自己尝试去加载某个类，如果找不到再代理给父类加载器</strong>，其目的是优先加载 Web 应用自己定义的类。<strong>防止 Web 应用自己的类覆盖 JRE 的核心类</strong>，使用 <strong>ExtClassLoader</strong> 去加载，这样即打破了双亲委派，又能安全加载。</p>
+<h2 id="如何阅读源码持续学习"><a href="#如何阅读源码持续学习" class="headerlink" title="如何阅读源码持续学习"></a>如何阅读源码持续学习</h2><p><strong>学习是一个反人类的过程，是比较痛苦的</strong>。尤其学习我们常用的优秀技术框架本身比较庞大，设计比较复杂，在学习初期很容易遇到 “挫折感”，debug 跳来跳去陷入恐怖细节之中无法自拔，往往就会放弃。</p>
+<p><strong>找到适合自己的学习方法非常重要，同样关键的是要保持学习的兴趣和动力，并且得到学习反馈效果</strong>。</p>
+<p>学习优秀源码，我们收获的就是架构设计能力，遇到复杂需求我们学习到可以利用合理模式与组件抽象设计了可拓展性强的代码能力。</p>
+<h3 id="如何阅读"><a href="#如何阅读" class="headerlink" title="如何阅读"></a>如何阅读</h3><p>比如我最初在学习 Spring 框架的时候，一开始就钻进某个模块啃起来。然而由于 Spring 太庞大，模块之间也有联系，根本不明白为啥要这么写，只觉得为啥设计这么 “绕”。</p>
+<h4 id="错误方式"><a href="#错误方式" class="headerlink" title="错误方式"></a>错误方式</h4><ul>
+<li>陷入细节，不看全局：<strong>我还没弄清楚森林长啥样，就盯着叶子看</strong> ，看不到全貌和整体设计思路。所以阅读源码学习的时候不要一开始就进入细节，而是宏观看待整体架构设计思想，模块之间的关系。</li>
+<li>还没学会用就研究如何设计：首先基本上框架都运用了设计模式，我们最起码也要了解常用的设计模式，即使是“背”，也得了然于胸。在学习一门技术，我推荐先看官方文档，看看有哪些模块、整体设计思想。然后下载示例跑一遍，最后才是看源码。</li>
+<li>看源码深究细节：到了看具体某个模块源码的时候也要下意识的不要去深入细节，重要的是学习设计思路，而不是具体一个方法实现逻辑。除非自己要基于源码做二次开发。</li>
+</ul>
+<h4 id="正确方式"><a href="#正确方式" class="headerlink" title="正确方式"></a>正确方式</h4><ul>
+<li>定焦原则：抓主线（抓住一个核心流程去分析，不要漫无目的的到处阅读）。</li>
+<li>宏观思维：从全局的视角去看待，上帝视角理出主要核心架构设计，先森林后树叶。切勿不要试图去搞明白每一行代码。</li>
+<li>断点：合理运用调用栈（观察调用过程上下文）。</li>
+</ul>
+<h3 id="带着目标去学"><a href="#带着目标去学" class="headerlink" title="带着目标去学"></a>带着目标去学</h3><p>比如某些知识点是面试的热点，那学习目标就是彻底理解和掌握它，当被问到相关问题时，你的回答能够使得面试官对你刮目相看，有时候往往凭着某一个亮点就能影响最后的录用结果。</p>
+<p>又或者接到一个稍微复杂的需求，<strong>学习从优秀源码中借鉴设计思路与优化技巧。</strong></p>
+<p><strong>最后就是动手实践</strong>，将所学运用在工作项目中。只有动手实践才会让我们对技术有最直观的感受。有时候我们听别人讲经验和理论，感觉似乎懂了，但是过一段时间便又忘记了。</p>
+<h2 id="实际场景运用"><a href="#实际场景运用" class="headerlink" title="实际场景运用"></a>实际场景运用</h2><p>简单的分析了 Tomcat 整体架构设计，从 【连接器】 到 【容器】，并且分别细说了一些组件的设计思想以及设计模式。接下来就是如何学以致用，借鉴优雅的设计运用到实际工作开发中。<strong>学习，从模仿开始。</strong></p>
+<h3 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h3><p>在工作中，有这么一个需求，用户可以输入一些信息并可以选择查验该企业的 【工商信息】、【司法信息】、【中登情况】等如下如所示的一个或者多个模块，而且模块之间还有一些公共的东西是要各个模块复用。</p>
+<p>这里就像一个请求，会被多个模块去处理。所以每个查询模块我们可以抽象为 <strong>处理阀门</strong>，使用一个 List 将这些 阀门保存起来，这样新增模块我们只需要新增一个<strong>阀门</strong>即可，实现了<strong>开闭原则</strong>，<strong>同时将一堆查验的代码解耦到不同的具体阀门中</strong>，使用抽象类提取 “<strong>不变的</strong>”功能。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="58f80e12c2dd2b9abd20c16b832fd4b4.webp" title="img" data-fancybox="images"><img src="58f80e12c2dd2b9abd20c16b832fd4b4.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p>具体示例代码如下所示：</p>
+<p>首先抽象我们的处理阀门， <code>NetCheckDTO</code>是请求信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 责任链模式：处理每个模块阀门</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Valve</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 调用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> netCheckDTO</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">invoke</span><span class="params">(NetCheckDTO netCheckDTO)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义抽象基类，复用代码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractCheckValve</span> <span class="keyword">implements</span> <span class="title">Valve</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> AnalysisReportLogDO <span class="title">getLatestHistoryData</span><span class="params">(NetCheckDTO netCheckDTO, NetCheckDataTypeEnum checkDataTypeEnum)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 获取历史记录，省略代码逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取查验数据源配置</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">getModuleSource</span><span class="params">(String querySource, ModuleEnum moduleEnum)</span></span>&#123;</span><br><span class="line">       <span class="comment">// 省略代码逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义具体每个模块处理的业务逻辑，比如 【百度负面新闻】对应的处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaiduNegativeValve</span> <span class="keyword">extends</span> <span class="title">AbstractCheckValve</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invoke</span><span class="params">(NetCheckDTO netCheckDTO)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后就是管理用户选择要查验的模块，我们通过 List 保存。用于触发所需要的查验模块</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NetCheckService</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 注入所有的阀门</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Map valveMap;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 发送查验请求</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> netCheckDTO</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Async</span>(<span class="string">"asyncExecutor"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendCheckRequest</span><span class="params">(NetCheckDTO netCheckDTO)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 用于保存客户选择处理的模块阀门</span></span><br><span class="line">        List valves = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        CheckModuleConfigDTO checkModuleConfig = netCheckDTO.getCheckModuleConfig();</span><br><span class="line">        <span class="comment">// 将用户选择查验的模块添加到 阀门链条中</span></span><br><span class="line">        <span class="keyword">if</span> (checkModuleConfig.getBaiduNegative()) &#123;</span><br><span class="line">            valves.add(valveMap.get(<span class="string">"baiduNegativeValve"</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 省略部分代码.......</span></span><br><span class="line">        <span class="keyword">if</span> (CollectionUtils.isEmpty(valves)) &#123;</span><br><span class="line">            log.info(<span class="string">"网查查验模块为空，没有需要查验的任务"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 触发处理</span></span><br><span class="line">        valves.forEach(valve -&gt; valve.invoke(netCheckDTO));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h3><p>需求是这样的，可根据客户录入的财报 excel 数据或者企业名称执行财报分析。</p>
+<p>对于非上市的则解析 excel -&gt; 校验数据是否合法-&gt;执行计算。</p>
+<p>上市企业：判断名称是否存在 ，不存在则发送邮件并中止计算-&gt; 从数据库拉取财报数据，初始化查验日志、生成一条报告记录，触发计算-&gt; 根据失败与成功修改任务状态 。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="23cf73882200a0622108b396eb8710c3.webp" title="img" data-fancybox="images"><img src="23cf73882200a0622108b396eb8710c3.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p>重要的 ”变“ 与 ”不变“，</p>
+<ul>
+<li><strong>不变</strong>的是整个流程是<strong>初始化查验日志、初始化一条报告</strong>、<strong>前期校验数据</strong>（若是上市公司校验不通过还需要构建邮件数据并发送）、从不同来源拉取财报数据并且适配通用数据、然后触发计算，任务异常与成功都需要修改状态。</li>
+<li><strong>变化</strong>的是上市与非上市校验规则不一样，获取财报数据方式不一样，两种方式的财报数据需要适配</li>
+</ul>
+<p>整个算法流程是固定的模板，但是需要将<strong>算法内部变化的部分</strong>具体实现延迟到不同子类实现，这正是模板方法模式的最佳场景。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractAnalysisTemplate</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 提交财报分析模板方法，定义骨架流程</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> reportAnalysisRequest</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> FinancialAnalysisResultDTO <span class="title">doProcess</span><span class="params">(FinancialReportAnalysisRequest reportAnalysisRequest)</span> </span>&#123;</span><br><span class="line">        FinancialAnalysisResultDTO analysisDTO = <span class="keyword">new</span> FinancialAnalysisResultDTO();</span><br><span class="line">  <span class="comment">// 抽象方法：提交查验的合法校验</span></span><br><span class="line">        <span class="keyword">boolean</span> prepareValidate = prepareValidate(reportAnalysisRequest, analysisDTO);</span><br><span class="line">        log.info(<span class="string">"prepareValidate 校验结果 = &#123;&#125; "</span>, prepareValidate);</span><br><span class="line">        <span class="keyword">if</span> (!prepareValidate) &#123;</span><br><span class="line">   <span class="comment">// 抽象方法：构建通知邮件所需要的数据</span></span><br><span class="line">            buildEmailData(analysisDTO);</span><br><span class="line">            log.info(<span class="string">"构建邮件信息，data = &#123;&#125;"</span>, JSON.toJSONString(analysisDTO));</span><br><span class="line">            <span class="keyword">return</span> analysisDTO;</span><br><span class="line">        &#125;</span><br><span class="line">        String reportNo = FINANCIAL_REPORT_NO_PREFIX + reportAnalysisRequest.getUserId() + SerialNumGenerator.getFixLenthSerialNumber();</span><br><span class="line">        <span class="comment">// 生成分析日志</span></span><br><span class="line">        initFinancialAnalysisLog(reportAnalysisRequest, reportNo);</span><br><span class="line">  <span class="comment">// 生成分析记录</span></span><br><span class="line">        initAnalysisReport(reportAnalysisRequest, reportNo);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 抽象方法：拉取财报数据，不同子类实现</span></span><br><span class="line">            FinancialDataDTO financialData = pullFinancialData(reportAnalysisRequest);</span><br><span class="line">            log.info(<span class="string">"拉取财报数据完成, 准备执行计算"</span>);</span><br><span class="line">            <span class="comment">// 测算指标</span></span><br><span class="line">            financialCalcContext.calc(reportAnalysisRequest, financialData, reportNo);</span><br><span class="line">   <span class="comment">// 设置分析日志为成功</span></span><br><span class="line">            successCalc(reportNo);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            log.error(<span class="string">"财报计算子任务出现异常"</span>, e);</span><br><span class="line">   <span class="comment">// 设置分析日志失败</span></span><br><span class="line">            failCalc(reportNo);</span><br><span class="line">            <span class="keyword">throw</span> e;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> analysisDTO;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后新建两个子类继承该模板，并实现抽象方法。这样就将上市与非上市两种类型的处理逻辑解耦，同时又复用了代码。</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>需求是这样，要做一个万能识别银行流水的 excel 接口，假设标准流水包含【交易时间、收入、支出、交易余额、付款人账号、付款人名字、收款人名称、收款人账号】等字段。现在我们解析出来每个必要字段所在 excel 表头的下标。但是流水有多种情况：</p>
+<ol>
+<li>一种就是包含所有标准字段。</li>
+<li>收入、支出下标是同一列，通过正负来区分收入与支出。</li>
+<li>收入与支出是同一列，有一个交易类型的字段来区分。</li>
+<li>特殊银行的特殊处理。</li>
+</ol>
+<p>也就是我们要<strong>根据解析对应的下标找到对应的处理逻辑算法</strong>，我们可能在一个方法里面写超多 <code>if else</code> 的代码，整个流水处理都偶合在一起，假如未来再来一种新的流水类型，还要继续改老代码。最后可能出现 “又臭又长，难以维护” 的代码复杂度。</p>
+<p>这个时候我们可以用到<strong>策略模式</strong>，<strong>将不同模板的流水使用不同的处理器处理，根据模板找到对应的策略算法去处理</strong>。即使未来再加一种类型，我们只要新加一种处理器即可，高内聚低耦合，且可拓展。</p>
+<figure class="image-box">
+                <a rel=Tomcat架构原理解析到架构设计借鉴 href="bc69c1f573168ded681da5bc39642a57.webp" title="img" data-fancybox="images"><img src="bc69c1f573168ded681da5bc39642a57.webp" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p>定义处理器接口，不同处理器去实现处理逻辑。将所有的处理器注入到 <code>BankFlowDataHandler</code> 的<code>data_processor_map</code>中，根据不同的场景取出对已经的处理器处理流水。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DataProcessor</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理流水数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bankFlowTemplateDO 流水下标数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> row</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">BankTransactionFlowDO <span class="title">doProcess</span><span class="params">(BankFlowTemplateDO bankFlowTemplateDO, List row)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否支持处理该模板,不同类型的流水策略根据模板数据判断是否支持解析</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isSupport</span><span class="params">(BankFlowTemplateDO bankFlowTemplateDO)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理器的上下文</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BankFlowDataContext</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 将所有处理器注入到 map 中</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> List processors;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 找对对应的处理器处理流水</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">process</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         DataProcessor processor = getProcessor(bankFlowTemplateDO);</span><br><span class="line">        <span class="keyword">for</span>(DataProcessor processor ：processors) &#123;</span><br><span class="line">           <span class="keyword">if</span> (processor.isSupport(bankFlowTemplateDO)) &#123;</span><br><span class="line">             <span class="comment">// row 就是一行流水数据</span></span><br><span class="line">           processor.doProcess(bankFlowTemplateDO, row);</span><br><span class="line">             <span class="keyword">break</span>;</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>定义默认处理器，处理正常模板，新增模板只要新增处理器实现 <code>DataProcessor</code>即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 默认处理器：正对规范流水模板</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span>(<span class="string">"defaultDataProcessor"</span>)</span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultDataProcessor</span> <span class="keyword">implements</span> <span class="title">DataProcessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> BankTransactionFlowDO <span class="title">doProcess</span><span class="params">(BankFlowTemplateDO bankFlowTemplateDO)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 省略处理逻辑细节</span></span><br><span class="line">        <span class="keyword">return</span> bankTransactionFlowDO;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">strategy</span><span class="params">(BankFlowTemplateDO bankFlowTemplateDO)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// 省略判断是否支持解析该流水</span></span><br><span class="line">      <span class="keyword">boolean</span> isDefault = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> isDefault;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过策略模式，我们将不同处理逻辑分配到不同的处理类中，这样完全解耦，便于拓展。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2022-02-08T02:32:05.699Z" itemprop="dateUpdated">2022-02-08 10:32:05</time>
+</span><br>
+
+
+        
+        转载自：<a href="https://jishuin.proginn.com/p/763bfbd29294">https://jishuin.proginn.com/p/763bfbd29294</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2021/12/06/tomcat-architecture/&title=《Tomcat架构原理解析到架构设计借鉴》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2021/12/06/tomcat-architecture/&title=《Tomcat架构原理解析到架构设计借鉴》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2021/12/08/kafka-notes/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">消息队列| kafka中间件原理 &amp;&amp; 知识点</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2021/12/01/reverse-integer/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">整数反转 | 数学 | 当前值除以10与上一个值比较，判断是否溢出（java）</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Tomcat-架构原理解析到架构设计借鉴"><span class="post-toc-number">1.</span> <span class="post-toc-text">Tomcat 架构原理解析到架构设计借鉴</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#学习目的"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">学习目的</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#掌握-Tomcat-架构设计与原理提高内功"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">掌握 Tomcat 架构设计与原理提高内功</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#宏观理解一个请求如何与-Spring-联系起来"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">宏观理解一个请求如何与 Spring 联系起来</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#提升自己的系统设计能力"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">提升自己的系统设计能力</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#整体架构设计"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">整体架构设计</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Adapter-组件"><span class="post-toc-number">1.2.0.1.</span> <span class="post-toc-text">Adapter 组件</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#容器"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">容器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#请求定位-Servlet-的过程"><span class="post-toc-number">1.2.1.1.</span> <span class="post-toc-text">请求定位 Servlet 的过程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Lifecycle-生命周期"><span class="post-toc-number">1.2.1.2.</span> <span class="post-toc-text">Lifecycle 生命周期</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Tomcat-为何打破双亲委派机制"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">Tomcat 为何打破双亲委派机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#双亲委派"><span class="post-toc-number">1.2.2.1.</span> <span class="post-toc-text">双亲委派</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Tomcat-的类加载器"><span class="post-toc-number">1.2.2.2.</span> <span class="post-toc-text">Tomcat 的类加载器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Tomcat-类加载器层次"><span class="post-toc-number">1.2.2.3.</span> <span class="post-toc-text">Tomcat 类加载器层次</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#整体架构设计解析收获总结"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">整体架构设计解析收获总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#连接器"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">连接器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#容器-1"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">容器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类加载器"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">类加载器</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何阅读源码持续学习"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">如何阅读源码持续学习</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#如何阅读"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">如何阅读</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#错误方式"><span class="post-toc-number">1.4.1.1.</span> <span class="post-toc-text">错误方式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#正确方式"><span class="post-toc-number">1.4.1.2.</span> <span class="post-toc-text">正确方式</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#带着目标去学"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">带着目标去学</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实际场景运用"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">实际场景运用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#责任链模式"><span class="post-toc-number">1.5.1.</span> <span class="post-toc-text">责任链模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模板方法模式"><span class="post-toc-number">1.5.2.</span> <span class="post-toc-text">模板方法模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#策略模式"><span class="post-toc-number">1.5.3.</span> <span class="post-toc-text">策略模式</span></a></li></ol></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2022
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2021/12/06/tomcat-architecture/&title=《Tomcat架构原理解析到架构设计借鉴》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2021/12/06/tomcat-architecture/&title=《Tomcat架构原理解析到架构设计借鉴》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aQQ7CMAxE0d7/0mWLRBvNeFqk2D8rhCqS14WxYx+HvM6v9fuN/v3dL9/t8vCCAQPGtoxzudYbrLdcY9x9756BAQPGHIYSCpXgq0fC9TP62WDAgAEjSezcF1HbFwYMGDCUFNBNNGsvAgYMGDCUYlJJ5hLkn2pxGDBgbMjQt///51f6GzBgwNiKcZorKThrIVU6FQwYMFoz9ABXa2rqzUt32AIGDBiTGclBa8Ne+UgHDBgwejPctmJtJEIfs9AHLy4yXBgwYDRlrIOaHv6UFkItQBstTBgwYDRlFHPJOIlUjqgE6Iv/DRgwYLRj6IMU+s8lo10KTHqvMGDAaMdIeO6xkqs9I8+FAQNGI8ZTV2zvjWsYt4YwYMBoynBL0LzZqVyl1cI9DBgwujLc1qNSuOpF7CvDFjBgwGjN0K+03DBa66wafwAwYMBozdADojuKkTQs9VcJAwaMOQw3ZdRLzVqYTkYxYMCAMY3hbuYGzfza7tCjMgwYMDZnPHuUWtHrjohdPAMDBowxjNolmt5mcBNKo2EAAwaMYQx39MEdyHDbnFJwhwEDRlPGaa6jtNympk2FAQNGa4Z7FKXcVVJA9wIuujuEAQNGC4beBqhd7ieDFHozFQYMGBMYeeBzQ21SxBrTbTBgwBjPyL9J2gmPBVwYMGC0Y7iFbq1tYL8CGDBgDGDo46q1Qa5aafrKdRsMGDA2ZCRtSLdJkA/IRk1NGDBg7Mf4AMAAS6m0yHB7AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+    
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+   <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/plugins/fireworks.js?v=1.4.4"></script>
+
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ab84488547116c4d03e6764e6ced5433";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="https://cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="60" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+</body>
+</html>
