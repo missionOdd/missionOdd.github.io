@@ -211,6 +211,13 @@
             </li>
         
             <li class="">
+              <a href="https://leetcode-cn.com/u/missionary/" target="_blank">
+                <i class="icon icon-lg icon-gg-circle"></i>
+                LEETCODE
+              </a>
+            </li>
+        
+            <li class="">
               <a href="http://weibo.com/missionodd" target="_blank">
                 <i class="icon icon-lg icon-weibo"></i>
                 WEIBO
@@ -283,12 +290,12 @@
         <ul class="post-list">
         
             <li class="post-list-item fade  animated bounce">
-                <article id="post-kafka-notes"
+                <article id="post-sliding-window-maximum"
   class="article-card article-type-post" itemprop="blogPost">
   
         
 <div class="item-thumb">
-    <a class="thumb-link" href="/2021/12/08/kafka-notes/"></a>
+    <a class="thumb-link" href="/2022/02/02/sliding-window-maximum/"></a>
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
@@ -298,7 +305,7 @@
 
   
     <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/12/08/kafka-notes/">消息队列| kafka中间件原理 &amp;&amp; 知识点</a>
+      <a class="post-title-link" href="/2022/02/02/sliding-window-maximum/">双端递减队列 | 滑动窗口最大值</a>
     </h3>
   
 
@@ -311,22 +318,22 @@
     
     
     <div class="post-meta">
-        <time class="post-time" title="2021-12-08 13:50:37" datetime="2021-12-08T05:50:37.000Z"  itemprop="datePublished">2021-12-08</time>
+        <time class="post-time" title="2022-02-02 12:30:37" datetime="2022-02-02T04:30:37.000Z"  itemprop="datePublished">2022-02-02</time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/中间件/">中间件</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/中间件/技术/">技术</a></li></ul></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
 
 
 
         
 
         
-<span class="post-comments-counter" id="/2021/12/08/kafka-notes/">
+<span class="post-comments-counter" id="/2022/02/02/sliding-window-maximum/">
     <span class="post-meta-item-icon">
         <i class="icon icon-comment-o"></i>
     </span>
     
-    <a href="/2021/12/08/kafka-notes/#gitment-display-button" onclick="ShowGitment()">
+    <a href="/2022/02/02/sliding-window-maximum/#gitment-display-button" onclick="ShowGitment()">
         <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
     </a>
 </span>
@@ -335,8 +342,8 @@
 
     <span class="leancloud-comment">
         <i class="icon icon-comment-o"></i>
-        <a href="/2021/12/08/kafka-notes/#comment">
-            <span class="valine-comment-count" data-xid="/2021/12/08/kafka-notes/"></span>
+        <a href="/2022/02/02/sliding-window-maximum/#comment">
+            <span class="valine-comment-count" data-xid="/2022/02/02/sliding-window-maximum/"></span>
         </a>
     </span>
 
@@ -348,15 +355,17 @@
     <div class="post-content" id="post-content" itemprop="postContent">
     
     
-        消息队列首先了解一下使用分布式消息队列的优点，总结主要包括以下几个方面：
+        the leetcode link
 
-解耦 tags: None
-在项目启动之初来预测将来项目会碰到什么需求，是极其困难的。消息系统在处理过程中间插入了一个隐含的、基于数据的接口层，两边的处理过程都要实现这一接口。这允许你独立的扩展或修改两边的处理过程，只要确保它们遵守同样的接口约束。
+给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
 
-冗余
-有些情况下，处理数据的过程会失败。除非数据被持久化，否则将造...
+
+返回 滑动窗口中的最大值 。
+
+
+示例 1：输入：nums = [1,3,-1,-3,5,3,6,7], k = 3输出：[3,3,5,5,6,7]解释：滑动窗口的位置            ...
     
-    <a href="/2021/12/08/kafka-notes/" class="post-more waves-effect waves-button">
+    <a href="/2022/02/02/sliding-window-maximum/" class="post-more waves-effect waves-button">
         more
     </a>
     </div>
@@ -364,7 +373,7 @@
 
 <div class="post-footer">
     
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/">kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息队列/">消息队列</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双端队列/">双端队列</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/滑动窗口/">滑动窗口</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
 </div>
 
@@ -372,12 +381,12 @@
             </li>
         
             <li class="post-list-item fade  animated bounce">
-                <article id="post-tomcat-architecture"
+                <article id="post-shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof"
   class="article-card article-type-post" itemprop="blogPost">
   
         
 <div class="item-thumb">
-    <a class="thumb-link" href="/2021/12/06/tomcat-architecture/"></a>
+    <a class="thumb-link" href="/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/"></a>
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
@@ -387,7 +396,7 @@
 
   
     <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/12/06/tomcat-architecture/">Tomcat架构原理解析到架构设计借鉴</a>
+      <a class="post-title-link" href="/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/">位运算 | 2bit标识3状态 | 有限状态自动机</a>
     </h3>
   
 
@@ -400,22 +409,22 @@
     
     
     <div class="post-meta">
-        <time class="post-time" title="2021-12-06 13:50:37" datetime="2021-12-06T05:50:37.000Z"  itemprop="datePublished">2021-12-06</time>
+        <time class="post-time" title="2022-02-02 12:30:37" datetime="2022-02-02T04:30:37.000Z"  itemprop="datePublished">2022-02-02</time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
 
 
 
         
 
         
-<span class="post-comments-counter" id="/2021/12/06/tomcat-architecture/">
+<span class="post-comments-counter" id="/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/">
     <span class="post-meta-item-icon">
         <i class="icon icon-comment-o"></i>
     </span>
     
-    <a href="/2021/12/06/tomcat-architecture/#gitment-display-button" onclick="ShowGitment()">
+    <a href="/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/#gitment-display-button" onclick="ShowGitment()">
         <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
     </a>
 </span>
@@ -424,8 +433,8 @@
 
     <span class="leancloud-comment">
         <i class="icon icon-comment-o"></i>
-        <a href="/2021/12/06/tomcat-architecture/#comment">
-            <span class="valine-comment-count" data-xid="/2021/12/06/tomcat-architecture/"></span>
+        <a href="/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/#comment">
+            <span class="valine-comment-count" data-xid="/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/"></span>
         </a>
     </span>
 
@@ -437,13 +446,20 @@
     <div class="post-content" id="post-content" itemprop="postContent">
     
     
-        Tomcat 架构原理解析到架构设计借鉴
-Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快』的时代，Tomcat 作为 Java Web 开发必备的工具似乎变成了『熟悉的陌生人』，难道说如今就没有必要深入学习它了么？学习它我们又有什么收获呢？
+        the leetcode link
 
-静下心来，细细品味经典的开源作品 。提升我们的「内功」，具体来说就是学习大牛们如何设计、架构一个中间件系统，并且让这些经验为我所用。
-...
+剑指 Offer 56 - II. 数组中数字出现的次数 II在一个数组 nums 中除一个数字只出现一次之外，其他数字都出现了三次。请找出那个只出现一次的数字。
+
+
+示例 1：输入：nums = [3,4,3,3]输出：4
+
+
+示例 2：输入：nums = [9,1,7,9,7,9,7]输出：1
+
+
+限制：1 &lt;= nums.length &lt...
     
-    <a href="/2021/12/06/tomcat-architecture/" class="post-more waves-effect waves-button">
+    <a href="/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/" class="post-more waves-effect waves-button">
         more
     </a>
     </div>
@@ -451,7 +467,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
 <div class="post-footer">
     
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tomcat/">tomcat</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/位运算/">位运算</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
 </div>
 
@@ -459,12 +475,12 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
             </li>
         
             <li class="post-list-item fade  animated bounce">
-                <article id="post-reverse-integer"
+                <article id="post-zhan-de-ya-ru-dan-chu-xu-lie-lcof"
   class="article-card article-type-post" itemprop="blogPost">
   
         
 <div class="item-thumb">
-    <a class="thumb-link" href="/2021/12/01/reverse-integer/"></a>
+    <a class="thumb-link" href="/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/"></a>
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
@@ -474,7 +490,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
   
     <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/12/01/reverse-integer/">整数反转 | 数学 | 当前值除以10与上一个值比较，判断是否溢出（java）</a>
+      <a class="post-title-link" href="/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/">设计栈 |  模拟栈的压入、弹出序列</a>
     </h3>
   
 
@@ -487,7 +503,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
     
     
     <div class="post-meta">
-        <time class="post-time" title="2021-12-01 15:50:37" datetime="2021-12-01T07:50:37.000Z"  itemprop="datePublished">2021-12-01</time>
+        <time class="post-time" title="2022-01-13 12:30:37" datetime="2022-01-13T04:30:37.000Z"  itemprop="datePublished">2022-01-13</time>
 
         
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
@@ -497,12 +513,12 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
         
 
         
-<span class="post-comments-counter" id="/2021/12/01/reverse-integer/">
+<span class="post-comments-counter" id="/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/">
     <span class="post-meta-item-icon">
         <i class="icon icon-comment-o"></i>
     </span>
     
-    <a href="/2021/12/01/reverse-integer/#gitment-display-button" onclick="ShowGitment()">
+    <a href="/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/#gitment-display-button" onclick="ShowGitment()">
         <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
     </a>
 </span>
@@ -511,8 +527,8 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
     <span class="leancloud-comment">
         <i class="icon icon-comment-o"></i>
-        <a href="/2021/12/01/reverse-integer/#comment">
-            <span class="valine-comment-count" data-xid="/2021/12/01/reverse-integer/"></span>
+        <a href="/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/#comment">
+            <span class="valine-comment-count" data-xid="/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/"></span>
         </a>
     </span>
 
@@ -524,12 +540,14 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
     <div class="post-content" id="post-content" itemprop="postContent">
     
     
-        题目the leetcode link
+        the leetcode link
 
-给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。如果反转后整数超过 32 位的有符号整数的范围 [−231,  231 − 1] ，就返回 0。假设环境不允许存储 64 位整数（有符号或无符号）。
-示例 1：输入：x = 123输出：321示例 2：输入：x = -123输出：-321示例 3：输入：x = 120输出：2...
+剑指 Offer 31. 栈的压入、弹出序列输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如，序列 {1,2,3,4,5} 是某栈的压栈序列，序列 {4,5,3,2,1} 是该压栈序列对应的一个弹出序列，但 {4,3,5,1,2} 就不可能是该压栈序列的弹出序列。
+
+
+示例 1：输入：...
     
-    <a href="/2021/12/01/reverse-integer/" class="post-more waves-effect waves-button">
+    <a href="/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/" class="post-more waves-effect waves-button">
         more
     </a>
     </div>
@@ -537,7 +555,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
 <div class="post-footer">
     
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数学/">数学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/栈/">栈</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模拟/">模拟</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
 </div>
 
@@ -545,12 +563,12 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
             </li>
         
             <li class="post-list-item fade  animated bounce">
-                <article id="post-minimum-window-substring"
+                <article id="post-jian-sheng-zi-lcof"
   class="article-card article-type-post" itemprop="blogPost">
   
         
 <div class="item-thumb">
-    <a class="thumb-link" href="/2021/11/15/minimum-window-substring/"></a>
+    <a class="thumb-link" href="/2022/01/12/jian-sheng-zi-lcof/"></a>
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
@@ -560,7 +578,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
   
     <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/11/15/minimum-window-substring/">最小覆盖子串 | 哈希表+队列+滑动窗口</a>
+      <a class="post-title-link" href="/2022/01/12/jian-sheng-zi-lcof/">完全背包思路| 剪绳子 （java）</a>
     </h3>
   
 
@@ -573,7 +591,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
     
     
     <div class="post-meta">
-        <time class="post-time" title="2021-11-15 10:50:37" datetime="2021-11-15T02:50:37.000Z"  itemprop="datePublished">2021-11-15</time>
+        <time class="post-time" title="2022-01-12 12:30:37" datetime="2022-01-12T04:30:37.000Z"  itemprop="datePublished">2022-01-12</time>
 
         
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
@@ -583,12 +601,12 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
         
 
         
-<span class="post-comments-counter" id="/2021/11/15/minimum-window-substring/">
+<span class="post-comments-counter" id="/2022/01/12/jian-sheng-zi-lcof/">
     <span class="post-meta-item-icon">
         <i class="icon icon-comment-o"></i>
     </span>
     
-    <a href="/2021/11/15/minimum-window-substring/#gitment-display-button" onclick="ShowGitment()">
+    <a href="/2022/01/12/jian-sheng-zi-lcof/#gitment-display-button" onclick="ShowGitment()">
         <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
     </a>
 </span>
@@ -597,8 +615,186 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
     <span class="leancloud-comment">
         <i class="icon icon-comment-o"></i>
-        <a href="/2021/11/15/minimum-window-substring/#comment">
-            <span class="valine-comment-count" data-xid="/2021/11/15/minimum-window-substring/"></span>
+        <a href="/2022/01/12/jian-sheng-zi-lcof/#comment">
+            <span class="valine-comment-count" data-xid="/2022/01/12/jian-sheng-zi-lcof/"></span>
+        </a>
+    </span>
+
+
+        
+        
+    </div>
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+    
+    
+        the leetcode link
+
+剑指 Offer 14- I. 剪绳子给你一根长度为 n 的绳子，请把绳子剪成整数长度的 m 段（m、n都是整数，n&gt;1并且m&gt;1），每段绳子的长度记为 k[0],k[1]…k[m-1] 。请问 k[0]k[1]…*k[m-1] 可能的最大乘积是多少？例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。...
+    
+    <a href="/2022/01/12/jian-sheng-zi-lcof/" class="post-more waves-effect waves-button">
+        more
+    </a>
+    </div>
+</article>
+
+<div class="post-footer">
+    
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/完全背包/">完全背包</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+</div>
+
+
+            </li>
+        
+            <li class="post-list-item fade  animated bounce">
+                <article id="post-partition-equal-subset-sum"
+  class="article-card article-type-post" itemprop="blogPost">
+  
+        
+<div class="item-thumb">
+    <a class="thumb-link" href="/2022/01/09/partition-equal-subset-sum/"></a>
+    <div class="thumb-hover">
+        <span class="icon icon-eye"></span>
+    </div>
+    <img src="/img/thumb/6.jpg" alt="图片路径不正确">
+    
+
+
+  
+    <h3 class="post-title ab-title" itemprop="name">
+      <a class="post-title-link" href="/2022/01/09/partition-equal-subset-sum/">01背包 | 分割等和子集</a>
+    </h3>
+  
+
+
+
+</div>
+
+        
+    
+    
+    
+    <div class="post-meta">
+        <time class="post-time" title="2022-01-09 12:30:37" datetime="2022-01-09T04:30:37.000Z"  itemprop="datePublished">2022-01-09</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+        
+
+        
+<span class="post-comments-counter" id="/2022/01/09/partition-equal-subset-sum/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/01/09/partition-equal-subset-sum/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/01/09/partition-equal-subset-sum/#comment">
+            <span class="valine-comment-count" data-xid="/2022/01/09/partition-equal-subset-sum/"></span>
+        </a>
+    </span>
+
+
+        
+        
+    </div>
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+    
+    
+        the leetcode link
+
+
+分割等和子集给你一个 只包含正整数 的 非空 数组 nums 。请你判断是否可以将这个数组分割成两个子集，使得两个子集的元素和相等。
+
+
+
+示例 1：输入：nums = [1,5,11,5]输出：true解释：数组可以分割成 [1, 5, 5] 和 [11] 。
+
+
+示例 2：输入：nums = [1,2,3,5]输出：false解释：数组不能分割成两...
+    
+    <a href="/2022/01/09/partition-equal-subset-sum/" class="post-more waves-effect waves-button">
+        more
+    </a>
+    </div>
+</article>
+
+<div class="post-footer">
+    
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/01背包/">01背包</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+</div>
+
+
+            </li>
+        
+            <li class="post-list-item fade  animated bounce">
+                <article id="post-distinct-subsequences"
+  class="article-card article-type-post" itemprop="blogPost">
+  
+        
+<div class="item-thumb">
+    <a class="thumb-link" href="/2022/01/05/distinct-subsequences/"></a>
+    <div class="thumb-hover">
+        <span class="icon icon-eye"></span>
+    </div>
+    <img src="/img/thumb/5.jpg" alt="图片路径不正确">
+    
+
+
+  
+    <h3 class="post-title ab-title" itemprop="name">
+      <a class="post-title-link" href="/2022/01/05/distinct-subsequences/">动态规划 |  双串题 | 不同的子序列</a>
+    </h3>
+  
+
+
+
+</div>
+
+        
+    
+    
+    
+    <div class="post-meta">
+        <time class="post-time" title="2022-01-05 15:50:37" datetime="2022-01-05T07:50:37.000Z"  itemprop="datePublished">2022-01-05</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+        
+
+        
+<span class="post-comments-counter" id="/2022/01/05/distinct-subsequences/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/01/05/distinct-subsequences/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/01/05/distinct-subsequences/#comment">
+            <span class="valine-comment-count" data-xid="/2022/01/05/distinct-subsequences/"></span>
         </a>
     </span>
 
@@ -612,11 +808,283 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
     
         题目the leetcode link
 
-给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 “” 。
-注意：对于 t 中重复字符，我们寻找的子字符串中该字符数量必须不少于 t 中该字符数量。如果 s 中存在这样的子串，我们保证它是唯一的答案。
-示例 1：输入：s = “ADOBECODEBANC”, ...
+
+不同的子序列给定一个字符串 s 和一个字符串 t ，计算在 s 的子序列中 t 出现的个数。
+
+字符串的一个 子序列 是指，通过删除一些（也可以不删除）字符且不干扰剩余字符相对位置所组成的新字符串。（例如，”ACE” 是 “ABCDE” 的一个子序列，而 “AEC” 不是）
+题目数据保证答案符合 32 位带符号整数范围。
+
+
+示例 1：输入：s =...
     
-    <a href="/2021/11/15/minimum-window-substring/" class="post-more waves-effect waves-button">
+    <a href="/2022/01/05/distinct-subsequences/" class="post-more waves-effect waves-button">
+        more
+    </a>
+    </div>
+</article>
+
+<div class="post-footer">
+    
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+</div>
+
+
+            </li>
+        
+            <li class="post-list-item fade  animated bounce">
+                <article id="post-longest-happy-string"
+  class="article-card article-type-post" itemprop="blogPost">
+  
+        
+<div class="item-thumb">
+    <a class="thumb-link" href="/2022/01/03/longest-happy-string/"></a>
+    <div class="thumb-hover">
+        <span class="icon icon-eye"></span>
+    </div>
+    <img src="/img/thumb/4.jpg" alt="图片路径不正确">
+    
+
+
+  
+    <h3 class="post-title ab-title" itemprop="name">
+      <a class="post-title-link" href="/2022/01/03/longest-happy-string/">贪心| 大根堆 | 最长快乐字符串 | 取合法的剩余最多的字符进行拼接</a>
+    </h3>
+  
+
+
+
+</div>
+
+        
+    
+    
+    
+    <div class="post-meta">
+        <time class="post-time" title="2022-01-03 15:50:37" datetime="2022-01-03T07:50:37.000Z"  itemprop="datePublished">2022-01-03</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+        
+
+        
+<span class="post-comments-counter" id="/2022/01/03/longest-happy-string/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/01/03/longest-happy-string/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/01/03/longest-happy-string/#comment">
+            <span class="valine-comment-count" data-xid="/2022/01/03/longest-happy-string/"></span>
+        </a>
+    </span>
+
+
+        
+        
+    </div>
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+    
+    
+        解题思路贪心思路：在同一字符相邻小于3的情况下，取剩余最多的字符进行拼接，否则不用第3个字符，取剩余数第二多的字符拼接。步骤：
+
+定义大根堆，目的是进行字符剩余数量的排序
+定义结果字符串
+遍历堆的取出操作，直至堆空
+判断取出字段是否可能组成同一字符相邻出现3个的情况，如果是，则不用第3个字符，取剩余数第二多的字符拼接（注意发生堆空的情况：不存在剩余数第二多的字符）
+如果字符数量大于0，拼接字...
+    
+    <a href="/2022/01/03/longest-happy-string/" class="post-more waves-effect waves-button">
+        more
+    </a>
+    </div>
+</article>
+
+<div class="post-footer">
+    
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/贪心/">贪心</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/队列/">队列</a></li></ul>
+
+</div>
+
+
+            </li>
+        
+            <li class="post-list-item fade  animated bounce">
+                <article id="post-super-egg-drop"
+  class="article-card article-type-post" itemprop="blogPost">
+  
+        
+<div class="item-thumb">
+    <a class="thumb-link" href="/2022/01/03/super-egg-drop/"></a>
+    <div class="thumb-hover">
+        <span class="icon icon-eye"></span>
+    </div>
+    <img src="/img/thumb/3.jpg" alt="图片路径不正确">
+    
+
+
+  
+    <h3 class="post-title ab-title" itemprop="name">
+      <a class="post-title-link" href="/2022/01/03/super-egg-drop/">01背包问题 | 看懂鸡蛋掉落的本质 + 滚动数组优化</a>
+    </h3>
+  
+
+
+
+</div>
+
+        
+    
+    
+    
+    <div class="post-meta">
+        <time class="post-time" title="2022-01-03 15:50:37" datetime="2022-01-03T07:50:37.000Z"  itemprop="datePublished">2022-01-03</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+        
+
+        
+<span class="post-comments-counter" id="/2022/01/03/super-egg-drop/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/01/03/super-egg-drop/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/01/03/super-egg-drop/#comment">
+            <span class="valine-comment-count" data-xid="/2022/01/03/super-egg-drop/"></span>
+        </a>
+    </span>
+
+
+        
+        
+    </div>
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+    
+    
+        题目the leetcode link
+
+
+鸡蛋掉落给你 k 枚相同的鸡蛋，并可以使用一栋从第 1 层到第 n 层共有 n 层楼的建筑。
+
+已知存在楼层 f ，满足 0 &lt;= f &lt;= n ，任何从 高于 f 的楼层落下的鸡蛋都会碎，从 f 楼层或比它低的楼层落下的鸡蛋都不会破。
+每次操作，你可以取一枚没有碎的鸡蛋并把它从任一楼层 x 扔下（满足 1 &lt;= x &lt;= ...
+    
+    <a href="/2022/01/03/super-egg-drop/" class="post-more waves-effect waves-button">
+        more
+    </a>
+    </div>
+</article>
+
+<div class="post-footer">
+    
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/01背包/">01背包</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+</div>
+
+
+            </li>
+        
+            <li class="post-list-item fade  animated bounce">
+                <article id="post-majority-element-ii"
+  class="article-card article-type-post" itemprop="blogPost">
+  
+        
+<div class="item-thumb">
+    <a class="thumb-link" href="/2021/12/14/majority-element-ii/"></a>
+    <div class="thumb-hover">
+        <span class="icon icon-eye"></span>
+    </div>
+    <img src="/img/thumb/2.jpg" alt="图片路径不正确">
+    
+
+
+  
+    <h3 class="post-title ab-title" itemprop="name">
+      <a class="post-title-link" href="/2021/12/14/majority-element-ii/">求众数II （摩尔投票法）用类似俄罗斯方块消除的游戏例子讲解</a>
+    </h3>
+  
+
+
+
+</div>
+
+        
+    
+    
+    
+    <div class="post-meta">
+        <time class="post-time" title="2021-12-14 20:50:37" datetime="2021-12-14T12:50:37.000Z"  itemprop="datePublished">2021-12-14</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+        
+
+        
+<span class="post-comments-counter" id="/2021/12/14/majority-element-ii/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2021/12/14/majority-element-ii/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2021/12/14/majority-element-ii/#comment">
+            <span class="valine-comment-count" data-xid="/2021/12/14/majority-element-ii/"></span>
+        </a>
+    </span>
+
+
+        
+        
+    </div>
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+    
+    
+        题目the leetcode link
+
+求众数 II给定一个大小为 n 的整数数组，找出其中所有出现超过 ⌊ n/3 ⌋ 次的元素。示例 1：
+输入：[3,2,3]输出：[3]示例 2：
+输入：nums = [1]输出：[1]
+示例 3：输入：[1,1,1,3,3,2,2,2]输出：[1,2]
+提示：1 &lt;= nums.length &lt;= 5 * 104-109 &lt;= n...
+    
+    <a href="/2021/12/14/majority-element-ii/" class="post-more waves-effect waves-button">
         more
     </a>
     </div>
@@ -632,449 +1100,12 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
             </li>
         
             <li class="post-list-item fade  animated bounce">
-                <article id="post-sort-colors"
+                <article id="post-kmp-algorithm"
   class="article-card article-type-post" itemprop="blogPost">
   
         
 <div class="item-thumb">
-    <a class="thumb-link" href="/2021/11/13/sort-colors/"></a>
-    <div class="thumb-hover">
-        <span class="icon icon-eye"></span>
-    </div>
-    <img src="/img/thumb/6.jpg" alt="图片路径不正确">
-    
-
-
-  
-    <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/11/13/sort-colors/">颜色分类LeetCode题 | 三指针，2指针循环去重写法改编</a>
-    </h3>
-  
-
-
-
-</div>
-
-        
-    
-    
-    
-    <div class="post-meta">
-        <time class="post-time" title="2021-11-13 12:30:37" datetime="2021-11-13T04:30:37.000Z"  itemprop="datePublished">2021-11-13</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
-
-
-
-        
-
-        
-<span class="post-comments-counter" id="/2021/11/13/sort-colors/">
-    <span class="post-meta-item-icon">
-        <i class="icon icon-comment-o"></i>
-    </span>
-    
-    <a href="/2021/11/13/sort-colors/#gitment-display-button" onclick="ShowGitment()">
-        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
-    </a>
-</span>
-
-
-
-    <span class="leancloud-comment">
-        <i class="icon icon-comment-o"></i>
-        <a href="/2021/11/13/sort-colors/#comment">
-            <span class="valine-comment-count" data-xid="/2021/11/13/sort-colors/"></span>
-        </a>
-    </span>
-
-
-        
-        
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-    
-    
-        题目the leetcode link
-
- 颜色分类给定一个包含红色、白色和蓝色，一共 n 个元素的数组，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。
-此题中，我们使用整数 0、 1 和 2 分别表示红色、白色和蓝色。
-示例 1：输入：nums = [2,0,2,1,1,0]输出：[0,0,1,1,2,2]示例 2：输入：nums = [2,0,1]输出：[0...
-    
-    <a href="/2021/11/13/sort-colors/" class="post-more waves-effect waves-button">
-        more
-    </a>
-    </div>
-</article>
-
-<div class="post-footer">
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/三指针/">三指针</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-
-</div>
-
-
-            </li>
-        
-            <li class="post-list-item fade  animated bounce">
-                <article id="post-rotate-list"
-  class="article-card article-type-post" itemprop="blogPost">
-  
-        
-<div class="item-thumb">
-    <a class="thumb-link" href="/2021/11/12/rotate-list/"></a>
-    <div class="thumb-hover">
-        <span class="icon icon-eye"></span>
-    </div>
-    <img src="/img/thumb/5.jpg" alt="图片路径不正确">
-    
-
-
-  
-    <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/11/12/rotate-list/">旋转链表 | 哈希表存储链表索引，定位查找链表环切断点</a>
-    </h3>
-  
-
-
-
-</div>
-
-        
-    
-    
-    
-    <div class="post-meta">
-        <time class="post-time" title="2021-11-12 15:50:37" datetime="2021-11-12T07:50:37.000Z"  itemprop="datePublished">2021-11-12</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
-
-
-
-        
-
-        
-<span class="post-comments-counter" id="/2021/11/12/rotate-list/">
-    <span class="post-meta-item-icon">
-        <i class="icon icon-comment-o"></i>
-    </span>
-    
-    <a href="/2021/11/12/rotate-list/#gitment-display-button" onclick="ShowGitment()">
-        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
-    </a>
-</span>
-
-
-
-    <span class="leancloud-comment">
-        <i class="icon icon-comment-o"></i>
-        <a href="/2021/11/12/rotate-list/#comment">
-            <span class="valine-comment-count" data-xid="/2021/11/12/rotate-list/"></span>
-        </a>
-    </span>
-
-
-        
-        
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-    
-    
-        题目the leetcode link
-解题思路
-计算链表长度，同时初始化哈希索引
-取余去重
-形成环，链尾指向链头
-定位到翻转后的尾结点
-断链
-返回新链头代码
-
-1234567891011121314151617181920212223242526272829303132333435363738394041/** * Definition for singly-linked list. * ...
-    
-    <a href="/2021/11/12/rotate-list/" class="post-more waves-effect waves-button">
-        more
-    </a>
-    </div>
-</article>
-
-<div class="post-footer">
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/链表/">链表</a></li></ul>
-
-</div>
-
-
-            </li>
-        
-            <li class="post-list-item fade  animated bounce">
-                <article id="post-house-robber-ii"
-  class="article-card article-type-post" itemprop="blogPost">
-  
-        
-<div class="item-thumb">
-    <a class="thumb-link" href="/2021/11/10/house-robber-ii/"></a>
-    <div class="thumb-hover">
-        <span class="icon icon-eye"></span>
-    </div>
-    <img src="/img/thumb/4.jpg" alt="图片路径不正确">
-    
-
-
-  
-    <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/11/10/house-robber-ii/">打家劫舍 II | 动态规划 | 环看作两个队列 （JAVA）</a>
-    </h3>
-  
-
-
-
-</div>
-
-        
-    
-    
-    
-    <div class="post-meta">
-        <time class="post-time" title="2021-11-10 15:50:37" datetime="2021-11-10T07:50:37.000Z"  itemprop="datePublished">2021-11-10</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
-
-
-
-        
-
-        
-<span class="post-comments-counter" id="/2021/11/10/house-robber-ii/">
-    <span class="post-meta-item-icon">
-        <i class="icon icon-comment-o"></i>
-    </span>
-    
-    <a href="/2021/11/10/house-robber-ii/#gitment-display-button" onclick="ShowGitment()">
-        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
-    </a>
-</span>
-
-
-
-    <span class="leancloud-comment">
-        <i class="icon icon-comment-o"></i>
-        <a href="/2021/11/10/house-robber-ii/#comment">
-            <span class="valine-comment-count" data-xid="/2021/11/10/house-robber-ii/"></span>
-        </a>
-    </span>
-
-
-        
-        
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-    
-    
-        题目the leetcode link
-
-打家劫舍 II你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 围成一圈 ，这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警 。
-给定一个代表每个房屋存放金额的非负整数数组，计算你 在不触动警报装置的情况下 ，今晚能够偷窃到...
-    
-    <a href="/2021/11/10/house-robber-ii/" class="post-more waves-effect waves-button">
-        more
-    </a>
-    </div>
-</article>
-
-<div class="post-footer">
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/动态规划/">动态规划</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/环/">环</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/队列/">队列</a></li></ul>
-
-</div>
-
-
-            </li>
-        
-            <li class="post-list-item fade  animated bounce">
-                <article id="post-search-in-rotated-sorted-array"
-  class="article-card article-type-post" itemprop="blogPost">
-  
-        
-<div class="item-thumb">
-    <a class="thumb-link" href="/2021/11/05/search-in-rotated-sorted-array/"></a>
-    <div class="thumb-hover">
-        <span class="icon icon-eye"></span>
-    </div>
-    <img src="/img/thumb/3.jpg" alt="图片路径不正确">
-    
-
-
-  
-    <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/11/05/search-in-rotated-sorted-array/">搜索旋转排序数组 | 二分法</a>
-    </h3>
-  
-
-
-
-</div>
-
-        
-    
-    
-    
-    <div class="post-meta">
-        <time class="post-time" title="2021-11-05 10:50:37" datetime="2021-11-05T02:50:37.000Z"  itemprop="datePublished">2021-11-05</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
-
-
-
-        
-
-        
-<span class="post-comments-counter" id="/2021/11/05/search-in-rotated-sorted-array/">
-    <span class="post-meta-item-icon">
-        <i class="icon icon-comment-o"></i>
-    </span>
-    
-    <a href="/2021/11/05/search-in-rotated-sorted-array/#gitment-display-button" onclick="ShowGitment()">
-        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
-    </a>
-</span>
-
-
-
-    <span class="leancloud-comment">
-        <i class="icon icon-comment-o"></i>
-        <a href="/2021/11/05/search-in-rotated-sorted-array/#comment">
-            <span class="valine-comment-count" data-xid="/2021/11/05/search-in-rotated-sorted-array/"></span>
-        </a>
-    </span>
-
-
-        
-        
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-    
-    
-        题目the leetcode link
-
-搜索旋转排序数组整数数组 nums 按升序排列，数组中的值 互不相同 。
-在传递给函数之前，nums 在预先未知的某个下标 k（0 &lt;= k &lt; nums.length）上进行了 旋转，使数组变为 [nums[k], nums[k+1], …, nums[n-1], nums[0], nums[1], …, nums[k-1]]（下标 从...
-    
-    <a href="/2021/11/05/search-in-rotated-sorted-array/" class="post-more waves-effect waves-button">
-        more
-    </a>
-    </div>
-</article>
-
-<div class="post-footer">
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/二分法/">二分法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-
-</div>
-
-
-            </li>
-        
-            <li class="post-list-item fade  animated bounce">
-                <article id="post-chuangye-end"
-  class="article-card article-type-post" itemprop="blogPost">
-  
-        
-<div class="item-thumb">
-    <a class="thumb-link" href="/2021/11/03/chuangye-end/"></a>
-    <div class="thumb-hover">
-        <span class="icon icon-eye"></span>
-    </div>
-    <img src="/img/thumb/2.jpg" alt="图片路径不正确">
-    
-
-
-  
-    <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2021/11/03/chuangye-end/">大学创业的结束随笔</a>
-    </h3>
-  
-
-
-
-</div>
-
-        
-    
-    
-    
-    <div class="post-meta">
-        <time class="post-time" title="2021-11-03 03:15:14" datetime="2021-11-02T19:15:14.000Z"  itemprop="datePublished">2021-11-03</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/生活/">生活</a></li></ul>
-
-
-
-        
-
-        
-<span class="post-comments-counter" id="/2021/11/03/chuangye-end/">
-    <span class="post-meta-item-icon">
-        <i class="icon icon-comment-o"></i>
-    </span>
-    
-    <a href="/2021/11/03/chuangye-end/#gitment-display-button" onclick="ShowGitment()">
-        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
-    </a>
-</span>
-
-
-
-    <span class="leancloud-comment">
-        <i class="icon icon-comment-o"></i>
-        <a href="/2021/11/03/chuangye-end/#comment">
-            <span class="valine-comment-count" data-xid="/2021/11/03/chuangye-end/"></span>
-        </a>
-    </span>
-
-
-        
-        
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-    
-    
-        
- 如果让博主盘点自己的大学生涯，说实话挺单调的，就是 – All In 创业
-
-博主，只不过是一个有两年创业经历的互联网年轻人。读的是双非重本的学校，在校期间开家小型软件公司，开展经营活动数次，这就是博主过往大学的基本情况。提到校园创业者，按我理解，是要分两种，一种为了参加创业比赛赢奖而在台上进行创业路演的学生，一种是为了挣钱在校期间有真实创办运作公司经历的学生。博主属于后者，业务活跃地点...
-    
-    <a href="/2021/11/03/chuangye-end/" class="post-more waves-effect waves-button">
-        more
-    </a>
-    </div>
-</article>
-
-<div class="post-footer">
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li></ul>
-
-</div>
-
-
-            </li>
-        
-            <li class="post-list-item fade  animated bounce">
-                <article id="post-debit-creditbookkeeping"
-  class="article-card article-type-post" itemprop="blogPost">
-  
-        
-<div class="item-thumb">
-    <a class="thumb-link" href="/2020/02/01/debit-creditbookkeeping/"></a>
+    <a class="thumb-link" href="/2021/12/12/kmp-algorithm/"></a>
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
@@ -1084,7 +1115,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
   
     <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2020/02/01/debit-creditbookkeeping/">会计学|复式记账法</a>
+      <a class="post-title-link" href="/2021/12/12/kmp-algorithm/">双串题 | kmp算法的简单理解 （java）</a>
     </h3>
   
 
@@ -1097,22 +1128,22 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
     
     
     <div class="post-meta">
-        <time class="post-time" title="2020-02-01 13:40:32" datetime="2020-02-01T05:40:32.000Z"  itemprop="datePublished">2020-02-01</time>
+        <time class="post-time" title="2021-12-12 15:50:37" datetime="2021-12-12T07:50:37.000Z"  itemprop="datePublished">2021-12-12</time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/会计学/">会计学</a></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
 
 
 
         
 
         
-<span class="post-comments-counter" id="/2020/02/01/debit-creditbookkeeping/">
+<span class="post-comments-counter" id="/2021/12/12/kmp-algorithm/">
     <span class="post-meta-item-icon">
         <i class="icon icon-comment-o"></i>
     </span>
     
-    <a href="/2020/02/01/debit-creditbookkeeping/#gitment-display-button" onclick="ShowGitment()">
+    <a href="/2021/12/12/kmp-algorithm/#gitment-display-button" onclick="ShowGitment()">
         <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
     </a>
 </span>
@@ -1121,8 +1152,8 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
     <span class="leancloud-comment">
         <i class="icon icon-comment-o"></i>
-        <a href="/2020/02/01/debit-creditbookkeeping/#comment">
-            <span class="valine-comment-count" data-xid="/2020/02/01/debit-creditbookkeeping/"></span>
+        <a href="/2021/12/12/kmp-algorithm/#comment">
+            <span class="valine-comment-count" data-xid="/2021/12/12/kmp-algorithm/"></span>
         </a>
     </span>
 
@@ -1134,18 +1165,11 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
     <div class="post-content" id="post-content" itemprop="postContent">
     
     
-        借贷记账法
-泛金融类企业的账务或者财务系统常常使用“借贷”记账法，又称复式记账法。
-看一下财务系统的一条分录信息：
+        题目the leetcode link
 
-借（D）：xx账号 1000元
-贷（C）：xx账号 1000元
-
-什么是贷？什么是借？千万别被字面意思误导，忘记什么“贷”就是减少，“借”是“增加”等的错误印象。
-在学习复式记账法，会计学的几个基础需要先弄明白。
-第一点：“借”、“贷” 只是一个符号“借”“贷”二字，由于借贷...
+实现 strStr()给你两个字符串&nbsp;haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串出现的第一个位置（下标从 0 开始）。如果不存在，则返回&nbsp; -1 。说明：当&nbsp;needle&nbsp;是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。对于本题而言，当&n...
     
-    <a href="/2020/02/01/debit-creditbookkeeping/" class="post-more waves-effect waves-button">
+    <a href="/2021/12/12/kmp-algorithm/" class="post-more waves-effect waves-button">
         more
     </a>
     </div>
@@ -1153,7 +1177,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
 
 <div class="post-footer">
     
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/会计学/">会计学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/思维/">思维</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kmp/">kmp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/双串题/">双串题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
 </div>
 
@@ -1164,7 +1188,7 @@ Tomcat 发展这么多年，已经比较成熟稳定。在如今『追新求快�
         
 <nav id="page-nav">
     <div class="inner">
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
     </div>
 </nav>
 

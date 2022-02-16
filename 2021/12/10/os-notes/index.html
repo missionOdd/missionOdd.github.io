@@ -211,6 +211,13 @@
             </li>
         
             <li class="">
+              <a href="https://leetcode-cn.com/u/missionary/" target="_blank">
+                <i class="icon icon-lg icon-gg-circle"></i>
+                LEETCODE
+              </a>
+            </li>
+        
+            <li class="">
               <a href="http://weibo.com/missionodd" target="_blank">
                 <i class="icon icon-lg icon-weibo"></i>
                 WEIBO
@@ -363,8 +370,16 @@
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105332463.png" title="cpu" data-fancybox="images"><img src="image-20220208105332463.png" alt="cpu" title class></a>
                 <p>cpu</p>
-            </figure>CPU<br><br>1. <code>CPU核心</code>：一般一个CPU会有多个CPU核心，平常说的多核是指在一枚处理器中集成两个或多个完整的计算引擎。核跟CPU的关系是：核属于CPU的一部分。<br><br>2. <code>寄存器</code>：最靠近CPU对存储单元，32位CPU寄存器可存储4字节，64位寄存器可存储8字节。寄存器访问速度一般是半个CPU时钟周期，属于纳秒级别，<br><br>3. <code>L1缓存</code>：每个CPU核心都有，用来缓存数据跟指令，访问空间大小一般在32～256KB，访问速度一般是2～4个CPU时钟周期。<br><br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index0/size # L1 数据缓存</span><br><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index1/size # L1 指令缓存</span><br></pre></td></tr></table></figure>
-<ol start="4">
+            </figure>
+<p>  CPU</p>
+<ol>
+<li><p><code>CPU核心</code>：一般一个CPU会有多个CPU核心，平常说的多核是指在一枚处理器中集成两个或多个完整的计算引擎。核跟CPU的关系是：核属于CPU的一部分。</p>
+</li>
+<li><p><code>寄存器</code>：最靠近CPU对存储单元，32位CPU寄存器可存储4字节，64位寄存器可存储8字节。寄存器访问速度一般是半个CPU时钟周期，属于纳秒级别，</p>
+</li>
+<li><p><code>L1缓存</code>：每个CPU核心都有，用来缓存数据跟指令，访问空间大小一般在32～256KB，访问速度一般是2～4个CPU时钟周期。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index0/size # L1 数据缓存</span><br><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index1/size # L1 指令缓存</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>L2缓存</code>：每个CPU核心都有，访问空间大小在128KB～2MB，访问速度一般是10～20个CPU时钟周期。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/devices/system/cpu/cpu0/cache/index2/size # L2 缓存容量大小</span><br></pre></td></tr></table></figure>
 </li>
@@ -393,10 +408,33 @@
 <h3 id="1-3-CPU-访问方式"><a href="#1-3-CPU-访问方式" class="headerlink" title="1.3 CPU 访问方式"></a>1.3 CPU 访问方式</h3><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105404666.png" title="image-20220208105404666" data-fancybox="images"><img src="image-20220208105404666.png" alt="image-20220208105404666" title class></a>
                 <p>image-20220208105404666</p>
-            </figure>CPU访问方式<br><br><br>内存数据映射到CPU Cache 时通过公式<code>Block N % CacheLineMax</code>决定内存Block数据放到那个CPU Cache Line 里。CPU Cache 主要有4部分组成。<br><br><br><br>1. <strong>Cache Line Index</strong> ：CPU缓存读取数据时不是按照字节来读取的，而是按照CacheLine方式存储跟读取数据的。<br>2. <strong>Valid Bit</strong> : 有效位标志符，值为0时表示无论 CPU Line 中是否有数据，CPU 都会直接访问内存，重新加载数据。<br>3. <strong>Tag</strong>：组标记，用来标记内存中不同BLock映射到相同CacheLine，用Tag来区分不同的内存Block。<br>4. <strong>Data</strong>：真实到内存数据信息。<br><br>CPU真实访问内存数据时只需要指定三个部分即可。<br><br>1. <strong>Cache Line Index</strong> ：要访问到Cache Line 位置。<br>2. <strong>Tag</strong>：表示用那个数据块。<br>3. <strong>Offset</strong>：CPU从CPU Cache 读取数据时不是直接读取Cache Line整个数据块，而是读取CPU所需的数据片段，称为Word。如何找到Word就需要个偏移量Offset。<br><br>### 1.4 CPU 访问速度<br><br><figure class="image-box">
+            </figure>
+<p>  CPU访问方式</p>
+<p>内存数据映射到CPU Cache 时通过公式<code>Block N % CacheLineMax</code>决定内存Block数据放到那个CPU Cache Line 里。CPU Cache 主要有4部分组成。</p>
+<ol>
+<li><strong>Cache Line Index</strong> ：CPU缓存读取数据时不是按照字节来读取的，而是按照CacheLine方式存储跟读取数据的。</li>
+<li><strong>Valid Bit</strong> : 有效位标志符，值为0时表示无论 CPU Line 中是否有数据，CPU 都会直接访问内存，重新加载数据。</li>
+<li><strong>Tag</strong>：组标记，用来标记内存中不同BLock映射到相同CacheLine，用Tag来区分不同的内存Block。</li>
+<li><strong>Data</strong>：真实到内存数据信息。</li>
+</ol>
+<p>CPU真实访问内存数据时只需要指定三个部分即可。</p>
+<ol>
+<li><strong>Cache Line Index</strong> ：要访问到Cache Line 位置。</li>
+<li><strong>Tag</strong>：表示用那个数据块。</li>
+<li><strong>Offset</strong>：CPU从CPU Cache 读取数据时不是直接读取Cache Line整个数据块，而是读取CPU所需的数据片段，称为Word。如何找到Word就需要个偏移量Offset。</li>
+</ol>
+<h3 id="1-4-CPU-访问速度"><a href="#1-4-CPU-访问速度" class="headerlink" title="1.4 CPU 访问速度"></a>1.4 CPU 访问速度</h3><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105417253.png" title="image-20220208105417253" data-fancybox="images"><img src="image-20220208105417253.png" alt="image-20220208105417253" title class></a>
                 <p>image-20220208105417253</p>
-            </figure>访问耗时对比<br><br><br>如上图所示，CPU访问速度是逐步变慢，所以CPU访问数据时需尽量在距离CPU近的高速缓存区访问，根据摩尔定律CPU访问速度每18个月就会翻倍，而内存的访问每18个月也就增长10% 左右，导致的结果就是CPU跟内存访问性能差距逐步变大，那如何尽可能提高CPU缓存命中率呢？<br><br><br>\1. <code>数据缓存</code>：遍历数据时候按照内存布局顺序访问，因为CPU Cache是根据Cache Line批量操作数据的，所以你顺序读取数据会提速，道理跟磁盘顺序写一样。<br><br>1. <code>指令缓存</code>：尽可能的提供有规律的条件分支语句，让 CPU 的分支预测器发挥作用，进一步提高执行的效率，因为CPU是自带<code>分支预测器</code>，自动提前将可能需要的指令放到指令缓存区。<br>2. <code>线程绑定到CPU</code>：一个任务A在前一个时间片用CPU核心1 运行，后一个时间片用CPU核心2 运行，这样缓存L1、L2就浪费了。因此操作系统提供了将进程或者线程绑定到某一颗 CPU 上运行的能力。如 Linux 上提供了 sched_setaffinity 方法实现这一功能，其他操作系统也有类似功能的 API 可用。当多线程同时执行密集计算，且 CPU 缓存命中率很高时，如果将每个线程分别绑定在不同的 CPU 核心上，性能便会获得非常可观的提升。<br><br>### 1.5  操作系统<br><br><figure class="image-box">
+            </figure>
+<p>访问耗时对比</p>
+<p>如上图所示，CPU访问速度是逐步变慢，所以CPU访问数据时需尽量在距离CPU近的高速缓存区访问，根据摩尔定律CPU访问速度每18个月就会翻倍，而内存的访问每18个月也就增长10% 左右，导致的结果就是CPU跟内存访问性能差距逐步变大，那如何尽可能提高CPU缓存命中率呢？</p>
+<p>\1. <code>数据缓存</code>：遍历数据时候按照内存布局顺序访问，因为CPU Cache是根据Cache Line批量操作数据的，所以你顺序读取数据会提速，道理跟磁盘顺序写一样。</p>
+<ol>
+<li><code>指令缓存</code>：尽可能的提供有规律的条件分支语句，让 CPU 的分支预测器发挥作用，进一步提高执行的效率，因为CPU是自带<code>分支预测器</code>，自动提前将可能需要的指令放到指令缓存区。</li>
+<li><code>线程绑定到CPU</code>：一个任务A在前一个时间片用CPU核心1 运行，后一个时间片用CPU核心2 运行，这样缓存L1、L2就浪费了。因此操作系统提供了将进程或者线程绑定到某一颗 CPU 上运行的能力。如 Linux 上提供了 sched_setaffinity 方法实现这一功能，其他操作系统也有类似功能的 API 可用。当多线程同时执行密集计算，且 CPU 缓存命中率很高时，如果将每个线程分别绑定在不同的 CPU 核心上，性能便会获得非常可观的提升。</li>
+</ol>
+<h3 id="1-5-操作系统"><a href="#1-5-操作系统" class="headerlink" title="1.5  操作系统"></a>1.5  操作系统</h3><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105427891.png" title="image-20220208105427891" data-fancybox="images"><img src="image-20220208105427891.png" alt="image-20220208105427891" title class></a>
                 <p>image-20220208105427891</p>
             </figure>
@@ -433,7 +471,12 @@
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105626772.png" title="image-20220208105626772" data-fancybox="images"><img src="image-20220208105626772.png" alt="image-20220208105626772" title class></a>
                 <p>image-20220208105626772</p>
-            </figure>swap空间利用<br><br>##### 2.2.2 内存分页<br><br>内存分页，<code>整个虚拟内存和物理内存切成一段段固定尺寸的大小</code>。每个固定大小的尺寸称之为<code>页Page</code>，在 Linux 系统中Page = 4KB。然后虚拟内存跟物理内存之间通过<code>页表</code>来实现映射。<br><br>采用<strong>内存分页</strong>时内存的释放跟使用都是以页为单位的，也就不会产生内存碎片了。当空间还不够时根据操作系统调度算法，可能将最少用的内存页面 swap-out换出到磁盘，用时候再swap-in换入，尽可能的减少磁盘刷写量，提高内存交互效率。<br><br>分页模式下虚拟地址主要有<code>页号</code>跟<code>页内偏移量</code>两部分组成。通过页号查询页表找到物理内存地址，然后再配合页内偏移量就找到了真正的物理内存地址。<br><br><figure class="image-box">
+            </figure>
+<p>swap空间利用</p>
+<h5 id="2-2-2-内存分页"><a href="#2-2-2-内存分页" class="headerlink" title="2.2.2 内存分页"></a>2.2.2 内存分页</h5><p>内存分页，<code>整个虚拟内存和物理内存切成一段段固定尺寸的大小</code>。每个固定大小的尺寸称之为<code>页Page</code>，在 Linux 系统中Page = 4KB。然后虚拟内存跟物理内存之间通过<code>页表</code>来实现映射。</p>
+<p>采用<strong>内存分页</strong>时内存的释放跟使用都是以页为单位的，也就不会产生内存碎片了。当空间还不够时根据操作系统调度算法，可能将最少用的内存页面 swap-out换出到磁盘，用时候再swap-in换入，尽可能的减少磁盘刷写量，提高内存交互效率。</p>
+<p>分页模式下虚拟地址主要有<code>页号</code>跟<code>页内偏移量</code>两部分组成。通过页号查询页表找到物理内存地址，然后再配合页内偏移量就找到了真正的物理内存地址。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105654323.png" title="image-20220208105654323" data-fancybox="images"><img src="image-20220208105654323.png" alt="image-20220208105654323" title class></a>
                 <p>image-20220208105654323</p>
             </figure>
@@ -492,7 +535,15 @@
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105806478.png" title="image-20220208105806478" data-fancybox="images"><img src="image-20220208105806478.png" alt="image-20220208105806478" title class></a>
                 <p>image-20220208105806478</p>
-            </figure>段页式管理<br><br><br>同时我们经常看到两个专业词<code>逻辑地址</code>跟<code>线性地址</code>。<br><br><br><br>1. <code>逻辑地址</code>：指的是没被段式内存管理映射的地址。<br>2. <code>线性地址</code>：通过段式内存管理映射且页式内存管理转换前的地址，俗称虚拟地址。<br><br>目前 Intel X86 CPU 采用的是内存分段 +  内存分页的管理方式，其中分页的意思是在由段式内存管理所映射而成的的地址上再加上一层地址映射。<br><br><figure class="image-box">
+            </figure>
+<p>  段页式管理</p>
+<p>同时我们经常看到两个专业词<code>逻辑地址</code>跟<code>线性地址</code>。</p>
+<ol>
+<li><code>逻辑地址</code>：指的是没被段式内存管理映射的地址。</li>
+<li><code>线性地址</code>：通过段式内存管理映射且页式内存管理转换前的地址，俗称虚拟地址。</li>
+</ol>
+<p>目前 Intel X86 CPU 采用的是内存分段 +  内存分页的管理方式，其中分页的意思是在由段式内存管理所映射而成的的地址上再加上一层地址映射。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105815982.png" title="image-20220208105815982" data-fancybox="images"><img src="image-20220208105815982.png" alt="image-20220208105815982" title class></a>
                 <p>image-20220208105815982</p>
             </figure>
@@ -522,7 +573,63 @@
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="640.png" title="图片" data-fancybox="images"><img src="640.png" alt="图片" title class></a>
                 <p>图片</p>
-            </figure>状态变化图<br><br><br>重点说下<code>挂起</code>跟<code>阻塞</code>：<br><br><br><br>1. 阻塞一般是当系统执行IO操作时，此时进程进入阻塞状态，等待某个事件的返回。<br>2. 挂起是指进程没有占有物理内存，被写到磁盘上了。这时进程状态是挂起状态。<br><br>&gt; 1. <code>阻塞挂起</code>：进程被写入硬盘并等待某个事件的出现。<br>&gt; 2. <code>就绪挂起</code>：进程被写入硬盘，进入内存可直接进入就绪状态。<br><br>### 3.2 PCB<br><br>为了描述跟控制进程的运行，系统为每个进程定义了一个数据结构——<code>进程控制块 Process Control Block</code>，它是进程实体的一部分，是操作系统中最重要的记录型数据结构。<br><br>PCB 的作用是<strong>使一个在多道程序环境下不能独立运行的程序，成为一个能独立运行的基本单位，一个能与其它进程并发执行的进程</strong> :<br><br>1. 作为独立运行基本单位的标志<br>2. 实现间断性的运行方式<br>3. 提供进程管理所需要的信息<br>4. 提供进程调度所需要的信息<br>5. 实现与其他进程的同步与通信<br><br>##### 3.2.1 PCB 信息<br><br>PCB为实现上述功能，内部包含众多信息：<br><br>1. <strong>进程标识符</strong>：用于唯一地标识一个进程，一个进程通常有两种标识符：<br><br>&gt; 1. <code>内部进程标识符</code>：标识各个进程，每个进程都有一个并且唯一的标识符，设置内部标识符主要是为了方便系统使用。<br>&gt; 2. <code>外部进程标识符</code>：它由创建者提供，可设置用户标识，以指示拥有该进程的用户。往往是由用户进程在访问该进程时使用。一般为了描述进程的家族关系，还应设置父进程标识及子进程标识。<br><br>1. <strong>处理机状态</strong>：由各种寄存器组成。包含许多信息都放在寄存器中，方便程序restart。<br><br>&gt; 1. 通用寄存器、指令计数器、程序状态字PSW、用户栈指针等信息。<br><br>1. <strong>进程调度信息</strong><br><br>&gt; 1. 进程状态：指明进程的当前状态，作为进程调度和对换时的依据。<br>&gt; 2. 进程优先级：用于描述进程使用处理机的优先级别的一个整数，优先级高的进程应优先获得处理机<br>&gt; 3. 进程调度所需的其它信息：与所采用的进程调度算法有关，如进程已等待CPU的时间总和、进程已执行的时间总和等。<br>&gt; 4. 事件：指进程由执行状态转变为阻塞状态所等待发生的事件，即阻塞原因。<br><br>1. <strong>资源清单</strong><br><br>&gt; 有关内存地址空间或虚拟地址空间的信息，所打开文件的列表和所使用的 I/O 设备信息。<br><br>##### 3.2.2 PCB 组织方式<br><br>操作系统中有太多 PCB，如何管理是个问题，一般有如下方式。<br><br><figure class="image-box">
+            </figure>
+<p>状态变化图</p>
+<p>重点说下<code>挂起</code>跟<code>阻塞</code>：</p>
+<ol>
+<li>阻塞一般是当系统执行IO操作时，此时进程进入阻塞状态，等待某个事件的返回。</li>
+<li>挂起是指进程没有占有物理内存，被写到磁盘上了。这时进程状态是挂起状态。</li>
+</ol>
+<blockquote>
+<p> <code>阻塞挂起</code>：进程被写入硬盘并等待某个事件的出现。<br> <code>就绪挂起</code>：进程被写入硬盘，进入内存可直接进入就绪状态。</p>
+</blockquote>
+<hr>
+<h3 id="3-2-PCB"><a href="#3-2-PCB" class="headerlink" title="3.2 PCB"></a>3.2 PCB</h3><p>为了描述跟控制进程的运行，系统为每个进程定义了一个数据结构——<code>进程控制块 Process Control Block</code>，它是进程实体的一部分，是操作系统中最重要的记录型数据结构。</p>
+<p>PCB 的作用是<strong>使一个在多道程序环境下不能独立运行的程序，成为一个能独立运行的基本单位，一个能与其它进程并发执行的进程</strong> :</p>
+<ol>
+<li>作为独立运行基本单位的标志</li>
+<li>实现间断性的运行方式</li>
+<li>提供进程管理所需要的信息</li>
+<li>提供进程调度所需要的信息</li>
+<li>实现与其他进程的同步与通信</li>
+</ol>
+<h5 id="3-2-1-PCB-信息"><a href="#3-2-1-PCB-信息" class="headerlink" title="3.2.1 PCB 信息"></a>3.2.1 PCB 信息</h5><p>PCB为实现上述功能，内部包含众多信息：</p>
+<ol>
+<li><strong>进程标识符</strong>：用于唯一地标识一个进程，一个进程通常有两种标识符：</li>
+</ol>
+<blockquote>
+<ol>
+<li><code>内部进程标识符</code>：标识各个进程，每个进程都有一个并且唯一的标识符，设置内部标识符主要是为了方便系统使用。</li>
+<li><code>外部进程标识符</code>：它由创建者提供，可设置用户标识，以指示拥有该进程的用户。往往是由用户进程在访问该进程时使用。一般为了描述进程的家族关系，还应设置父进程标识及子进程标识。</li>
+</ol>
+</blockquote>
+<ol>
+<li><strong>处理机状态</strong>：由各种寄存器组成。包含许多信息都放在寄存器中，方便程序restart。</li>
+</ol>
+<blockquote>
+<ol>
+<li>通用寄存器、指令计数器、程序状态字PSW、用户栈指针等信息。</li>
+</ol>
+</blockquote>
+<ol>
+<li><strong>进程调度信息</strong></li>
+</ol>
+<blockquote>
+<ol>
+<li>进程状态：指明进程的当前状态，作为进程调度和对换时的依据。</li>
+<li>进程优先级：用于描述进程使用处理机的优先级别的一个整数，优先级高的进程应优先获得处理机</li>
+<li>进程调度所需的其它信息：与所采用的进程调度算法有关，如进程已等待CPU的时间总和、进程已执行的时间总和等。</li>
+<li>事件：指进程由执行状态转变为阻塞状态所等待发生的事件，即阻塞原因。</li>
+</ol>
+</blockquote>
+<ol>
+<li><strong>资源清单</strong></li>
+</ol>
+<blockquote>
+<p>有关内存地址空间或虚拟地址空间的信息，所打开文件的列表和所使用的 I/O 设备信息。</p>
+</blockquote>
+<h5 id="3-2-2-PCB-组织方式"><a href="#3-2-2-PCB-组织方式" class="headerlink" title="3.2.2 PCB 组织方式"></a>3.2.2 PCB 组织方式</h5><p>操作系统中有太多 PCB，如何管理是个问题，一般有如下方式。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105914468.png" title="image-20220208105914468" data-fancybox="images"><img src="image-20220208105914468.png" alt="image-20220208105914468" title class></a>
                 <p>image-20220208105914468</p>
             </figure>
@@ -538,7 +645,17 @@
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105928416.png" title="image-20220208105928416" data-fancybox="images"><img src="image-20220208105928416.png" alt="image-20220208105928416" title class></a>
                 <p>image-20220208105928416</p>
-            </figure>索引方式<br><br>1. <strong>索引方式</strong>：<br><br>&gt; 1. 将同一状态的进程组织在一个索引表中，索引表项指向相应的 PCB，不同状态对应不同的索引表。<br><br><figure class="image-box">
+            </figure>
+<p>索引方式</p>
+<ol>
+<li><strong>索引方式</strong>：</li>
+</ol>
+<blockquote>
+<ol>
+<li>将同一状态的进程组织在一个索引表中，索引表项指向相应的 PCB，不同状态对应不同的索引表。</li>
+</ol>
+</blockquote>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208105942343.png" title="image-20220208105942343" data-fancybox="images"><img src="image-20220208105942343.png" alt="image-20220208105942343" title class></a>
                 <p>image-20220208105942343</p>
             </figure>
@@ -704,7 +821,7 @@
 <li><p>系统会同时存在多个就绪队列，每个队列优先级从高到低排列，同时优先级越高获得是时间片越短。</p>
 </li>
 <li><p>新进程会先加入到最高优先级队列，如果新进程优先级高于当前在执行的进程，会停止当前进程转而去执行新进程。新进程如果在时间片内没执行完毕需下移到次优先级队列。</p>
-<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110001762.png" title="image-20220208110001762" data-fancybox="images"><img src="image-20220208110001762.png" alt="image-20220208110001762"></a>多级反馈队列调度算法</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110001762.png" title="image-20220208110001762" data-fancybox="images"><img src="image-20220208110001762.png" alt="image-20220208110001762"></a><br>多级反馈队列调度算法</p>
 </li>
 </ol>
 <h3 id="3-5-线程"><a href="#3-5-线程" class="headerlink" title="3.5 线程"></a>3.5 线程</h3><h5 id="3-5-1-线程定义"><a href="#3-5-1-线程定义" class="headerlink" title="3.5.1 线程定义"></a>3.5.1 线程定义</h5><p>早期操作系统是没有线程概念的，线程是后来加进来的。为啥会有线程呢？那是因为以前在多进程阶段，经常会涉及到进程之间如何通讯，如何共享数据的问题。并且进程关联到PCB的生命周期，管理起来开销较大。为了解决这个问题引入了线程。</p>
@@ -752,13 +869,56 @@
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110024780.png" title="image-20220208110024780" data-fancybox="images"><img src="image-20220208110024780.png" alt="image-20220208110024780" title class></a>
                 <p>image-20220208110024780</p>
-            </figure>用户态线程<br><br><strong>好处</strong>：<br><br>1. 及时操作系统不支持线程模式也可以通过用户层库函数来支持线程模式，TCB 由用户级线程库函数来维护。<br>2. 使用库函数模式实现线程可以避免用户态到内核态的切换。<br><br><strong>坏处</strong>：<br><br>1. CPU不知道线程存在，CPU的时间片切换是以进程为维度的，某个线程因为IO等操作导致线程阻塞，操作系统会阻塞整个进程，即使这个进程中其它线程还在工作。<br>2. 用户态线程没法打断正在运行中的线程，除非线程主动交出CPU使用权。<br><br>###### 3.5.4.2 内核态线程<br><br>在内核中实现的线程，是由内核管理的线程，线程对应的 TCB 在操作系统里，这样线程的创建、终止和管理都是由操作系统负责。内线程模式下一个用户线程对应一个内核线程。<br><br><figure class="image-box">
+            </figure>
+<p>用户态线程</p>
+<p><strong>好处</strong>：</p>
+<ol>
+<li>及时操作系统不支持线程模式也可以通过用户层库函数来支持线程模式，TCB 由用户级线程库函数来维护。</li>
+<li>使用库函数模式实现线程可以避免用户态到内核态的切换。</li>
+</ol>
+<p><strong>坏处</strong>：</p>
+<ol>
+<li>CPU不知道线程存在，CPU的时间片切换是以进程为维度的，某个线程因为IO等操作导致线程阻塞，操作系统会阻塞整个进程，即使这个进程中其它线程还在工作。</li>
+<li>用户态线程没法打断正在运行中的线程，除非线程主动交出CPU使用权。</li>
+</ol>
+<h6 id="3-5-4-2-内核态线程"><a href="#3-5-4-2-内核态线程" class="headerlink" title="3.5.4.2 内核态线程"></a>3.5.4.2 内核态线程</h6><p>在内核中实现的线程，是由内核管理的线程，线程对应的 TCB 在操作系统里，这样线程的创建、终止和管理都是由操作系统负责。内线程模式下一个用户线程对应一个内核线程。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110103377.png" title="image-20220208110103377" data-fancybox="images"><img src="image-20220208110103377.png" alt="image-20220208110103377" title class></a>
                 <p>image-20220208110103377</p>
-            </figure>内核态线程<br><br><br><strong>注意</strong>：Linux中的JVM从1.2版以后是基于pthread实现的，<code>所以现在Java中线程的本质就是操作系统中的线程</code>。<br><br><strong>优点</strong>：<br><br>1. 一个进程中某个线程阻塞不会影响其他内核线程运行。<br>2. 用户态模式一个时间片分给多个线程，内核态模式直接分配给线程的时间片增加。<br><br><strong>缺点</strong>：<br><br>1. 内核级线程调度开销较大。调度内核线程的代价可能和调度进程差不多昂贵，代价要比用户级线程大很多。一个线程默认栈=1M，线程多了会导致内存消耗很大。<br>2. 线程表是存放在操作系统固定的表格空间或者堆栈空间里，所以内核级线程的数量是有限的。<br><br>###### 3.4.4.3 轻量级进程<br><br>最初的进程定义都包含程序、资源及其执行三部分，其中程序通常指代码，资源在操作系统层面上通常包括内存资源、IO资源、信号处理等部分，而程序的执行通常理解为执行上下文，包括对CPU的占用，后来发展为线程。在线程概念出现以前，为了减小进程切换的开销，操作系统设计者逐渐修正进程的概念，逐渐允许将进程所占有的资源从其主体剥离出来，允许某些进程共享一部分资源，例如文件、信号，数据内存，甚至代码，这就发展出轻量进程的概念。<br><br>Light-weight process <strong>轻量级进程是内核支持的用户线程</strong>，它是基于内核线程的高级抽象，系统只有先支持内核线程才能有 LWP。一个进程可有1~N个LWP，每个 LWP 是跟内核线程一对一映射的，也就是 LWP 都是由一个内核线程支持。<br><br><figure class="image-box">
+            </figure>
+<p>内核态线程</p>
+<p><strong>注意</strong>：Linux中的JVM从1.2版以后是基于pthread实现的，<code>所以现在Java中线程的本质就是操作系统中的线程</code>。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>一个进程中某个线程阻塞不会影响其他内核线程运行。</li>
+<li>用户态模式一个时间片分给多个线程，内核态模式直接分配给线程的时间片增加。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>内核级线程调度开销较大。调度内核线程的代价可能和调度进程差不多昂贵，代价要比用户级线程大很多。一个线程默认栈=1M，线程多了会导致内存消耗很大。</li>
+<li>线程表是存放在操作系统固定的表格空间或者堆栈空间里，所以内核级线程的数量是有限的。</li>
+</ol>
+<h6 id="3-4-4-3-轻量级进程"><a href="#3-4-4-3-轻量级进程" class="headerlink" title="3.4.4.3 轻量级进程"></a>3.4.4.3 轻量级进程</h6><p>最初的进程定义都包含程序、资源及其执行三部分，其中程序通常指代码，资源在操作系统层面上通常包括内存资源、IO资源、信号处理等部分，而程序的执行通常理解为执行上下文，包括对CPU的占用，后来发展为线程。在线程概念出现以前，为了减小进程切换的开销，操作系统设计者逐渐修正进程的概念，逐渐允许将进程所占有的资源从其主体剥离出来，允许某些进程共享一部分资源，例如文件、信号，数据内存，甚至代码，这就发展出轻量进程的概念。</p>
+<p>Light-weight process <strong>轻量级进程是内核支持的用户线程</strong>，它是基于内核线程的高级抽象，系统只有先支持内核线程才能有 LWP。一个进程可有1~N个LWP，每个 LWP 是跟内核线程一对一映射的，也就是 LWP 都是由一个内核线程支持。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110121188.png" title="image-20220208110121188" data-fancybox="images"><img src="image-20220208110121188.png" alt="image-20220208110121188" title class></a>
                 <p>image-20220208110121188</p>
-            </figure>LWP模式<br><br><strong>轻量级进程本质还是进程</strong>，只是跟普通进程相比LWP跟其他进程共享大部分逻辑地址空间跟系统资源，LWP轻量体现在它只有一个最小的执行上下文和调度程序所需的统计信息。他是进程的执行部分，只带有执行相关的信息。<br><br><strong>Linux特性</strong>：<br><br>1. Linux中没有真正的线程，因为Linux并没有为线程准备特定的数据结构。在内核看来只有进程而没有线程，在调度时也是当做进程来调度。Linux所谓的线程其实是与其他进程共享资源的进程。但windows中确实有线程。<br>2. Linux中没有的线程，线程是由进程来模拟实现的。<br>3. 所以在Linux中在CPU角度看，进程被称作轻量级进程LWP。<br><br>##### 3.5.5 协程<br><br>###### 3.5.5.1 协程定义<br><br>大多数web服务跟互联网服务本质上大部分都是 IO 密集型服务，IO 密集型服务的瓶颈不在CPU处理速度，而在于尽可能快速的完成高并发、多连接下的数据读写。以前有两种解决方案：<br><br>1. <code>多进程</code>：存在频繁调度切换问题，同时还会存在每个进程资源不共享的问题，需要额外引入进程间通信机制来解决。<br>2. <code>多线程</code>：高并发场景的大量 IO 等待会导致多线程被频繁挂起和切换，非常消耗系统资源，同时多线程访问共享资源存在竞争问题。<br><br>此时协程出现了，协程 Coroutines 是一种比线程更加轻量级的微线程。类比一个进程可以拥有多个线程，一个线程也可以拥有多个协程。可以简单的把协程理解成子程序调用，每个子程序都可以在一个单独的协程内执行。<br><br><figure class="image-box">
+            </figure>
+<p>LWP模式</p>
+<p><strong>轻量级进程本质还是进程</strong>，只是跟普通进程相比LWP跟其他进程共享大部分逻辑地址空间跟系统资源，LWP轻量体现在它只有一个最小的执行上下文和调度程序所需的统计信息。他是进程的执行部分，只带有执行相关的信息。</p>
+<p><strong>Linux特性</strong>：</p>
+<ol>
+<li>Linux中没有真正的线程，因为Linux并没有为线程准备特定的数据结构。在内核看来只有进程而没有线程，在调度时也是当做进程来调度。Linux所谓的线程其实是与其他进程共享资源的进程。但windows中确实有线程。</li>
+<li>Linux中没有的线程，线程是由进程来模拟实现的。</li>
+<li>所以在Linux中在CPU角度看，进程被称作轻量级进程LWP。</li>
+</ol>
+<h5 id="3-5-5-协程"><a href="#3-5-5-协程" class="headerlink" title="3.5.5 协程"></a>3.5.5 协程</h5><h6 id="3-5-5-1-协程定义"><a href="#3-5-5-1-协程定义" class="headerlink" title="3.5.5.1 协程定义"></a>3.5.5.1 协程定义</h6><p>大多数web服务跟互联网服务本质上大部分都是 IO 密集型服务，IO 密集型服务的瓶颈不在CPU处理速度，而在于尽可能快速的完成高并发、多连接下的数据读写。以前有两种解决方案：</p>
+<ol>
+<li><code>多进程</code>：存在频繁调度切换问题，同时还会存在每个进程资源不共享的问题，需要额外引入进程间通信机制来解决。</li>
+<li><code>多线程</code>：高并发场景的大量 IO 等待会导致多线程被频繁挂起和切换，非常消耗系统资源，同时多线程访问共享资源存在竞争问题。</li>
+</ol>
+<p>此时协程出现了，协程 Coroutines 是一种比线程更加轻量级的微线程。类比一个进程可以拥有多个线程，一个线程也可以拥有多个协程。可以简单的把协程理解成子程序调用，每个子程序都可以在一个单独的协程内执行。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110132404.png" title="image-20220208110132404" data-fancybox="images"><img src="image-20220208110132404.png" alt="image-20220208110132404" title class></a>
                 <p>image-20220208110132404</p>
             </figure>
@@ -779,33 +939,110 @@
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110149376.png" title="image-20220208110149376" data-fancybox="images"><img src="image-20220208110149376.png" alt="image-20220208110149376" title class></a>
                 <p>image-20220208110149376</p>
-            </figure>管道通信底层<br><br><br>匿名管道的通信范围是存在父子关系的进程。由于管道没有实体，也就是没有管道文件，不会涉及到文件系统。只能通过<code>fork</code>子进程来复制父进程 fd 文件描述符，父子进程通过共用特殊的管道文件实现跨进程通信，并且因为管道只能一端写入，另一端读出，所以通常父子进程遵从如下要求：<br><br><br><br>1. 父进程关闭读取的 fd[0]，只保留写入的 fd[1]。<br>2. 子进程关闭写入的 fd[1]，只保留读取的 fd[0]。<br><br><figure class="image-box">
+            </figure>
+<p>管道通信底层</p>
+<p>匿名管道的通信范围是存在父子关系的进程。由于管道没有实体，也就是没有管道文件，不会涉及到文件系统。只能通过<code>fork</code>子进程来复制父进程 fd 文件描述符，父子进程通过共用特殊的管道文件实现跨进程通信，并且因为管道只能一端写入，另一端读出，所以通常父子进程遵从如下要求：</p>
+<ol>
+<li>父进程关闭读取的 fd[0]，只保留写入的 fd[1]。</li>
+<li>子进程关闭写入的 fd[1]，只保留读取的 fd[0]。</li>
+</ol>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110206417.png" title="image-20220208110206417" data-fancybox="images"><img src="image-20220208110206417.png" alt="image-20220208110206417" title class></a>
                 <p>image-20220208110206417</p>
-            </figure>shell管道通信<br><br><br>需注意Shell执行匿名管道 a | b其实是通过Shell父进程fork出了两个子进程来实现通信的，而ab之间是不存在父子进程关系的。而命名管道是可以直接在不想关进程间通信的，因为有管道文件。<br><br>##### 3.6.2 消息队列<br><br><figure class="image-box">
+            </figure>
+<p>shell管道通信</p>
+<p>需注意Shell执行匿名管道 a | b其实是通过Shell父进程fork出了两个子进程来实现通信的，而ab之间是不存在父子进程关系的。而命名管道是可以直接在不想关进程间通信的，因为有管道文件。</p>
+<h5 id="3-6-2-消息队列"><a href="#3-6-2-消息队列" class="headerlink" title="3.6.2 消息队列"></a>3.6.2 消息队列</h5><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110230770.png" title="image-20220208110230770" data-fancybox="images"><img src="image-20220208110230770.png" alt="image-20220208110230770" title class></a>
                 <p>image-20220208110230770</p>
-            </figure>消息队列<br><br>消息队列是保存在<strong>内核</strong>中的消息链表，<strong>会涉及到用户态跟内核态到来回切换</strong>，双方约定好消息体到数据结构，然后发送数据时将数据分成一个个独立的数据单元消息体，需注意消息队列及单个消息都有上限，日常我们到<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247490325&amp;idx=1&amp;sn=ab7cfedc7b8f2361cc1fab9418b314b8&amp;chksm=ebdefa2ddca9733b76cffbcba2d5f8c0c61bd36d5ebba20aaecb07148aa0fd7a5781e16ab03e&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">RabbitMQ</a>、<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247488832&amp;idx=1&amp;sn=5999893d7fe773f54f7d097ac1c2074d&amp;chksm=ebdef478dca97d6e2433abdeecf600669ffbb1b68eb2b744e7ed72aac4cd5c4cabf19b0d8f19&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">Redis </a>都涉及到消息队列。<br><br>##### 3.6.3 共享内存<br><br><figure class="image-box">
+            </figure>
+<p>消息队列</p>
+<p>消息队列是保存在<strong>内核</strong>中的消息链表，<strong>会涉及到用户态跟内核态到来回切换</strong>，双方约定好消息体到数据结构，然后发送数据时将数据分成一个个独立的数据单元消息体，需注意消息队列及单个消息都有上限，日常我们到<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247490325&amp;idx=1&amp;sn=ab7cfedc7b8f2361cc1fab9418b314b8&amp;chksm=ebdefa2ddca9733b76cffbcba2d5f8c0c61bd36d5ebba20aaecb07148aa0fd7a5781e16ab03e&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">RabbitMQ</a>、<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247488832&amp;idx=1&amp;sn=5999893d7fe773f54f7d097ac1c2074d&amp;chksm=ebdef478dca97d6e2433abdeecf600669ffbb1b68eb2b744e7ed72aac4cd5c4cabf19b0d8f19&amp;scene=21#wechat_redirect" target="_blank" rel="noopener">Redis </a>都涉及到消息队列。</p>
+<h5 id="3-6-3-共享内存"><a href="#3-6-3-共享内存" class="headerlink" title="3.6.3 共享内存"></a>3.6.3 共享内存</h5><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110245494.png" title="image-20220208110245494" data-fancybox="images"><img src="image-20220208110245494.png" alt="image-20220208110245494" title class></a>
                 <p>image-20220208110245494</p>
-            </figure>共享空间<br><br><br>现代操作系统对内存管理采用的是虚拟内存技术，也就是每个进程都有自己独立的虚拟内存空间，不同进程的虚拟内存映射到不同的物理内存中。所以，即使进程A和进程B虚拟地址是一样的，真正访问的也是不同的物理内存地址，该模式不涉及到用户态跟内核态来回切换，JVM 就是用的共享内存模式。并且并发编程也是个难点。<br><br>##### 3.6.4 信号量<br><br>既然共享内存容易造成数据紊乱，那为了简单的实现共享数据在任意时刻只能被一个进程访问，此时需要信号量。<br><br><strong>信号量其实是一个整型的计数器，主要用于实现进程间的互斥与同步，而不是用于缓存进程间通信的数据</strong>。<br><br>信号量表示资源的数量，核心点在于原子性的控制一个数据的值，控制信号量的方式有<strong>PV两种原子操作</strong>：<br><br>1. P 操作会把信号量减去 -1，相减后如果信号量 &lt; 0，则表明资源已被占用，进程需阻塞等待。相减后如果信号量 &gt;= 0，则表明还有资源可使用，进程可正常继续执行。<br>2. V 操作会把信号量加上 1，相加后如果信号量 &lt;= 0，则表明当前有阻塞中的进程，于是会将该进程唤醒运行。相加后如果信号量 &gt; 0，则表明当前没有阻塞中的进程。<br><br>##### 3.6.5 信号<br><br>对于异常状态下进程工作模式需要用到信号工作方式来通知进程。比如Linux系统为了响应各种事件提供了很多异常信号<code>kill -l</code>，<strong>信号是进程间通信机制中唯一的异步通信机制</strong>，可以在任何时候发送信号给某一进程。比如：<br><br>1. kill -9 1412 ，表示给 PID 为 1412 的进程发送 SIGKILL 信号，用来立即结束该进程。<br>2. 键盘 Ctrl+C 产生 SIGINT 信号，表示终止该进程。<br>3. 键盘 Ctrl+Z 产生 SIGTSTP 信号，表示停止该进程，但还未结束。<br><br>有信号发生时，进程一般有三种方式响应信号：<br><br>1. 执行默认操作：Linux操作系统为众多信号配备了专门的处理操作。<br>2. 捕捉信号：给捕捉到的信号配备专门的信号处理函数。<br>3. 忽略信号：专门用来忽略某些信号，但 SIGKILL 和 SEGSTOP是无法被忽略的，为了能在任何时候结束或停止某个进程而存在。<br><br>##### 3.6.6 Socket编程<br><br>前面提到的管道、消息队列、共享内存、信号量和信号都是在同一台主机上进行进程间通信，<strong>那要想跨网络与不同主机上的进程之间通信，就需要 Socket 通信</strong>。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int domain, int type, int protocal)</span><br></pre></td></tr></table></figure>
+            </figure>
+<p>共享空间</p>
+<p>现代操作系统对内存管理采用的是虚拟内存技术，也就是每个进程都有自己独立的虚拟内存空间，不同进程的虚拟内存映射到不同的物理内存中。所以，即使进程A和进程B虚拟地址是一样的，真正访问的也是不同的物理内存地址，该模式不涉及到用户态跟内核态来回切换，JVM 就是用的共享内存模式。并且并发编程也是个难点。</p>
+<h5 id="3-6-4-信号量"><a href="#3-6-4-信号量" class="headerlink" title="3.6.4 信号量"></a>3.6.4 信号量</h5><p>既然共享内存容易造成数据紊乱，那为了简单的实现共享数据在任意时刻只能被一个进程访问，此时需要信号量。</p>
+<p><strong>信号量其实是一个整型的计数器，主要用于实现进程间的互斥与同步，而不是用于缓存进程间通信的数据</strong>。</p>
+<p>信号量表示资源的数量，核心点在于原子性的控制一个数据的值，控制信号量的方式有<strong>PV两种原子操作</strong>：</p>
+<ol>
+<li>P 操作会把信号量减去 -1，相减后如果信号量 &lt; 0，则表明资源已被占用，进程需阻塞等待。相减后如果信号量 &gt;= 0，则表明还有资源可使用，进程可正常继续执行。</li>
+<li>V 操作会把信号量加上 1，相加后如果信号量 &lt;= 0，则表明当前有阻塞中的进程，于是会将该进程唤醒运行。相加后如果信号量 &gt; 0，则表明当前没有阻塞中的进程。</li>
+</ol>
+<h5 id="3-6-5-信号"><a href="#3-6-5-信号" class="headerlink" title="3.6.5 信号"></a>3.6.5 信号</h5><p>对于异常状态下进程工作模式需要用到信号工作方式来通知进程。比如Linux系统为了响应各种事件提供了很多异常信号<code>kill -l</code>，<strong>信号是进程间通信机制中唯一的异步通信机制</strong>，可以在任何时候发送信号给某一进程。比如：</p>
+<ol>
+<li>kill -9 1412 ，表示给 PID 为 1412 的进程发送 SIGKILL 信号，用来立即结束该进程。</li>
+<li>键盘 Ctrl+C 产生 SIGINT 信号，表示终止该进程。</li>
+<li>键盘 Ctrl+Z 产生 SIGTSTP 信号，表示停止该进程，但还未结束。</li>
+</ol>
+<p>有信号发生时，进程一般有三种方式响应信号：</p>
+<ol>
+<li>执行默认操作：Linux操作系统为众多信号配备了专门的处理操作。</li>
+<li>捕捉信号：给捕捉到的信号配备专门的信号处理函数。</li>
+<li>忽略信号：专门用来忽略某些信号，但 SIGKILL 和 SEGSTOP是无法被忽略的，为了能在任何时候结束或停止某个进程而存在。</li>
+</ol>
+<h5 id="3-6-6-Socket编程"><a href="#3-6-6-Socket编程" class="headerlink" title="3.6.6 Socket编程"></a>3.6.6 Socket编程</h5><p>前面提到的管道、消息队列、共享内存、信号量和信号都是在同一台主机上进行进程间通信，<strong>那要想跨网络与不同主机上的进程之间通信，就需要 Socket 通信</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int domain, int type, int protocal)</span><br></pre></td></tr></table></figure>
 <p>上面是socket编程的核心函数，可以指定IPV4或IPV6类型，TCP或UDP类型。比如<a href="http://mp.weixin.qq.com/s?__biz=MzI4NjI1OTI4Nw==&amp;mid=2247490719&amp;idx=1&amp;sn=9590fea26b75698ddb37b24ef34e0c8c&amp;chksm=ebdefda7dca974b16ac1e3ae78ff0222c4ad4bd181a70a233df8683cb3fb6199395e14bd65e6&amp;scene=21#wechat_redirect" target="_blank" rel="noopener"><strong>TCP</strong></a>协议通信的 socket 编程模型如下：</p>
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110306777.png" title="image-20220208110306777" data-fancybox="images"><img src="image-20220208110306777.png" alt="image-20220208110306777" title class></a>
                 <p>image-20220208110306777</p>
-            </figure>Socket编程<br><br>1. 服务端和客户端初始化 <code>socket</code>，得到文件描述符。<br>2. 服务端调用<code>bind</code>，将绑定在 IP 地址和端口。<br>3. 服务端调用 <code>listen</code>，进行监听。<br>4. 服务端调用 <code>accept</code>，等待客户端连接。<br>5. 客户端调用 <code>connect</code>，向服务器端的地址和端口发起连接请求。<br>6. 服务端 <code>accept</code> 返回用于传输的 <code>socket</code> 的文件描述符。<br>7. 客户端调用 <code>write</code> 写入数据，服务端调用 <code>read</code> 读取数据。<br>8. 客户端断开连接时，会调用 <code>close</code>，那么服务端 <code>read</code> 读取数据的时候，就会读取到了<code>EOF</code>，待处理完数据后，服务端调用 close，表示连接关闭。<br>9. 服务端调用 <code>accept</code>时，连接成功会返回一个已完成连接的 <code>socket</code>，后续用来传输数据。服务端有俩<code>socket</code>，一个叫作监听 <code>socket</code>，一个叫作已完成连接 <code>socket</code>。<br>10. 成功连接建立之后双方开始通过 read 和 write 函数来读写数据。<br><br><figure class="image-box">
+            </figure>
+<p>Socket编程</p>
+<ol>
+<li>服务端和客户端初始化 <code>socket</code>，得到文件描述符。</li>
+<li>服务端调用<code>bind</code>，将绑定在 IP 地址和端口。</li>
+<li>服务端调用 <code>listen</code>，进行监听。</li>
+<li>服务端调用 <code>accept</code>，等待客户端连接。</li>
+<li>客户端调用 <code>connect</code>，向服务器端的地址和端口发起连接请求。</li>
+<li>服务端 <code>accept</code> 返回用于传输的 <code>socket</code> 的文件描述符。</li>
+<li>客户端调用 <code>write</code> 写入数据，服务端调用 <code>read</code> 读取数据。</li>
+<li>客户端断开连接时，会调用 <code>close</code>，那么服务端 <code>read</code> 读取数据的时候，就会读取到了<code>EOF</code>，待处理完数据后，服务端调用 close，表示连接关闭。</li>
+<li>服务端调用 <code>accept</code>时，连接成功会返回一个已完成连接的 <code>socket</code>，后续用来传输数据。服务端有俩<code>socket</code>，一个叫作监听 <code>socket</code>，一个叫作已完成连接 <code>socket</code>。</li>
+<li>成功连接建立之后双方开始通过 read 和 write 函数来读写数据。</li>
+</ol>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110319666.png" title="image-20220208110319666" data-fancybox="images"><img src="image-20220208110319666.png" alt="image-20220208110319666" title class></a>
                 <p>image-20220208110319666</p>
-            </figure>UDP传输<br><br><br>UDP比较简单，属于类似广播性质的传输，不需要维护连接。但也需要 bind，每次通信时调用 sendto 和 recvfrom 都要传入目标主机的 IP 地址和端口。<br><br>### 3.7 多线程编程<br><br>既然多进程开销过大，那平常我们经常使用到的就是多线程编程了。期间可能涉及到内存模型、JMM、Volatile、临界区等等。这些在<a href="https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&amp;album_id=1663052626025840644&amp;__biz=MzI4NjI1OTI4Nw==&amp;uin=&amp;key=&amp;devicetype=Windows+7+x64&amp;version=63010043&amp;lang=zh_CN&amp;ascene=7&amp;fontgear=2" target="_blank" rel="noopener">Java并发编程专栏</a>有讲。<br><br># 4 文件管理<br><br>### 4.1 VFS 虚拟文件系统<br><br>文件系统在操作系统中主要负责将文件数据信息存储到磁盘中，起到持久化文件的作用。文件系统的基本组成单元就是文件，文件组成方式不同就会形成不同的文件系统。<br><br>文件系统有很多种而不同的文件系统应用到操作系统后需要提供统一的对外接口，此时用到了一个设计理念<code>没有什么是加一层解决不了的</code>，在用户层跟不同的文件系统之间加入一个虚拟文件系统层 <code>Virtual File System</code>。<br><br>虚拟文件系统层<code>定义了一组所有文件系统都支持的数据结构和标准接口</code>，这样程序员不需要了解文件系统的工作原理，只需要了解 VFS 提供的统一接口即可。<br><br><figure class="image-box">
-                <a rel=操作系统 | 硬核图文讲解 href="image-20220208110333436.png" title="image-20220208110333436" data-fancybox="images"><img src="image-20220208110333436.png" alt="image-20220208110333436" title class></a>
-                <p>image-20220208110333436</p>
-            </figure>虚拟文件系统<br><br><br>日常的文件系统一般有如下三种：<br><br><br><br>1. <code>磁盘文件系统</code>：就是我们常见的EXT 2/3/4系列。<br>2. <code>内存文件系统</code>：数据没存储到磁盘，占用内存数据，比如<code>/sys</code>、<code>/proc</code>。进程中的一些数据映射到/proc中了。<br>3. <code>网络文件系统</code>：常见的网盘挂载NFS等，通过访问其他主机数据实现。<br><br>### 4.2 文件组成<br><br>以Linux系统为例，在Linux系统中一切皆文件，Linux文件系统会为每个文件分配<code>索引节点 inode</code>跟<code>目录项directory entry</code>来记录文件内容跟目录层次结构。<br><br>##### 4.2.1 inode<br><br>要理解<code>inode</code>要从文件储存说起。文件存储在硬盘上，硬盘的最小存储单位叫做扇区。每个扇区储存512字节。操作系统读取硬盘的时候，不会一个个扇区的读取，这样效率太低，一般一次性连续读取8个扇区(4KB)来当做一块，这种由多个扇区组成的<strong>块</strong>，是文件存取的最小单位。<br><br>文件数据都储存在块中，我们还必须找到一个地方储存文件的元信息，比如inode编号、文件大小、创建时间、修改时间、磁盘位置、访问权限等。几乎除了文件名以为的所有文件元数据信息都存储在一个叫叫索引节点inode的地方。可通过<code>stat 文件名</code>查看 inode 信息<br><br>每个inode都有一个号码，操作系统用inode号码来识别不同的文件。Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件，用户可通过<code>ls -i</code>查看每个文件对应编号。对于系统来说文件名只是inode号码便于识别的别称或者绰号。特殊名字的文件不好删除时可以尝试用inode号删除，移动跟重命名不会导致文件inode变化，当用户尝试根据文件名打开文件时，实际上系统内部将这个过程分成三步：<br><br>1. 系统找到这个文件名对应的inode号码。<br>2. 通过inode号码，获取inode信息，进行权限验证等操作。<br>3. 根据inode信息，找到文件数据所在的block，读出数据。<br><br>需注意 inode也会消耗硬盘空间，硬盘格式化后会被分成<strong>超级块</strong>、<strong>索引节点区</strong>和<strong>数据块区</strong>三个区域：<br><br>1. <code>超级块区</code>：用来存储文件系统的详细信息，比如块大小，块个数等信息。一般文件系统挂载后就会将数据信息同步到内存。<br><br>2. <code>索引节点区</code>：用来存储索引节点 inode  table。每个inode一般为128字节或256字节，一般每1KB或2KB数据就需设置一个inode。一般为了加速查询会把索引数据缓存到内存。<br><br>3. <code>数据块区</code>：真正存储磁盘数据的地方。<br><br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df -i # 查看每个硬盘分区的inode总数和已经使用的数量</span><br><span class="line">sudo dumpe2fs -h /dev/hda | grep &quot;Inode size&quot; # 查看每个inode节点的大小</span><br></pre></td></tr></table></figure>
+            </figure>
+<p>  UDP传输</p>
+<p>UDP比较简单，属于类似广播性质的传输，不需要维护连接。但也需要 bind，每次通信时调用 sendto 和 recvfrom 都要传入目标主机的 IP 地址和端口。</p>
+<h3 id="3-7-多线程编程"><a href="#3-7-多线程编程" class="headerlink" title="3.7 多线程编程"></a>3.7 多线程编程</h3><p>既然多进程开销过大，那平常我们经常使用到的就是多线程编程了。期间可能涉及到内存模型、JMM、Volatile、临界区等等。这些在<a href="https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&amp;album_id=1663052626025840644&amp;__biz=MzI4NjI1OTI4Nw==&amp;uin=&amp;key=&amp;devicetype=Windows+7+x64&amp;version=63010043&amp;lang=zh_CN&amp;ascene=7&amp;fontgear=2" target="_blank" rel="noopener">Java并发编程专栏</a>有讲。</p>
+<h1 id="4-文件管理"><a href="#4-文件管理" class="headerlink" title="4 文件管理"></a>4 文件管理</h1><h3 id="4-1-VFS-虚拟文件系统"><a href="#4-1-VFS-虚拟文件系统" class="headerlink" title="4.1 VFS 虚拟文件系统"></a>4.1 VFS 虚拟文件系统</h3><p>  文件系统在操作系统中主要负责将文件数据信息存储到磁盘中，起到持久化文件的作用。文件系统的基本组成单元就是文件，文件组成方式不同就会形成不同的文件系统。</p>
+<p>  文件系统有很多种而不同的文件系统应用到操作系统后需要提供统一的对外接口，此时用到了一个设计理念<code>没有什么是加一层解决不了的</code>，在用户层跟不同的文件系统之间加入一个虚拟文件系统层 <code>Virtual File System</code>。</p>
+<p>  虚拟文件系统层<code>定义了一组所有文件系统都支持的数据结构和标准接口</code>，这样程序员不需要了解文件系统的工作原理，只需要了解 VFS 提供的统一接口即可。</p>
+<p>  <a rel=操作系统 | 硬核图文讲解 href="image-20220208110333436.png" title="image-20220208110333436" data-fancybox="images"><img src="image-20220208110333436.png" alt="image-20220208110333436"></a>虚拟文件系统</p>
+<p>  日常的文件系统一般有如下三种：</p>
+<p>   1 <code>磁盘文件系统</code>：就是我们常见的EXT 2/3/4系列。<br>   2 <code>内存文件系统</code>：数据没存储到磁盘，占用内存数据，比如<code>/sys</code>、<code>/proc</code>。进程中的一些数据映射到/proc中了。<br>   3 <code>网络文件系统</code>：常见的网盘挂载NFS等，通过访问其他主机数据实现。</p>
+<h3 id="4-2-文件组成"><a href="#4-2-文件组成" class="headerlink" title="4.2 文件组成"></a>4.2 文件组成</h3><p>以Linux系统为例，在Linux系统中一切皆文件，Linux文件系统会为每个文件分配<code>索引节点 inode</code>跟<code>目录项directory entry</code>来记录文件内容跟目录层次结构。</p>
+<h5 id="4-2-1-inode"><a href="#4-2-1-inode" class="headerlink" title="4.2.1 inode"></a>4.2.1 inode</h5><p>  要理解<code>inode</code>要从文件储存说起。文件存储在硬盘上，硬盘的最小存储单位叫做扇区。每个扇区储存512字节。操作系统读取硬盘的时候，不会一个个扇区的读取，这样效率太低，一般一次性连续读取8个扇区(4KB)来当做一块，这种由多个扇区组成的<strong>块</strong>，是文件存取的最小单位。</p>
+<p>  文件数据都储存在块中，我们还必须找到一个地方储存文件的元信息，比如inode编号、文件大小、创建时间、修改时间、磁盘位置、访问权限等。几乎除了文件名以为的所有文件元数据信息都存储在一个叫叫索引节点inode的地方。可通过<code>stat 文件名</code>查看 inode 信息</p>
+<p>  每个inode都有一个号码，操作系统用inode号码来识别不同的文件。Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件，用户可通过<code>ls -i</code>查看每个文件对应编号。对于系统来说文件名只是inode号码便于识别的别称或者绰号。特殊名字的文件不好删除时可以尝试用inode号删除，移动跟重命名不会导致文件inode变化，当用户尝试根据文件名打开文件时，实际上系统内部将这个过程分成三步：</p>
+<ol>
+<li>系统找到这个文件名对应的inode号码。</li>
+<li>通过inode号码，获取inode信息，进行权限验证等操作。</li>
+<li><p>根据inode信息，找到文件数据所在的block，读出数据。</p>
+<p>需注意 inode也会消耗硬盘空间，硬盘格式化后会被分成<strong>超级块</strong>、<strong>索引节点区</strong>和<strong>数据块区</strong>三个区域：</p>
+</li>
+<li><p><code>超级块区</code>：用来存储文件系统的详细信息，比如块大小，块个数等信息。一般文件系统挂载后就会将数据信息同步到内存。</p>
+</li>
+<li><p><code>索引节点区</code>：用来存储索引节点 inode  table。每个inode一般为128字节或256字节，一般每1KB或2KB数据就需设置一个inode。一般为了加速查询会把索引数据缓存到内存。</p>
+</li>
+<li><p><code>数据块区</code>：真正存储磁盘数据的地方。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df -i # 查看每个硬盘分区的inode总数和已经使用的数量</span><br><span class="line">sudo dumpe2fs -h /dev/hda | grep &quot;Inode size&quot; # 查看每个inode节点的大小</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <h5 id="4-2-2-目录"><a href="#4-2-2-目录" class="headerlink" title="4.2.2 目录"></a>4.2.2 目录</h5><p>Unix/Linux系统中<strong>目录directory也是一种文件</strong>，打开目录实际上就是打开目录文件。目录文件内容就是一系列目录项的列，目录项的内容包含<strong>文件的名字、文件类型、索引节点指针以及与其他目录项的层级关系</strong>。</p>
 <p>为避免频繁读取磁盘里的目录文件，内核会把已经读过的目录文件用<code>目录项</code>这个数据结构缓存在内存，方便用户下次读取目录信息，目录项可包含目录或文件，不要惊讶于可以保存目录，目录格式的目录项里面保存的是目录里面一项一项的文件信息。</p>
 <h5 id="4-2-3-软连接跟硬链接"><a href="#4-2-3-软连接跟硬链接" class="headerlink" title="4.2.3 软连接跟硬链接"></a>4.2.3 软连接跟硬链接</h5><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110345265.png" title="image-20220208110345265" data-fancybox="images"><img src="image-20220208110345265.png" alt="image-20220208110345265" title class></a>
                 <p>image-20220208110345265</p>
-            </figure>软连接跟硬链接<br><br><br><strong>硬链接</strong>：老文件A被创建若干个硬链接B、C后。A、B、C三个文件的inode是相同的，所以不能跨文件系统。同时只有ABC全部删除，系统才会删除源文件。<br><strong>软链接</strong>：相当于基于老文件A新建了个文件B，该文件B有新的inode，不过文件B内容是老文件A的路径。所以软链接可以跨文件系统。当老文件A删除后，文件B仍然存在，不过找不到指定文件了。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[sowhat@localhost ~]$ ln [选项] 源文件 目标文件</span><br><span class="line">选项：</span><br><span class="line">-s：建立软链接文件。如果不加 &quot;-s&quot; 选项，则建立硬链接文件；</span><br><span class="line">-f：强制。如果目标文件已经存在，则删除目标文件后再建立链接文件；</span><br></pre></td></tr></table></figure>
+            </figure>
+<p>软连接跟硬链接</p>
+<p><strong>硬链接</strong>：老文件A被创建若干个硬链接B、C后。A、B、C三个文件的inode是相同的，所以不能跨文件系统。同时只有ABC全部删除，系统才会删除源文件。<br><strong>软链接</strong>：相当于基于老文件A新建了个文件B，该文件B有新的inode，不过文件B内容是老文件A的路径。所以软链接可以跨文件系统。当老文件A删除后，文件B仍然存在，不过找不到指定文件了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[sowhat@localhost ~]$ ln [选项] 源文件 目标文件</span><br><span class="line">选项：</span><br><span class="line">-s：建立软链接文件。如果不加 &quot;-s&quot; 选项，则建立硬链接文件；</span><br><span class="line">-f：强制。如果目标文件已经存在，则删除目标文件后再建立链接文件；</span><br></pre></td></tr></table></figure>
 <h3 id="4-3-文件存储"><a href="#4-3-文件存储" class="headerlink" title="4.3 文件存储"></a>4.3 文件存储</h3><p>说文件存储前需了解<strong>文件系统操作基本单位是数据块</strong>，而平常用户操作字节到数据块之间是需要转换的，当然这些文件系统都帮我们对接好了。接下来看文件系统是如何按照数据块， 文件在磁盘中存储时候主要分为<code>连续空间存储</code>跟<code>非连续空间存储</code></p>
 <h5 id="4-3-1-连续空间存储"><a href="#4-3-1-连续空间存储" class="headerlink" title="4.3.1 连续空间存储"></a>4.3.1 连续空间存储</h5><ol>
 <li><p><code>实现</code>：连续空间存储的意思就跟数组存储一样，找个连续的空间一次性把数据存储进去，<strong>文件头</strong>存储起始位置跟数据长度即可。</p>
@@ -813,7 +1050,8 @@
 <li><p><code>优势</code>：读写效率高，磁盘寻址一次即可。</p>
 </li>
 <li><p><code>劣势</code>：容易产生空间碎片，并且文件扩容不方便。</p>
-<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110358288.png" title="image-20220208110358288" data-fancybox="images"><img src="image-20220208110358288.png" alt="image-20220208110358288"></a>连续存储</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110358288.png" title="image-20220208110358288" data-fancybox="images"><img src="image-20220208110358288.png" alt="image-20220208110358288"></a></p>
+<p>连续存储</p>
 </li>
 </ol>
 <h5 id="4-3-2-非连续空间存储之链表"><a href="#4-3-2-非连续空间存储之链表" class="headerlink" title="4.3.2 非连续空间存储之链表"></a>4.3.2 非连续空间存储之链表</h5><p><strong>隐式链表</strong></p>
@@ -830,7 +1068,7 @@
 <li><p><code>实现</code>：把每个Block中的next指针存储到内存<code>文件分配表</code>中，通过遍历数组方式实现拿到全部数据。</p>
 </li>
 <li><p><code>缺点</code>：前面说1KB就有个inode指针，如果磁盘数据很大那就需要很大的<strong>文件分配表</strong>来存储映射关系了，</p>
-<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110425596.png" title="image-20220208110425596" data-fancybox="images"><img src="image-20220208110425596.png" alt="image-20220208110425596"></a>显示链表</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110425596.png" title="image-20220208110425596" data-fancybox="images"><img src="image-20220208110425596.png" alt="image-20220208110425596"></a><br>显示链表</p>
 </li>
 </ol>
 <h5 id="4-3-3-非连续空间存储之索引"><a href="#4-3-3-非连续空间存储之索引" class="headerlink" title="4.3.3 非连续空间存储之索引"></a>4.3.3 非连续空间存储之索引</h5><ol>
@@ -841,49 +1079,132 @@
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110436521.png" title="image-20220208110436521" data-fancybox="images"><img src="image-20220208110436521.png" alt="image-20220208110436521" title class></a>
                 <p>image-20220208110436521</p>
-            </figure>索引存储<br><br><br>这些存储方式各有利弊，所以操作系统才存储的时候一般是根据文件的大小进行动态的变化存储方式的，跟STL中的快排底层 = 快排 + 插入排序 + 堆排 一样的道理。<br><br>##### 4.3.4 空闲空间管理<br><br>为了避免用户存储数据时候遍历全部磁盘空间来寻找可以数据块，一般有如下几种记录方法。<br><br>1. <code>空闲表</code>：动态的维护一个空闲数据块列表，每行存储空闲块的开始位置跟空闲长度。适合少量有少量空闲数据块时。<br><br>   <a rel=操作系统 | 硬核图文讲解 href="image-20220208110452631.png" title="image-20220208110452631" data-fancybox="images"><img src="image-20220208110452631.png" alt="image-20220208110452631"></a>空闲表<br><br>2. <code>空闲链表</code>：将空闲的数据库用next指针串联起来，缺点是不能随机访问。<br><br>   <a rel=操作系统 | 硬核图文讲解 href="image-20220208110504160.png" title="image-20220208110504160" data-fancybox="images"><img src="image-20220208110504160.png" alt="image-20220208110504160"></a>空闲链表<br><br>3. <code>位图法</code>：利用Bit的 01 表示数据块可用跟不可用，简单方便，<strong>inode跟空闲数据库都用的此方法</strong>。<br><br>   <a rel=操作系统 | 硬核图文讲解 href="image-20220208110514002.png" title="image-20220208110514002" data-fancybox="images"><img src="image-20220208110514002.png" alt="image-20220208110514002"></a>位图法<br><br># 5  输入输出管理<br><br>### 5.1 设备控制器跟驱动程序<br><br>##### 5.1.1 设备控制器<br><br><figure class="image-box">
+            </figure>
+<p>  索引存储</p>
+<p>这些存储方式各有利弊，所以操作系统才存储的时候一般是根据文件的大小进行动态的变化存储方式的，跟STL中的快排底层 = 快排 + 插入排序 + 堆排 一样的道理。</p>
+<h5 id="4-3-4-空闲空间管理"><a href="#4-3-4-空闲空间管理" class="headerlink" title="4.3.4 空闲空间管理"></a>4.3.4 空闲空间管理</h5><p>为了避免用户存储数据时候遍历全部磁盘空间来寻找可以数据块，一般有如下几种记录方法。</p>
+<ol>
+<li><p><code>空闲表</code>：动态的维护一个空闲数据块列表，每行存储空闲块的开始位置跟空闲长度。适合少量有少量空闲数据块时。</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110452631.png" title="image-20220208110452631" data-fancybox="images"><img src="image-20220208110452631.png" alt="image-20220208110452631"></a><br>空闲表</p>
+</li>
+<li><p><code>空闲链表</code>：将空闲的数据库用next指针串联起来，缺点是不能随机访问。</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110504160.png" title="image-20220208110504160" data-fancybox="images"><img src="image-20220208110504160.png" alt="image-20220208110504160"></a><br>空闲链表</p>
+</li>
+<li><p><code>位图法</code>：利用Bit的 01 表示数据块可用跟不可用，简单方便，<strong>inode跟空闲数据库都用的此方法</strong>。</p>
+<p><a rel=操作系统 | 硬核图文讲解 href="image-20220208110514002.png" title="image-20220208110514002" data-fancybox="images"><img src="image-20220208110514002.png" alt="image-20220208110514002"></a><br>位图法</p>
+</li>
+</ol>
+<h1 id="5-输入输出管理"><a href="#5-输入输出管理" class="headerlink" title="5  输入输出管理"></a>5  输入输出管理</h1><h3 id="5-1-设备控制器跟驱动程序"><a href="#5-1-设备控制器跟驱动程序" class="headerlink" title="5.1 设备控制器跟驱动程序"></a>5.1 设备控制器跟驱动程序</h3><h5 id="5-1-1-设备控制器"><a href="#5-1-1-设备控制器" class="headerlink" title="5.1.1 设备控制器"></a>5.1.1 设备控制器</h5><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110525266.png" title="image-20220208110525266" data-fancybox="images"><img src="image-20220208110525266.png" alt="image-20220208110525266" title class></a>
                 <p>image-20220208110525266</p>
-            </figure>设备控制器<br><br><br>操作系统为统一管理众多的设备并且屏蔽设备之间的差异，给每个设备都安装了个小CPU叫<strong>设备控制器</strong>。每个设备控制器都知道自己对应外设的功能跟用法，并且每个<strong>设备控制器</strong>都有独有的寄存器用来跟CPU通信。<br><br><br><br>1. 读设备寄存器值了解设备状态，是否可以接收新指令。<br>2. 操作系统给设备寄存器写入一些指令可以实现发送数据、接收数据等等操作。<br><br>控制器一般分为<strong>数据寄存器、命令寄存器跟状态寄存器</strong>，CPU 通过读、写设备控制器中的寄存器来便捷的控制设备：<br><br>1. <code>数据寄存器</code>：CPU 向 I/O 设备写入需要传输的数据，比如打印what，CPU 就要先发送一个w字符给到对应的 I/O 设备。<br>2. <code>命令寄存器</code>：CPU 发送命令来告诉 I/O 设备要进行输入/输出操作，于是就会交给 I/O 设备去工作，任务完成后，会把状态寄存器里面的状态标记为完成。<br>3. <code>状态寄存器</code>：用来告诉 CPU 现在已经在工作或工作已经完成，只有状态寄存标记成已完成，CPU 才能发送下一个字符和命令。<br><br>同时输入输出设备可分为<code>块设备</code>跟<code>字符设备</code>。<br><br>1. <code>块设备</code>：用来把数据存储在固定大小的块中，每个块有自己的地址，硬盘、U盘等是常见的块设备。块设备一般数据传输较大为避免频繁IO，控制器中有个可读写等<strong>数据缓冲区</strong>。Linux操作系统为屏蔽不同块设备带来的差异引入了<strong>通用块层</strong>，<strong>通用块层</strong>是处于文件系统和磁盘驱动中间的一个块设备抽象层，主要提供如下俩功能：<br><br>&gt; 1. 向上为文件系统和应用程序，提供访问块设备的标准接口，向下把各种不同的磁盘设备抽象为统一的块设备，并在内核层面提供一个框架来管理这些设备的驱动程序。<br>&gt; 2. 通用层还会给文件系统和应用程序发来的 I/O进行<strong>调度</strong>，主要目的是为了提高磁盘读写的效率。<br><br>1. <code>字符设备</code>：以字符为单位发送或接收一个字符流，字符设备是不可寻址的，也没有任何寻道操作，鼠标是常见的字符设备。<br><br>CPU一般通过<strong>IO端口</strong>跟<strong>内存映射IO</strong>来跟设备的控制寄存器和数据缓冲区进行通信<br><br>1. <code>IO端口</code>：每个控制寄存器被分配一个 I/O 端口，可以通过特殊的汇编指令操作这些寄存器，比如 in/out 类似的指令。<br>2. <code>内存映射IO</code>：将所有控制寄存器映射到内存空间中，这样就可以像读写内存一样读写数据缓冲区。<br><br>##### 5.1.2 驱动接口<br><br><figure class="image-box">
+            </figure>
+<p>  设备控制器</p>
+<p>操作系统为统一管理众多的设备并且屏蔽设备之间的差异，给每个设备都安装了个小CPU叫<strong>设备控制器</strong>。每个设备控制器都知道自己对应外设的功能跟用法，并且每个<strong>设备控制器</strong>都有独有的寄存器用来跟CPU通信。</p>
+<ol>
+<li>读设备寄存器值了解设备状态，是否可以接收新指令。</li>
+<li>操作系统给设备寄存器写入一些指令可以实现发送数据、接收数据等等操作。</li>
+</ol>
+<p>控制器一般分为<strong>数据寄存器、命令寄存器跟状态寄存器</strong>，CPU 通过读、写设备控制器中的寄存器来便捷的控制设备：</p>
+<ol>
+<li><code>数据寄存器</code>：CPU 向 I/O 设备写入需要传输的数据，比如打印what，CPU 就要先发送一个w字符给到对应的 I/O 设备。</li>
+<li><code>命令寄存器</code>：CPU 发送命令来告诉 I/O 设备要进行输入/输出操作，于是就会交给 I/O 设备去工作，任务完成后，会把状态寄存器里面的状态标记为完成。</li>
+<li><code>状态寄存器</code>：用来告诉 CPU 现在已经在工作或工作已经完成，只有状态寄存标记成已完成，CPU 才能发送下一个字符和命令。</li>
+</ol>
+<p>同时输入输出设备可分为<code>块设备</code>跟<code>字符设备</code>。</p>
+<ol>
+<li><code>块设备</code>：用来把数据存储在固定大小的块中，每个块有自己的地址，硬盘、U盘等是常见的块设备。块设备一般数据传输较大为避免频繁IO，控制器中有个可读写等<strong>数据缓冲区</strong>。Linux操作系统为屏蔽不同块设备带来的差异引入了<strong>通用块层</strong>，<strong>通用块层</strong>是处于文件系统和磁盘驱动中间的一个块设备抽象层，主要提供如下俩功能：</li>
+</ol>
+<blockquote>
+<ol>
+<li>向上为文件系统和应用程序，提供访问块设备的标准接口，向下把各种不同的磁盘设备抽象为统一的块设备，并在内核层面提供一个框架来管理这些设备的驱动程序。</li>
+<li>通用层还会给文件系统和应用程序发来的 I/O进行<strong>调度</strong>，主要目的是为了提高磁盘读写的效率。</li>
+</ol>
+</blockquote>
+<ol>
+<li><code>字符设备</code>：以字符为单位发送或接收一个字符流，字符设备是不可寻址的，也没有任何寻道操作，鼠标是常见的字符设备。</li>
+</ol>
+<p>CPU一般通过<strong>IO端口</strong>跟<strong>内存映射IO</strong>来跟设备的控制寄存器和数据缓冲区进行通信</p>
+<ol>
+<li><code>IO端口</code>：每个控制寄存器被分配一个 I/O 端口，可以通过特殊的汇编指令操作这些寄存器，比如 in/out 类似的指令。</li>
+<li><code>内存映射IO</code>：将所有控制寄存器映射到内存空间中，这样就可以像读写内存一样读写数据缓冲区。</li>
+</ol>
+<h5 id="5-1-2-驱动接口"><a href="#5-1-2-驱动接口" class="headerlink" title="5.1.2 驱动接口"></a>5.1.2 驱动接口</h5><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110540638.png" title="image-20220208110540638" data-fancybox="images"><img src="image-20220208110540638.png" alt="image-20220208110540638" title class></a>
                 <p>image-20220208110540638</p>
-            </figure>驱动程序<br><br>设备控制器屏蔽了设备细节，但每种设备的控制器的寄存器、缓冲区等使用模式都是不同的，它属于硬件。在操作系统图范畴内为了屏蔽设备控制器的差异，引入了<strong>设备驱动程序</strong>，<strong>不同设备到驱动程序会提供统一接口给操作系统来调用</strong>，这样操作系统内核会像调用本地代码一样使用设备驱动程序接口。<br><br>设备发出IO请求就是在<strong>设备驱动程序</strong>中来响应到，它会根据中断类型调用响应到中断处理程序进行处理。<br><br><figure class="image-box">
+            </figure>
+<p>  驱动程序</p>
+<p>设备控制器屏蔽了设备细节，但每种设备的控制器的寄存器、缓冲区等使用模式都是不同的，它属于硬件。在操作系统图范畴内为了屏蔽设备控制器的差异，引入了<strong>设备驱动程序</strong>，<strong>不同设备到驱动程序会提供统一接口给操作系统来调用</strong>，这样操作系统内核会像调用本地代码一样使用设备驱动程序接口。</p>
+<p>设备发出IO请求就是在<strong>设备驱动程序</strong>中来响应到，它会根据中断类型调用响应到中断处理程序进行处理。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110624410.png" title="image-20220208110624410" data-fancybox="images"><img src="image-20220208110624410.png" alt="image-20220208110624410" title class></a>
                 <p>image-20220208110624410</p>
-            </figure>中断请求流程<br><br>### 5.2 IO 控制<br><br>CPU发送指令让那个设备控制器去读写数据，完毕后如何通知CPU呢？<br><br>##### 5.2.1 轮询模式<br><br>控制器中有个<strong>状态寄存器</strong>，CPU不断<strong>轮</strong>询查看寄存器状态，该模式会傻瓜式的一直占用CPU。<br><br><figure class="image-box">
+            </figure>
+<p>  中断请求流程</p>
+<h3 id="5-2-IO-控制"><a href="#5-2-IO-控制" class="headerlink" title="5.2 IO 控制"></a>5.2 IO 控制</h3><p>CPU发送指令让那个设备控制器去读写数据，完毕后如何通知CPU呢？</p>
+<h5 id="5-2-1-轮询模式"><a href="#5-2-1-轮询模式" class="headerlink" title="5.2.1 轮询模式"></a>5.2.1 轮询模式</h5><p>控制器中有个<strong>状态寄存器</strong>，CPU不断<strong>轮</strong>询查看寄存器状态，该模式会傻瓜式的一直占用CPU。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110635167.png" title="image-20220208110635167" data-fancybox="images"><img src="image-20220208110635167.png" alt="image-20220208110635167" title class></a>
                 <p>image-20220208110635167</p>
-            </figure>轮询模式<br><br>##### 5.2.2 IO 中断请求<br><br><figure class="image-box">
+            </figure>
+<p>  轮询模式</p>
+<h5 id="5-2-2-IO-中断请求"><a href="#5-2-2-IO-中断请求" class="headerlink" title="5.2.2 IO 中断请求"></a>5.2.2 IO 中断请求</h5><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110646262.png" title="image-20220208110646262" data-fancybox="images"><img src="image-20220208110646262.png" alt="image-20220208110646262" title class></a>
                 <p>image-20220208110646262</p>
-            </figure>中断模式<br><br><br>控制器有个中断控制器，当设备完成任务后触发中断到中断控制器，中断控制器就通知 CPU来处理中断请求。中断有两种，一种是<strong>软中断</strong>，比如代码调用 INT 指令触发。一种是<strong>硬件中断</strong>，硬件通过中断控制器触发的。但中断方式对于频繁读写磁盘数据的操作就不太友好了，会频繁打断CPU。<br><br>这里说下磁盘高速缓存 <strong>PageCache</strong>，它是用来缓存最近被CPU访问的数据到内存中，并且还具有预读功能，可能你读前16KB数据，已经把后16KB数据给你缓存好了。<br><br>&gt; 1. <strong>pagecache</strong> : 页缓存，当进程需读取磁盘文件时，linux先分配一些内存，将数据从磁盘读区到内存中，然后再将数据传给进程。当进程需写数据到磁盘时，linux先分配内存接收用户数据，然后再将数据从内存写到磁盘。同时pagecache由于大小受限，所以一般只缓存最近被访问的数据，数据不足时还需访问磁盘。<br><br>##### 5.2.3 DMA 模式<br><br><code>Direct Memory Access</code> 直接内存访问，在硬件DMA控制器的支持下，<strong>在进行 I/O 设备和内存的数据传输的时候，数据搬运的工作全部交给 DMA 控制器，而 CPU 不再参与任何与数据搬运相关的事情，让CPU 去处理别的事</strong>。<br><br><figure class="image-box">
+            </figure>
+<p>  中断模式</p>
+<p>控制器有个中断控制器，当设备完成任务后触发中断到中断控制器，中断控制器就通知 CPU来处理中断请求。中断有两种，一种是<strong>软中断</strong>，比如代码调用 INT 指令触发。一种是<strong>硬件中断</strong>，硬件通过中断控制器触发的。但中断方式对于频繁读写磁盘数据的操作就不太友好了，会频繁打断CPU。</p>
+<p>这里说下磁盘高速缓存 <strong>PageCache</strong>，它是用来缓存最近被CPU访问的数据到内存中，并且还具有预读功能，可能你读前16KB数据，已经把后16KB数据给你缓存好了。</p>
+<blockquote>
+<ol>
+<li><strong>pagecache</strong> : 页缓存，当进程需读取磁盘文件时，linux先分配一些内存，将数据从磁盘读区到内存中，然后再将数据传给进程。当进程需写数据到磁盘时，linux先分配内存接收用户数据，然后再将数据从内存写到磁盘。同时pagecache由于大小受限，所以一般只缓存最近被访问的数据，数据不足时还需访问磁盘。</li>
+</ol>
+</blockquote>
+<h5 id="5-2-3-DMA-模式"><a href="#5-2-3-DMA-模式" class="headerlink" title="5.2.3 DMA 模式"></a>5.2.3 DMA 模式</h5><p><code>Direct Memory Access</code> 直接内存访问，在硬件DMA控制器的支持下，<strong>在进行 I/O 设备和内存的数据传输的时候，数据搬运的工作全部交给 DMA 控制器，而 CPU 不再参与任何与数据搬运相关的事情，让CPU 去处理别的事</strong>。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110700883.png" title="image-20220208110700883" data-fancybox="images"><img src="image-20220208110700883.png" alt="image-20220208110700883" title class></a>
                 <p>image-20220208110700883</p>
-            </figure>DMA模式<br><br>可以发现整个数据传输过程中CPU是不会直接参与数据搬运工作，由DMA来直接负责数据读取工作，现如今每个IO设备一般都自带DMA控制器。读数据时候仅仅在传送开始跟结束时需要CPU干预。<br><br>##### 5.2.4 Zero Copy<br><br>Zero Copy 全程不会通过 CPU 来搬运数据，所有的数据都是通过 DMA 来进行传输的，中间只需要经过2次上下文切换跟2次DMA数据拷贝，相比最原始读写方式至少速度翻倍。其实在Kafka中已经讲过Zero Copy了。<br><br>###### 5.2.4.1 老版本读写<br><br>老版本的简单读写操作中间不对数据做任何操作。期间会发生<strong>4次用户态跟内核态的切换。2次DMA数据拷贝，2次CPU数据拷贝</strong>。<br><br><figure class="image-box">
+            </figure>
+<p>  DMA模式</p>
+<p>可以发现整个数据传输过程中CPU是不会直接参与数据搬运工作，由DMA来直接负责数据读取工作，现如今每个IO设备一般都自带DMA控制器。读数据时候仅仅在传送开始跟结束时需要CPU干预。</p>
+<h5 id="5-2-4-Zero-Copy"><a href="#5-2-4-Zero-Copy" class="headerlink" title="5.2.4 Zero Copy"></a>5.2.4 Zero Copy</h5><p>Zero Copy 全程不会通过 CPU 来搬运数据，所有的数据都是通过 DMA 来进行传输的，中间只需要经过2次上下文切换跟2次DMA数据拷贝，相比最原始读写方式至少速度翻倍。其实在Kafka中已经讲过Zero Copy了。</p>
+<h6 id="5-2-4-1-老版本读写"><a href="#5-2-4-1-老版本读写" class="headerlink" title="5.2.4.1 老版本读写"></a>5.2.4.1 老版本读写</h6><p>老版本的简单读写操作中间不对数据做任何操作。期间会发生<strong>4次用户态跟内核态的切换。2次DMA数据拷贝，2次CPU数据拷贝</strong>。</p>
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110717472.png" title="image-20220208110717472" data-fancybox="images"><img src="image-20220208110717472.png" alt="image-20220208110717472" title class></a>
                 <p>image-20220208110717472</p>
-            </figure>老式读写<br><br><br>提速方法就是需减少用户态与内核态的上下文切换和内存拷贝的次数。数据传输时从内核的读缓冲区拷贝到用户的缓冲区，再从用户缓冲区拷贝到 socket 缓冲区的这个过程是没有必要的。接下来<br><br>接下来按照三个版本说下Zero Copy 发展史。<br><br>###### 5.2.4.2  mmap 跟 write<br><br><figure class="image-box">
+            </figure>
+<p>  老式读写</p>
+<p>提速方法就是需减少用户态与内核态的上下文切换和内存拷贝的次数。数据传输时从内核的读缓冲区拷贝到用户的缓冲区，再从用户缓冲区拷贝到 socket 缓冲区的这个过程是没有必要的。接下来</p>
+<p>接下来按照三个版本说下Zero Copy 发展史。</p>
+<h6 id="5-2-4-2-mmap-跟-write"><a href="#5-2-4-2-mmap-跟-write" class="headerlink" title="5.2.4.2  mmap 跟 write"></a>5.2.4.2  mmap 跟 write</h6><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110728516.png" title="image-20220208110728516" data-fancybox="images"><img src="image-20220208110728516.png" alt="image-20220208110728516" title class></a>
                 <p>image-20220208110728516</p>
-            </figure>mmap + write<br><br><br>思路就是用<strong>mmap</strong>替代read函数，mmap调用时会<strong>直接把内核缓冲区里的数据映射到用户空间</strong>，此时减少了一次数据拷贝，但仍然需要通过 CPU 把内核缓冲区的数据拷贝到 socket 缓冲区里，而且仍然需要 4 次上下文切换，因为系统调用还是 2 次。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">buf = mmap(file, len);</span><br><span class="line">write(sockfd, buf, len);</span><br></pre></td></tr></table></figure>
+            </figure>
+<p>  mmap + write</p>
+<p>思路就是用<strong>mmap</strong>替代read函数，mmap调用时会<strong>直接把内核缓冲区里的数据映射到用户空间</strong>，此时减少了一次数据拷贝，但仍然需要通过 CPU 把内核缓冲区的数据拷贝到 socket 缓冲区里，而且仍然需要 4 次上下文切换，因为系统调用还是 2 次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">buf = mmap(file, len);</span><br><span class="line">write(sockfd, buf, len);</span><br></pre></td></tr></table></figure>
 <h6 id="5-2-4-3-sendfile"><a href="#5-2-4-3-sendfile" class="headerlink" title="5.2.4.3 sendfile"></a>5.2.4.3 sendfile</h6><p>Linux 内核版本 2.1版本提供了函数 <strong>sendfile()</strong>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssize_t sendfile(int out_fd, int in_fd, off_t *offset, size_t count);</span><br><span class="line">out_fd : 目的文件描述符</span><br><span class="line">in_fd:源文件描述符</span><br><span class="line">offset:源文件内偏移量</span><br><span class="line">count:打算复制数据长度</span><br><span class="line">ssize_t:实际上复制数据的长度</span><br></pre></td></tr></table></figure>
 <p>可以发现一个 sendfile = read + write，避免了2次用户态跟内核态来回切换，并且可以直接把内核缓冲区里的数据拷贝到 socket 缓冲区里，这样就只有 2 次上下文切换，和 3 次数据拷贝。</p>
 <figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110742002.png" title="image-20220208110742002" data-fancybox="images"><img src="image-20220208110742002.png" alt="image-20220208110742002" title class></a>
                 <p>image-20220208110742002</p>
-            </figure>sendfile模式<br><br>###### 5.2.4.4 真正的零拷贝<br><br>Linux 内核 2.4如果网卡支持SG-DMA 技术，可以减少通过 CPU 把内核缓冲区里的数据拷贝到 socket 缓冲区的过程。<br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ethtool -k eth0 | grep scatter-gather</span><br><span class="line">scatter-gather: on</span><br></pre></td></tr></table></figure>
+            </figure>
+<p> sendfile模式</p>
+<h6 id="5-2-4-4-真正的零拷贝"><a href="#5-2-4-4-真正的零拷贝" class="headerlink" title="5.2.4.4 真正的零拷贝"></a>5.2.4.4 真正的零拷贝</h6><p>Linux 内核 2.4如果网卡支持SG-DMA 技术，可以减少通过 CPU 把内核缓冲区里的数据拷贝到 socket 缓冲区的过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ethtool -k eth0 | grep scatter-gather</span><br><span class="line">scatter-gather: on</span><br></pre></td></tr></table></figure>
 <p>SG-DMA 技术可以直接将内核缓存中的数据拷贝到网卡的缓冲区里，此过程不需要将数据从操作系统内核缓冲区拷贝到 socket 缓冲区中，这样就减少了一次数据拷贝。</p>
-<p><figure class="image-box">
+<figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110800158.png" title="image-20220208110800158" data-fancybox="images"><img src="image-20220208110800158.png" alt="image-20220208110800158" title class></a>
                 <p>image-20220208110800158</p>
-            </figure>ZeroCopy</p>
+            </figure>
+<p>  ZeroCopy</p>
 <h6 id="5-2-4-5-文件传输规则"><a href="#5-2-4-5-文件传输规则" class="headerlink" title="5.2.4.5 文件传输规则"></a>5.2.4.5 文件传输规则</h6><p>不要以为会了Zero Copy后，无论大小文件都用Zero Copy。实际工作中一般小文件采用Zero Copy技术，而大文件会用异步IO。至于为啥，且看如下分析：</p>
 <p>前面说的数据从磁盘读到内核缓冲区就是读到PageCache中，PageCache具有缓存跟预读功能。但当传输超大文件时PageCache会不失效，因为大文件会快速占满PageCache区，但这些文件又只是一次访问，会造成其他热点小文件无法使用PageCache，所以索性不用PageCache，使用异步IO的了。至于异步IO是啥呢？下文在说。</p>
-<h3 id="5-3-IO分层"><a href="#5-3-IO分层" class="headerlink" title="5.3 IO分层"></a>5.3 IO分层</h3><p><figure class="image-box">
+<h3 id="5-3-IO分层"><a href="#5-3-IO分层" class="headerlink" title="5.3 IO分层"></a>5.3 IO分层</h3><figure class="image-box">
                 <a rel=操作系统 | 硬核图文讲解 href="image-20220208110811235.png" title="image-20220208110811235" data-fancybox="images"><img src="image-20220208110811235.png" alt="image-20220208110811235" title class></a>
                 <p>image-20220208110811235</p>
-            </figure>IO分层</p>
+            </figure>
+<p>  IO分层</p>
 <p>Linux 存储系统的 I/O 由上到下可以分为<strong>文件系统层</strong>、<strong>通用块层</strong>、<strong>设备层</strong>。</p>
 <ol>
 <li>文件系统层向上为应用程序统一提供了标准的文件访问接口，向下会通过通用块层来存储和管理磁盘数据。</li>
@@ -902,7 +1223,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2022-02-08T03:28:42.198Z" itemprop="dateUpdated">2022-02-08 11:28:42</time>
+    最后更新时间：<time datetime="2022-02-16T10:32:46.731Z" itemprop="dateUpdated">2022-02-16 18:32:46</time>
 </span><br>
 
 
@@ -1026,7 +1347,7 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-冯诺伊曼体系"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 冯诺伊曼体系</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-冯诺伊曼体系简介"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1.1 冯诺伊曼体系简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-CPU-简介"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">1.2 CPU 简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-CPU-访问方式"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">1.3 CPU 访问方式</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-内存管理"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 内存管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-MMU"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">2.1  MMU</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-内存管理方式"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">2.2  内存管理方式</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-进程管理"><span class="post-toc-number">3.</span> <span class="post-toc-text">3 进程管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-进程基础知识"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">3.1 进程基础知识</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3-进程控制"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">3.3 进程控制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-4-进程调度"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">3.4 进程调度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-5-线程"><span class="post-toc-number">3.0.4.</span> <span class="post-toc-text">3.5 线程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-6-进程通信"><span class="post-toc-number">3.0.5.</span> <span class="post-toc-text">3.6 进程通信</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-文件存储"><span class="post-toc-number">3.0.6.</span> <span class="post-toc-text">4.3 文件存储</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-3-IO分层"><span class="post-toc-number">3.0.7.</span> <span class="post-toc-text">5.3 IO分层</span></a></li></ol></li></ol></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-冯诺伊曼体系"><span class="post-toc-number">1.</span> <span class="post-toc-text">1 冯诺伊曼体系</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-冯诺伊曼体系简介"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1.1 冯诺伊曼体系简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-CPU-简介"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">1.2 CPU 简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-CPU-访问方式"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">1.3 CPU 访问方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-4-CPU-访问速度"><span class="post-toc-number">1.0.4.</span> <span class="post-toc-text">1.4 CPU 访问速度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-5-操作系统"><span class="post-toc-number">1.0.5.</span> <span class="post-toc-text">1.5  操作系统</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-内存管理"><span class="post-toc-number">2.</span> <span class="post-toc-text">2 内存管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-MMU"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">2.1  MMU</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-内存管理方式"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">2.2  内存管理方式</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-进程管理"><span class="post-toc-number">3.</span> <span class="post-toc-text">3 进程管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-进程基础知识"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">3.1 进程基础知识</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-2-PCB"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">3.2 PCB</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3-进程控制"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">3.3 进程控制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-4-进程调度"><span class="post-toc-number">3.0.4.</span> <span class="post-toc-text">3.4 进程调度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-5-线程"><span class="post-toc-number">3.0.5.</span> <span class="post-toc-text">3.5 线程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-6-进程通信"><span class="post-toc-number">3.0.6.</span> <span class="post-toc-text">3.6 进程通信</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-7-多线程编程"><span class="post-toc-number">3.0.7.</span> <span class="post-toc-text">3.7 多线程编程</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-文件管理"><span class="post-toc-number">4.</span> <span class="post-toc-text">4 文件管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-1-VFS-虚拟文件系统"><span class="post-toc-number">4.0.1.</span> <span class="post-toc-text">4.1 VFS 虚拟文件系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-2-文件组成"><span class="post-toc-number">4.0.2.</span> <span class="post-toc-text">4.2 文件组成</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-文件存储"><span class="post-toc-number">4.0.3.</span> <span class="post-toc-text">4.3 文件存储</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#5-输入输出管理"><span class="post-toc-number">5.</span> <span class="post-toc-text">5  输入输出管理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-1-设备控制器跟驱动程序"><span class="post-toc-number">5.0.1.</span> <span class="post-toc-text">5.1 设备控制器跟驱动程序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-2-IO-控制"><span class="post-toc-number">5.0.2.</span> <span class="post-toc-text">5.2 IO 控制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-3-IO分层"><span class="post-toc-number">5.0.3.</span> <span class="post-toc-text">5.3 IO分层</span></a></li></ol></li></ol></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
