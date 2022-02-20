@@ -22,7 +22,7 @@
     <title>系统设计实战应用篇 | 常见的业务场景 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="技术,java,面试,复习">
+    <meta name="keywords" content="java,技术,面试,复习">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -777,10 +777,10 @@
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># docker create -it nginx</span></span><br><span class="line">[root@localhost ~]<span class="comment"># docker start 9cfcce23593a</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看运行的容器</span></span><br><span class="line">[root@localhost ~]<span class="comment"># docker ps</span></span><br><span class="line"><span class="comment">#查看所有容器</span></span><br><span class="line">[root@localhost ~]<span class="comment"># docker ps -a</span></span><br><span class="line"><span class="comment">#新建并启动容器</span></span><br><span class="line">[root@localhost ~]<span class="comment"># docker run -it --rm --network host tomcat:8.5.56-jdk8-openjdk</span></span><br></pre></td></tr></table></figure>
 <h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><ol>
 <li><p>创建一个卷，待后边使用</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">volume</span> create test_volume</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">volume</span><span class="bash"> create test_volume</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>分别启动2个容器挂在上卷,</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在<span class="number">2</span>个终端窗口启动<span class="number">2</span>个容器</span><br><span class="line">docker <span class="keyword">run</span> -it --rm -v test_volume:/test nginx:latest /bin/bash</span><br><span class="line">docker <span class="keyword">run</span> -it --rm -v test_volume:/test nginx:latest /bin/bash</span><br><span class="line">cd /test;</span><br><span class="line">touch a.txt</span><br><span class="line">ls /test <span class="comment"># 在两个容器中我们均可以看到我们创建的文件，shixian在多个容器之间实现数据共享</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在<span class="number">2</span>个终端窗口启动<span class="number">2</span>个容器</span><br><span class="line">docker <span class="keyword">run</span><span class="bash"> -it --rm -v test_volume:/<span class="built_in">test</span> nginx:latest /bin/bash</span></span><br><span class="line">docker <span class="keyword">run</span><span class="bash"> -it --rm -v test_volume:/<span class="built_in">test</span> nginx:latest /bin/bash</span></span><br><span class="line">cd /test;</span><br><span class="line">touch a.txt</span><br><span class="line">ls /test <span class="comment"># 在两个容器中我们均可以看到我们创建的文件，shixian在多个容器之间实现数据共享</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>挂载在容器 /test 目录内创建。 Docker <strong>不支持容器内安装点的相对路径</strong>。 多个容器可以在同一时间段内使用相同的卷。如果两个容器需要访问共享数据，例如，如果一个容器写入而另一个容器读取数据。 卷名 在驱动程序test必须唯一。这意味着不能将<strong>相同的卷名</strong>与两个不同的驱动程序一起使用。 如果我们指定了当前test_volume程序上已在使用的卷名，则Docker会假定我们要重用现有卷，并且不会返回错误。如果开始无 test_volume 则会创建这个卷当然除了使用卷，也可以使用将宿主机的文件映射到容器的卷，命令类似，只不过不用提前创建卷，而且数据会映射到宿主机上注意如果宿主机上的目录可以不存在，会在启动容器的时候创建</p>
@@ -2070,7 +2070,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2022-02-16T10:37:03.529Z" itemprop="dateUpdated">2022-02-16 18:37:03</time>
+    Last updated: <time datetime="2022-02-16T10:37:03.529Z" itemprop="dateUpdated">2022-02-16 18:37:03</time>
 </span><br>
 
 
