@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="技术,原理,java,分布式">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="🎉 Missionary's Blog 😆" type="application/atom+xml">
+</head>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://leetcode-cn.com/u/missionary" target="_blank">
+                  <i class="icon icon-lg icon-gg-circle"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://leetcode-cn.com/u/missionary/" target="_blank">
+                <i class="icon icon-lg icon-gg-circle"></i>
+                LEETCODE
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2022-02-13T05:50:37.000Z" itemprop="datePublished" class="page-time">
+  2022-02-13
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/并发编程/">并发编程</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/并发编程/技术/">技术</a></li></ul></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-distributed-volatile-series"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2022-02-13 13:50:37" datetime="2022-02-13T05:50:37.000Z"  itemprop="datePublished">2022-02-13</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/并发编程/">并发编程</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/并发编程/技术/">技术</a></li></ul></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2022/02/13/distributed-volatile-series/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/02/13/distributed-volatile-series/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/02/13/distributed-volatile-series/#comment">
+            <span class="valine-comment-count" data-xid="/2022/02/13/distributed-volatile-series/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="select-poll-epoll"><a href="#select-poll-epoll" class="headerlink" title="select/poll/epoll"></a>select/poll/epoll</h2><p>在客户端请求服务端时，就是在服务端写入对应的客户端文件描述符FD，如果多个客户端同时请求一个服务端，每一次请求开一个线程，会耗费CPU资源，因此，用一个线程监听多个服务器资源，就是IO多路复用，通信模型有三种，select/poll/epoll。<br>第一种select，在需要判断是否有节点就绪时，会把文件描述符FD从用户态拷贝到内核态中，因为在内核态中判断，效率会比较高。<br>当遍历完文件描述符FD，会把事件返回，select再由用户态向内核态会耗费系统资源，效率比较低，除此，文件描述符以数组保存，在32位，有最大数量1024，64位为2048。拷贝过程中，是用bitmap位图来标记文件描述符的状态，并且使用完后需要置位。</p>
+<p>第二种poll 为了解决数组上限和位图置位问题，引用新结构体pollfd，包含fd，event，revent，首先看fd，是由链表保存，解决连接上限问题，event是读写和异常事件，revent是返回事件，可重用，解决select中位图置位问题，需要循环遍历判断就绪，时间O(n)。</p>
+<p>第三种epoll，可以把就绪判断控制在O(1)，通过三个方法实现，epoll_create()会创建poll实例；epoll_ctl()，会FD注册到内核，避免了用户态的拷贝，内核中保存FD是用了红黑树；epoll_wait()，在<br>红黑树中有就绪时间时，会把它在双向链表中，让用户调用epoll_wait()时，会直接从链表中返回，这里涉及两种触发模式，LT和ET模式；LT水平触发，wait检查fd就绪时，不立即转化双链表，当下次调用wait方法时，再通知进程，这是默认的触发方式；ET边缘触发，通知后进程立即处理事件，下次调用wait方法不会通知，减少epoll时间被重复触发的次数，效率比LT高。</p>
+<h2 id="Spring-Cloud-微服务"><a href="#Spring-Cloud-微服务" class="headerlink" title="Spring Cloud 微服务"></a>Spring Cloud 微服务</h2><p>起初，一个项目的所有功能模块都在一个工程中编码，编译，打包，比如部署在一个tomcat容器中，一般只需要一个数据库，随着业务和用户增长，tomcat需要集群化，负载均衡则需要一个nginx，甚至用到文件或缓存服务器，这样存在单个项目过大 ，而且耦合严重的问题。流行的微服务就可以把项目拆分粒度更小，耦合度降低，并且可以独立部署和扩展，可维护性更强，一个微服务可以部署多个节点来支撑。当服务过多，需要有效识别和管理服务，就需要引入服务治理，通过服务的发现和注册，比如阿里nacos，充当注册中心，把所有启动的服务注册进来，当然，它也可以作为配置中心。</p>
+<blockquote>
+<p>注册中心：Eureka册中心将返回所有可用的服务实例给消费者，但是一般不推荐这种情况。另一种方法就是本地Map存储服务实例列表，服务的消费者向注册中心订阅某个服务，并提交一个监听器，当注册中心中服务发生变更时，监听器会收到通知，这时消费者更新本地的服务实例列表，以保证所有的服务均是可用的。<br>配置中心：客户端是通过一个定时任务来检查自己监听的配置项的数据的，一旦服务端的数据发生变化时，客户端将会获取到最新的数据，并将最新的数据保存在一个 CacheData 对象，对比apollo，配置都没有心跳机制，nacos2.0 采用则统一gRBC通信，流式推送更可靠，吞吐量更少，QPS更高，缺点是没有权限配置，只提供给轻量化的配置）</p>
+</blockquote>
+<p>之前服务注册中心，通过30秒心跳包确定服务是否存活，30秒续约一次。但是，服务扩容时，由于心跳处理不及时，如果大量服务瞬时进行注册，有一定的概率推送超时，但是会在重试后推送成功，保持数据一致性，这种重试会使系统处于达不到稳态。nacos2.0长连接心跳，响应及时，推送失败率少，快速达到稳态。</p>
+<blockquote>
+<p>nacos 1.x</p>
+<ul>
+<li>每个服务实例都通过心跳续约，在Dubbo场景每个接口对应一个服务，当Dubbo的应用接口数较多时需要心跳续约TPS会很高。<br>心跳续约感知时延长，需要达到续约超时时间才能删除实例，一般需要15S，时效性较差</li>
+<li>通过UDP推送变更数据不可靠，需要客户端定时进行数据全量对账保证数据的正确性，大量无效查询，整体服务的QPS很高<br>通信方式基于HTTP短链接的方式，Nacos侧释放连接会进入</li>
+<li>TIME_WAIT状态，当QPS较高时会有连接耗尽导致报错的风险，当然这里通过SDK引入HTTP连接池能缓解，但不能根治</li>
+<li>配置的长轮询方式会导致相关数据进入JVM Old区申请和释放内存，引起频繁的CMS GC</li>
+</ul>
+<p>nacos 2.x</p>
+<ul>
+<li>应用POD按照长连接维度进行心跳续约，不需要按照实例级，大大降低重复请求</li>
+<li>长连接断开时可以快速感知到，不用等待续约超时时长就可以移除实例</li>
+<li>NIO流式推送机制相对于UDP更可靠，并且可以降低应用对账数据频率</li>
+<li>没有连接反复创建的开销，大幅降低TIME_WAIT连接多问题<br>长连接也解决了配置模块长轮询CMS GC问题</li>
+</ul>
+</blockquote>
+<p>消费者服务向提供者服务请求，可以采用dubbo组件，进行RPC远程调用，通信基于HTTP2长连接，交换数据格式基于Protocolbuf。</p>
+<blockquote>
+<p>Triple 协议是 Dubbo3 推出的主力协议。它采用分层设计，其数据交换格式基于Protobuf (Protocol Buffers) 协议开发，具备优秀的序列化/反序列化效率，当然还支持多种序列化方式，也支持众多开发语言。在传输层协议，Triple 选择了 HTTP/2，相较于 HTTP/1.1，其传输效率有了很大提升。此外HTTP/2作为一个成熟的开放标准，具备丰富的安全、流控等能力，同时拥有良好的互操作性。Triple 不仅可以用于Server端服务调用，也可以支持浏览器、移动App和IoT设备与后端服务的交互，同时 Triple协议无缝支持 Dubbo3 的全部服务治理能力。</p>
+</blockquote>
+<p>当并发比较高，需要做负载均衡，Ribbon组件提供多种负载均衡策略，轮询，随机，最少活跃，最短响应，一致性hash。<br>当依赖服务无法请求，导致调用链的大量服务雪崩，可以使用 Sentinel组件，可以使用熔断降级和限流阻止情况的发生。如果所有方法都用同一个线程池第线程，A把打满线程池，导致B不可用线程池，Hystrix采用可以创建多个线程池隔离，也能进信号量隔离，舱壁模式；Sentinel用tomcat现有的线程池，不创建新池，只能信号量隔离（并发线程数限流）。防止恶意流量，需要限流，其策略采用漏斗或者令牌桶算法。</p>
+<p>要了解多服务的调用链路和顺序，监控性能指标，需要搭建APM系统，采用Skywalking全链路服务追踪，无入侵埋点，使用java Agent探针，通过字节码注入实现拦截和数据收集。比zipkin效率高。</p>
+<h2 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h2><p>少数情况，需要使用分布式事务。单机时代，可以把多个逻辑放在同一事务中，保证原子性，当两个逻辑在A，B两个节点时，需要保证要么全部成功，要么全部失败，需要引入第三方事务协调者TC，分别向A，B下达开始began命令，A和B分别预处理本地事务，处于uncommitted状态，会被排他锁锁定，本地处理好事务，会ack通知事务协调者；所有ack成功，此时进入第二阶段提交，TC下达提交commit或回滚rollback命令，A，B返回提交成功或回滚的ack响应。但是会存在一个问题，下达二阶段提交命令，由于网络或其他原因，造成无法及时送达，A，B处于阻塞状态。</p>
+<p>解决这个问题，需要再引入一次提交precommit命令，ack协商，保证各节点状态相同，还引入超时机制解决阻塞，这就是3阶段提交3pc。在第一次预提交事务之后，插入一次询问是否提交就绪，并设置超时时间来解决阻塞问题。 三阶段提交解决了二阶段提交的单点故障问题并减少了阻塞。引入了超时机制，仍然有一致性问题，而且整体的交互过程更长了。PreCommit后，发出abort请求，只有一个Cohort收到abort，其他继续Commit，不一致性。</p>
+<p>2pc问题<br>1、同步阻塞问题。执行过程中，所有参与节点都是事务阻塞型的。当参与者占有公共资源时，其他第三方节点访问公共资源不得不处于阻塞状态。</p>
+<p>2、单点故障。由于协调者的重要性，一旦协调者发生故障。参与者会一直阻塞下去。尤其在第二阶段，协调者发生故障，那么所有的参与者还都处于锁定事务资源的状态中，而无法继续完成事务操作。（如果是协调者挂掉，可以重新选举一个协调者，但是无法解决因为协调者宕机导致的参与者处于阻塞状态的问题）</p>
+<p>3、数据不一致。在二阶段提交的阶段二中，当协调者向参与者发送commit请求之后，发生了局部网络异常或者在发送commit请求过程中协调者发生了故障，这回导致只有一部分参与者接受到了commit请求。而在这部分参与者接到commit请求之后就会执行commit操作。但是其他部分未接到commit请求的机器则无法执行事务提交。于是整个分布式系统便出现了数据部一致性的现象。</p>
+<p>4、二阶段无法解决的问题：协调者再发出commit消息之后宕机，而唯一接收到这条消息的参与者同时也宕机了。那么即使协调者通过选举协议产生了新的协调者，这条事务的状态也是不确定的，没人知道事务是否被已经提交。</p>
+<p>2PC与3PC的区别：<br>    相对于2PC，3PC主要解决的单点故障问题，并减少阻塞，因为一旦参与者无法及时收到来自协调者的信息之后，他会默认执行commit。而不会一直持有事务资源并处于阻塞状态。但是这种机制也会导致数据一致性问题，因为，由于网络原因，协调者发送的abort响应没有及时被参与者接收到，那么参与者在等待超时之后执行了commit操作。这样就和其他接到abort命令并执行回滚的参与者之间存在数据不一致的情况。</p>
+<p>*2PC：主持人<strong>跟第一位组员通话后</strong>，主持人<strong>失忆</strong>，<strong>组员</strong>得知结果并<strong>执行后痴呆</strong>，重选主持人，<strong>没人去提案</strong>，任务阻塞。</p>
+<p><strong>3PC：</strong>即使主持人通知一部分组员执行后<strong>失忆</strong>，<strong>全体决策组员过一段时间决定全体自发提案或全体默认否决</strong>，此时没有阻塞，也没有不一致</p>
+<p>如果主持人通知全体组员，大家再次确定，进入第三阶段</p>
+<p>这时主持人通知第一位组员，请通过提案后两人<strong>失忆</strong>，<strong>重选</strong>出主持人，<strong>所有人仍自发去提案</strong>，没有问题；如果主持人通知是否决任务，通知第一位组员否决后两人<strong>失忆</strong>，<strong>重选</strong>出主持人，<strong>所有人仍自发去提案</strong>，出现不一致。</p>
+<p>其实在我看来，解决单点故障减少阻塞的并不是将第一阶段掰成两半的操作，而是在最后提交的时候，超时自动提交。</p>
+<p>两阶段完全也可以做成超时自动提交，只不过这样就和三阶段一样，无法保证数据的一致性。<br><figure class="image-box">
+                <a rel=分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 href="image_20220220170723.jpeg?v=1&type=image&token=V1:wIKY4Q2qtCsc_zurcS0boXyzKsv6apc4fDSJ40yytuA" title="" data-fancybox="images"><img src="image_20220220170723.jpeg?v=1&type=image&token=V1:wIKY4Q2qtCsc_zurcS0boXyzKsv6apc4fDSJ40yytuA" alt title class></a>
+                <p></p>
+            </figure></p>
+<p>为了得到最终一致性，我们要用补偿机制。</p>
+<p><strong>2PC 和 3PC 都是数据库层面的，而 TCC 是业务层面的分布式事务</strong>，从思想上看和 2PC 差不多，用于补偿。</p>
+<p>TCC是成熟的分布式事务解决方案，核心思想是事务补偿机制，包括try，confirm，cancel三个接口。try尝试锁定所有需要使用的资源，当所有回答yes，进入confirm 提交事务阶段，如果出现失败，调用cancel会滚补偿，不过有一个缺点，就编码量大。</p>
+<blockquote>
+<p>优点：<br>性能提升：具体业务来实现控制资源锁的粒度变小，不会锁定整个资源。<br>数据最终一致性：基于 Confirm 和 Cancel 的幂等性，保证事务最终完成确认或者取消，保证数据的一致性。<br>可靠性：解决了 XA 协议的协调者单点故障问题，由主业务方发起并控制整个业务活动，业务活动管理器也变成多点，引入集群。<br>缺点：TCC 的 Try、Confirm 和 Cancel 操作功能要按具体业务来实现，业务耦合度较高，提高了开发成本。</p>
+</blockquote>
+<p>SAGA 是一种长活事务，把一个大的事务分解成一个个小事务T，每一个小事务T，都有一个对应的补偿任务C，当小事务失败，有两种补偿，1是正向重试T，2是反向恢复C。</p>
+<p>也可以借助本地事务状态表来实现分布式事务：初始状态为1，每次成功调用一次服务，则更新一次状态，在所有状态为3时，就说明所有服务调用成功。</p>
+<p>基于消息中间件的分布式事务解决方案：利用额外的MQ实现事务一致性，在业务A中把B的任务记录为msg B，逻辑合并在同一个事务中，并且把消息存储在本地DB表中，状态为待发送，并且开一个异步定时任务在本地轮询扫描这个表作为后续重试机制，通过MQ把消息发送到B，过程中可能存在消息投递失败的可能，此时就依靠<code>重试机制</code>来保证，当B收到消息时，在做对应操作前，会检查之前是否做过，因为集群或重试重复消息，需要做去重的幂等处理，保证消息不被重复消费。而后面如果B消费失败的话，则依赖MQ本身的重试来完成。B做完返回ACK到MQ，弹出MQ对应消息，同时将A接收ACK将对应消息状态更新或者消息清除；当然，后面A处理任务也是幂等。<br>多次重试后消息状态改为“超时”，要么回滚整个业务，要么再加一个单独地定时任务，它会间隔更长时间的定期轮训长时间处于<code>超时</code>状态的消息，通过一个<strong>check补偿机制</strong>来查询确认该消息对应的业务是否成功，如果对应的业务处理成功，则将消息然后将其投递给MQ，走一遍幂等业务；如果业务处理多次失败，则将对应的消息更新为失败，多次尝试失败记录警告，并通知等待人工干预，比如后台补单操作。因此在使用该方案时，消息生产者必须同时实现一个check查询服务，来供消息服务做消息的确认。</p>
+<p>联想“支付场景”逻辑</p>
+<p><a href="https://www.cnblogs.com/myseries/p/10819804.html" target="_blank" rel="noopener">https://www.cnblogs.com/myseries/p/10819804.html</a></p>
+<p>独立消息服务<br><figure class="image-box">
+                <a rel=分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 href="image_20220220181659.png?v=1&type=image&token=V1:wI5_dncmAo9J1SqGOy916FBsmqKqYsfb54Unekn4JFY" title="" data-fancybox="images"><img src="image_20220220181659.png?v=1&type=image&token=V1:wI5_dncmAo9J1SqGOy916FBsmqKqYsfb54Unekn4JFY" alt title class></a>
+                <p></p>
+            </figure></p>
+<blockquote>
+<p>优点：<br>消息数据独立存储，降低业务系统与消息系统之间的耦合。<br>实现部分事务可重试<br>缺点：<br>强依赖MQ可靠<br>一次消息发送需要两次网络请求(half消息 + commit/rollback)。</p>
+</blockquote>
+<p>业界有一些为“最终一致性”而生的消息队列，如Notify（阿里）、QMQ（去哪儿）等，其设计初衷，就是为了交易系统中的高可靠通知。</p>
+<p>seata支持多种模式：<br>XA协议：2PC，3PC，实现强一致性<br>TCC，SAGA，独创的AT模式，实现最终一致性；</p>
+<p>AT模式，有几个重要的角色，TM用于开启全局事务，可提交或会滚，A，B对应两个子任务，TC是事务协调者。<br>第一步，TM，A，B分别把自己注册给TC<br>第二步，TM开启全局事务，A处理事务，首先向TC注册分支事务，然后预处理A的操作，并向sql写入会滚日志，最终提交本地事务；同样，B也注册分支事务，预处理自己的逻辑，写会滚日志，提交处理成功告诉TC。<br>第三步，所有逻辑处理完，TM提交全局事务，TC分别向A，B提交分支事务，并且删除所有回滚日志。或者，进行全局的回滚。</p>
+<h2 id="单例模式的原因"><a href="#单例模式的原因" class="headerlink" title="单例模式的原因"></a>单例模式的原因</h2><p>双重校验锁DCL ——double check lock<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SafeDoubleCheckedLocking</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Instance instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Instance <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (SafeDoubleCheckedLocking<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>)</span><br><span class="line">                    instance = <span class="keyword">new</span> Instance();<span class="comment">//instance为volatile，现在没问题了</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>1.懒汉实现惰性加载资源。</p>
+<ol start="2">
+<li><p>volatile修饰，设置内存屏障，强制指令执行顺序，先分配内存空间，再创建对象，最后引用指向该对象。</p>
+</li>
+<li><p>static修饰，定义属于类变量，保证单例</p>
+</li>
+<li>第一个判断null，过滤synchronized锁的性能消耗</li>
+<li>同步块，设置临界区，同时间只允许一个线程完成对象的创建。</li>
+<li>第二个判断null，防止多线程进入第一个判断null，而导致多对象的创建。</li>
+</ol>
+<blockquote>
+<p>Q: 过去DCL不安全的原因？<br>JVM1.4前，允许指令混乱情况。final：一个线程构造函数为final修饰变量赋值，另一个线程可能获取final的初始化0值；volatile：只保证读可见性，不保证写的顺序</p>
+</blockquote>
+<blockquote>
+<p>Q: 不用volatile，先临时变量，再赋值到单例变量，是否能解决指令重排？<br> 不能，JVM只是潜在的reorder推手之一，CPU和缓存也会导致重排</p>
+</blockquote>
+<blockquote>
+<p>Q: 新版本volatile如何保证DCL安全？<br>设置内存屏障，防止指令重拍，其中store-load屏障是保证读写顺序，实现volatile上的happens-before语义，即一个线程对volatile变量的写，先于其他线程对该变量的同时读。屏障的结果就是原来只保证volatile字段本身的可见性，现在保证本身以及所有相关字段的可见性，代价就是造成访问volatile字段的更大性能开销。</p>
+</blockquote>
+<blockquote>
+<p>Q：是否可以用final实现DCL？<br>能。<br>a.对final字段的写必然先于其它线程装载该final字段的共享引用。（final字段必须被正确地赋值后其它线程才能读取到它）<br>b. 构造函数执行完毕后，对 final 字段的所有写以及通过这些 final 字段间接可及的变量变为“冻结”，所有在冻结之后获得对这个对象的引用的线程都会保证看到所有冻结字段的冻结值。（所有线程对final及其间接字段有一致的可见性）<br>c. 初始化 final 字段的写将不会与构造函数关联的冻结后面的操作一起重排序。（构造函数内部，对某个final字段而言，它的冻结点之前的操作必然先于冻结点之后的操作）</p>
+</blockquote>
+<blockquote>
+<p> 再来说一下final域的重排规则：</p>
+<ol>
+<li>写final的重排规则：<br>JMM禁止编译器把final域的写重排序到构造函数之外。<br>在final域的写之后，插入一个StoreStore屏障。<br>也就是说确保：在对象引用为任意线程可见之前，对象的final域已经被正确初始化过了。</li>
+<li>读final的重排规则：<br>在一个线程中，初次读对象引用与初次读该对象包含的final域，JMM禁止处理器重排序这两个操作（注意，这个规则仅仅针对处理器）。<br>在读final域操作的前面插入一个LoadLoad屏障。<br>也就是说确保：在读一个对象的final域之前，一定会先读包含这个final域的对象的引用。</li>
+<li>如果final域是引用类型，那么增加如下约束：<br>在构造函数内对一个final引用的对象的成员域的写入，与随后在构造函数外把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。<br>就是确保在构造函数外把这个被构造对象的引用赋值给一个引用变量之前，final域已经完全初始化并且赋值给了当前构造对象的成员域，至于初始化和赋值这两个操作则不确保先后顺序。）<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalWrapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> T value;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FinalWrapper</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> FinalWrapper&lt;Helper&gt; helperWrapper;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Helper <span class="title">getHelper</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      FinalWrapper&lt;Helper&gt; wrapper = helperWrapper;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (wrapper == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">              <span class="keyword">if</span> (helperWrapper == <span class="keyword">null</span>) &#123;</span><br><span class="line">                  helperWrapper = <span class="keyword">new</span> FinalWrapper&lt;Helper&gt;(<span class="keyword">new</span> Helper());</span><br><span class="line">              &#125;</span><br><span class="line">              wrapper = helperWrapper;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> wrapper.value;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<p>Q: DCL是否是实现单例的最佳方案？是否有代替？<br>不是。DCL的目的是懒加载和提高性能，但现代JMM加强volatile保证可靠，但副作用是性能开销变大，且加上了同步块的开销。</p>
+</blockquote>
+<p>完美方案：<br>推荐通过内部类实现惰性加载：<br>有一个大前提，JVM保证类的加载过程是线程互斥。<br>第一个调用getInstance，instance只被创建1次，且赋值给instance的内存已初始化完毕，避免reorder，此外，该方法第一次使用互斥机制，解决同步块带来的性能问题；<br>当然，只有第一次调用getInstance时才让instance加载，所以是惰性。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;      </span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">             …          </span><br><span class="line">&#125;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonContainer</span></span>&#123;</span><br><span class="line">             <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();          </span><br><span class="line">&#125;          </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">             <span class="keyword">return</span> SingletonContainer.instance;          </span><br><span class="line">&#125;      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>参考：<a href="https://blog.csdn.net/doraeimo/article/details/5714239" target="_blank" rel="noopener">https://blog.csdn.net/doraeimo/article/details/5714239</a></p>
+<h2 id="volatile-保证可见性？"><a href="#volatile-保证可见性？" class="headerlink" title="volatile 保证可见性？"></a>volatile 保证可见性？</h2><p>层层深入讲。</p>
+<ol>
+<li>可见性是指解决多线程在操作同一变量时，多个工作内存中的值不一样的问题。</li>
+<li>JMM中定义了8种原子操作保证可见性：<br> 除了lock和unlock，<br> 还定义了<br> read load use 作为一种读原子操作<br> assign store write 作为一种写原子操作<br> 避免在中间操作被打断。<br> 虽然use 和assign存在 被打断的可能，但工作内存和主内存依旧想等。<br> 因此在循环内，适合flag赋值，不适合a++等非原子操作，运算结果a会对中间加数a产生依赖。</li>
+<li>原子操作的底层实现需要两种方式：<br> 一个是通过总线的，总线上有一个<strong>缓存一致性协议</strong>。总线有一个数据修改，所有的数据修改都是从总线推到主存，这个时候，其他cpu会<strong>嗅探</strong>总线上的修改，然后推送给其他cpu置旧的缓存不可用，下次再使用，就会从主存里读取（这部分可展开CPU底层）。还有一个是通过<strong>内存屏障</strong>，<strong>禁止指令重排序</strong>。<br> <strong>内存屏障有4种，load和store指令之前执行，比如：volidate 有读和写操作，在写前加store屏障，保证写写操作，不能重排序；在写后加store-Load屏障，保证先写再读。在第一个读后加入load-Load，保证读读的顺序；读后加入lock-Store，虽然是全能屏障，但开销大。基本上这就是volidate的禁止重排序的配合。</strong></li>
+</ol>
+<h3 id="Q：问点简单的，细说8种原子操作？"><a href="#Q：问点简单的，细说8种原子操作？" class="headerlink" title="Q：问点简单的，细说8种原子操作？"></a>Q：问点简单的，细说8种原子操作？</h3><p>（这要背了。。。）</p>
+<ol>
+<li><strong>read</strong>  读取：作用于主内存，将共享变量从主内存传动到线程的工作内存中，供后面的 load 动作使用。</li>
+<li><strong>load</strong>  载入：作用于工作内存，把 read 读取的值放到工作内存中的副本变量中。</li>
+<li><strong>store</strong>  存储：作用于工作内存，把工作内存中的变量传送到主内存中，为随后的 write 操作使用。</li>
+<li><strong>write</strong>  写入：作用于主内存，把 store 传送值写到主内存的变量中。</li>
+<li><strong>use</strong>  使用：作用于工作内存，把工作内存的值传递给执行引擎，当虚拟机遇到一个需要使用这个变量的指令，就会执行这个动作。</li>
+<li><strong>assign</strong>  赋值：作用于工作内存，把执行引擎获取到的值赋值给工作内存中的变量，当虚拟机栈遇到给变量赋值的指令，执行该操作。比如  <code>int i = 1;</code></li>
+<li><strong>lock（锁定）</strong>  作用于主内存，把变量标记为线程独占状态。</li>
+<li><strong>unlock（解锁）</strong>  作用于主内存，它将释放独占状态。</li>
+</ol>
+<figure class="image-box">
+                <a rel=分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 href="http://magebyte.oss-cn-shenzhen.aliyuncs.com/juc/JMM%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4.png" title="深入浅出Java虚拟机" data-fancybox="images"><img src="http://magebyte.oss-cn-shenzhen.aliyuncs.com/juc/JMM%E6%93%8D%E4%BD%9C%E6%8C%87%E4%BB%A4.png" alt="深入浅出Java虚拟机" title class></a>
+                <p>深入浅出Java虚拟机</p>
+            </figure>
+<h3 id="Q：解释缓存一致性协议和嗅探机制？"><a href="#Q：解释缓存一致性协议和嗅探机制？" class="headerlink" title="Q：解释缓存一致性协议和嗅探机制？"></a>Q：解释缓存一致性协议和嗅探机制？</h3><p>a.  cpu三级缓存讲起，为解决主内存IO速度远远低于CPU运行速度，防止读CPU被阻塞，浪费CPU性能，CPU引入L1/L2/L3缓存行。<br>由于高速缓存行的引入，导致了多核CPU的并行访问缓存数据不一致的问题。比如更新一个CPU核的缓存，另外CPU依然存旧的值。<br>b. 为了解决脏数据和丢失更新的问题，要实现写原子操作，那么，需要两个锁：<br>一个总线锁，锁cpu和主内存通信，还阻塞其他CPU，保证锁期间只有一个CPU改写，但其他CPU也不能操作其他内存数据，似乎无影响操作也锁上了，开销过大。<br>一个缓存锁，只锁定被修改的缓存行。锁期间会进行一个CPU缓存的更新，以及其他缓存失效。这利用了缓存一致性协议mesi。缓存行有4状态：M修改，E独占，S共享，I失效。<br>共享表示主存和所有cpu的值一致，独占表示只有一个cpu有缓存，失效表示当前cpu存储旧值，修改表示当前cpu存储新值。<br>当一个cpu由共享态被主存改为修改态，cpu会更新一个排他标志，并且，通过总线，广播通知其他CPU，其他CPU异步“嗅探”事件后，把数据改为失效态。等下一次访问，再更新。</p>
+<p>拓展性表格：<br>|  |M|S|E|I|<br>|–|–|–|–|–|–|<br>|M|X|X|X|O|<br>|E|X|X|X|O|<br>|S|X|X|O|O|<br>|I|O|O|O|O|</p>
+<h3 id="Q：有缓存锁？为什么还要总线锁？"><a href="#Q：有缓存锁？为什么还要总线锁？" class="headerlink" title="Q：有缓存锁？为什么还要总线锁？"></a>Q：有缓存锁？为什么还要总线锁？</h3><p>（小细节不放过）</p>
+<p>有两种情况不能用缓存锁：<br>一是数据大或数据跨多缓存行，二是部分CPU不支持缓存锁。<br>现代CPU总线锁和缓存锁并存实现数据一致性。</p>
+<h3 id="Q：从硬件架构来说，CPU为什么会重排序？"><a href="#Q：从硬件架构来说，CPU为什么会重排序？" class="headerlink" title="Q：从硬件架构来说，CPU为什么会重排序？"></a>Q：从硬件架构来说，CPU为什么会重排序？</h3><p>​    前面指令如果依赖的数据发生缓存缺失，那么需要去内存磁盘读取数据，这个过程很耗时，如果不乱序执行的话，后面所有的指令都会被block住，这样CPU的吞吐量上不去，所有会有乱序执行机制，让后面没有数据依赖关系的指令可以不用等前面指令执行完了再执行（IPC，指令级并发）</p>
+<p>作者：sakura1027<br>链接：<a href="https://www.nowcoder.com/discuss/459561?channel=-1&amp;source_id=profile_follow_post_nctrack" target="_blank" rel="noopener">https://www.nowcoder.com/discuss/459561?channel=-1&amp;source_id=profile_follow_post_nctrack</a><br>来源：牛客网</p>
+<p>​    首先，我们要知道，CPU是并行流水线作业。本质上是利用了电路天然的并行性。这些电路，实际上都是一个个晶体管组合而成的。想要计算得快，一方面，我们要在 CPU 里，同样的面积里面，多放一些晶体管，<strong>也就是增加密度</strong>；另一方面，我们要让晶体管“打开”和“关闭”得更快一点，<strong>也就是提升主频</strong>。而这两者，都会增加功耗，带来耗电和散热的问题。</p>
+<p>​    在 CPU 内部，和我们平时戴的电子石英表类似，有一个<strong>叫晶体振荡器（Oscillator Crystal）的东西</strong>，简称为晶振。我们把晶振当成 CPU 内部的电子表来使用。<strong>晶振带来的每一次“滴答”，就是时钟周期时间</strong>。Clock Cycle Time 一次晶振时间，时钟周期。简称<strong>CPI</strong></p>
+<p>比如2.8GHz 就是电脑的主频，<strong>CPU 在 1 秒时间内，可以执行的简单指令的数量是 2.8G 条</strong>。<strong>2.0GHz意味着每秒钟它会产生20亿个时钟脉冲信号，每个时钟信号周期为0.5纳秒</strong></p>
+<p>对于 CPU 时钟周期数，我们可以再做一个分解，把它变成“指令数×每条指令的平均时钟周期数”，<strong>加法和乘法都对应着一条 CPU 指令</strong>，<strong>但是乘法需要的 Cycles 就比加法要多</strong></p>
+<p>现代的 CPU 通过流水线技术（Pipeline），让一条指令需要的 CPU Cycle 尽可能地少。因此，对于 CPI 的优化，也是计算机性能优化的重要一环。</p>
+<p>指令执行过程拆分成“取指令、译码、执行”这样三大步骤。这为一个指令周期。</p>
+<p>CPU一个时钟周期有很多条并行的流水线。</p>
+<p>比如，五级的流水线，就表示我们在同一个时钟周期里面，同时运行五条指令的不同阶段。这个时候，<strong>虽然执行一条指令的时钟周期变成了 5，但是我们可以把 CPU 的主频提得更高了</strong>。</p>
+<p>并行如何保证顺序流水线之间顺序？</p>
+<p>数据冒险，其实就是同时在执行的多个指令之间，有数据依赖的情况。这些数据依赖，我们可以分成三大类，分别是先写后读（Read After Write，RAW）、先读后写（Write After Read，WAR）和写后再写（Write After Write，WAW）。</p>
+<p>解决这些数据冒险的办法，就是流水线停顿（Pipeline Stall），或者叫流水线冒泡（Pipeline Bubbling），起到延迟再等等的作用。好像是内存屏障。</p>
+<h3 id="Q：什么是三级缓存？"><a href="#Q：什么是三级缓存？" class="headerlink" title="Q：什么是三级缓存？"></a>Q：什么是三级缓存？</h3><p>刚刚提到，为解决主内存IO速度远远低于CPU运行速度，防止读CPU被阻塞而引入L1/L2/L3。<br>L1各CPU独立，保存L2的数据，最小最快，如256k；L2各CPU独立，保存L3的数据，更大偏慢，如1M；L3各CPU共享，注意，不是所有CPU核共享，有多个L3，每几个CPU核共享一个L3，保存主存取的数据，最大最慢，如6MB。具体是二级还是三级根据CPU硬件而定。</p>
+<p>CPU需要数据的时候，会先在一级缓存中寻找数据，一般一级缓存的数据命中率可以达到80%。如果一级缓存中找不到数据，CPU就会到二级缓存中寻找数据，如果依旧找不到的话，就会到三级缓存中找。有的CPU有四级缓存，三级缓存中没有，那就到四级缓存中找。</p>
+<p>缓存怎么存呢？用缓存行，一个缓存行为64字节。<br>偏爱存储连续相邻的空间位置数据，体现为经常是访问数据+相邻数据，存指令也是，这就是空间局部性，比如mysql的B+树。如果一个信息被访问一次，近期可能会再次被访问，比如循环，递归，方法的反复调用，这就是时间局部性。共同构成局部性原理。</p>
+<h3 id="Q：既然提到缓存行，知道伪共享问题吗？如何解决？"><a href="#Q：既然提到缓存行，知道伪共享问题吗？如何解决？" class="headerlink" title="Q：既然提到缓存行，知道伪共享问题吗？如何解决？"></a>Q：既然提到缓存行，知道伪共享问题吗？如何解决？</h3><p>（深…不见底）<br>伪共享，不是缓存是否真假共享问题哈，而是一个性能问题。<br>a. 首先，我们知道，对共享数据的写操作，会加锁+EMSI操作，耗费性能。<br>b. 伪共享，就是几个在逻辑上相互独立但在同一个内存单元内的数据，由于被cpu加载在同一个缓存行当中，当在多线程环境下，被不同的cpu执行，导致缓存行失效而引起的大量的缓存命中率降低。<br>例如：当两个线程分别对一个数组中的两份数据进行写操作，每个线程操作不同index上的数据，看上去，两份数据之间是不存在同步问题的，但是，由于他们可能在同一个cpu缓存行当中，这就会使这一份缓存行出现大量的缓存失效，如前所说，一个线程更新CPU缓存，会让其他CPU缓存失效掉。<br>c. 解决伪共享，采用缓存行填充，Cache Line Padding。具体就是定义无用变量代码。<br>解决伪共享问题的一个办法是让每一份数据占据一个缓存行：因为缓存行的大小是64个字节，那我们只要让数组中每份数据的大小大于64个字节，就可以保证他们在不同的缓存行当中，就能避免这样的伪共享问题。<br>比如一个类当中原本只有一个long类型的属性。这样这个类型的对象只占了16个字节（java对象头有8字节），如果这个类被定义成一个长度为4的volatile数组，这个数组的所有数据都可能在一个缓存行当中，就可能出现伪共享问题，那么这个时候，就可以采用补齐(padding)的办法，在这个类中加上public long a,b,c,d,e,f,g;这6个无用的属性定义，8字节对象头+8字节long*7个，使得这个类的一个实例占用内存达到64字节，这样这个类型的伪共享问题就得到了解决，在多线程当中对这个类型的数组进行写操作就能避免伪共享问题。（妙）</p>
+<p><del>Q: 8字节对象头包括什么？算了，先不问这个</del></p>
+<h3 id="Q：volatile的使用会导致什么问题？能避免吗？"><a href="#Q：volatile的使用会导致什么问题？能避免吗？" class="headerlink" title="Q：volatile的使用会导致什么问题？能避免吗？"></a>Q：volatile的使用会导致什么问题？能避免吗？</h3><p>（真的能问）</p>
+<ol>
+<li>volatile和cas使用过多会产生工作内存和主内存频繁交互、嗅探等操作，其很多事无效的操作，而系统共用一条总线，总线（bus）带宽资源有限，其中还有其他数据流、显存等交互，总线流量激增，这样就导致总线风暴。</li>
+<li>不保证原子性。使用<code>volatile</code>在相关领域周围竖立记忆障碍物.好处是这不会导致线程进入”阻塞”状态。原子性：即一个操作或者多个操作 要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。但上面提到，use和assign是被打断的，以至于a++不是原子操作。只能一定程度上保证有序性。</li>
+<li>可能导致内核态与用户态的上下文切换。 它不会像锁一样直接引起线程<code>上下文的切换和调度</code>。当<code>volatile</code>访问该字段时，程序必须刷新对中央存储器的更改并更新需要周期的高速缓存存储器。在CPU的“嗅探”到消息后，CPU中断去处理失效，此时CPU程序计数器栈会发生上下文切换。</li>
+<li>当然，还有刚说的伪共享。几个逻辑上独立数据，加载在同一个缓存行，更新引发批量缓存失效问题。</li>
+</ol>
+<p>解决原子性，可以采用Atomic原子变量，有两种写set和lazySet<br>set方法使用CAS + volatile，在写操作的前后都加了内存屏障。lazySet方法并不是直接的操作value字段，而是通过Unsafe类的方法先通过初始化时候计算出的value字段的偏移变量找到字段地址，然后调用本地方法进行操作的，在本地方法中只在写操作前面加了一个屏障，而后面没有加。相当于只用普通变量。<br>因为引入CAS轻量级锁，有自旋操作，更消耗CPU。</p>
+<p>总之，使用volatile或Atomic，根据具体业务场景而定。</p>
+<h3 id="Q-CAS底层？"><a href="#Q-CAS底层？" class="headerlink" title="Q:CAS底层？"></a>Q:CAS底层？</h3><ol>
+<li>处理器提供<strong>总线锁定</strong>和<strong>缓存锁定</strong>两个机制来保证复杂内存操作的原子性</li>
+<li><p>cmpxchg指令加上lock前缀（lock cmpxchg）</p>
+<p>3.锁住总线，使得其他处理器暂时无法通过总线访问内存。</p>
+<p>4.StoreLoad内存屏障，<strong>禁止该指令与之前和之后的读和写指令重排序</strong>，使得线程把不是单单被修改的数据会被回写到主内存，而是写缓存中所有的数据都回写到主内存。</p>
+<p>5.而将写缓冲区的数据回写到内存时，就会通过缓存一致性协议（如，MESI协议）和窥探技术来保证写入的数据被其他处理器的缓存可见。这就相当于实现了volatile的内存语义。</p>
+</li>
+</ol>
+<h3 id="Q：上面有提到CPU上下文切换，来说说用户态和内核态？"><a href="#Q：上面有提到CPU上下文切换，来说说用户态和内核态？" class="headerlink" title="Q：上面有提到CPU上下文切换，来说说用户态和内核态？"></a>Q：上面有提到CPU上下文切换，来说说用户态和内核态？</h3><p>（来了，来了。扯操作系统，干爆！）</p>
+<p>从4个点讲：</p>
+<p> a. 从CPU指令集开始讲，多个汇编指令的集合就是CPU指令集。</p>
+<p>CPU指令集分为4个权限：ring 0，ring 1，ring 2 和 ring 3；</p>
+<p>ring 0 权限最高，ring 3 权限最低。</p>
+<ul>
+<li>ring 0被叫做内核态，完全在操作系统内核中运行，可以使用所有 <code>C P U 指令集</code>；</li>
+<li>ring 3被叫做用户态，在应用程序中运行，，不能使用操作硬件资源的 <code>C P U 指令集</code>，比如 <code>I O</code> 读写、网卡访问、申请内存都不行。</li>
+<li>ring1与ring2主要是访问驱动程序，win10 和 linux 只有 ring 0 和ring 3。</li>
+</ul>
+<p>b. 为什么划分权限？内核模式下任何异常都是灾难性的，会导致停机。用户模式下，可以限制对硬件的直接控制权限，只能通过系统提供的调用接口来控制。在这种保护模式下，即时用户程序发生崩溃也是可以恢复的，在电脑上大部分程序都是在用户模式下运行的。</p>
+<p>c. 再说，每个进程都有两个栈，分别是用户栈与内核栈，对应用户态与内核态的使用。用户程序会使用用户栈，为了可以操作ring 0 级别的 CPU 指令集， CPU切换权限级别为 ring 0，进入内核态，CPU再执行相应的ring 0 级别的 CPU 指令集（内核代码），执行的内核代码会使用当前进程的内核栈。</p>
+<p>d. 再一个是，用户态与内核态的虚拟内存寻址空间。操作系统会把一个进程的虚拟控制内存地址划分为两部分，以32位Linux操作系统为例，假如有<code>4G</code>寻址空间范围 ，高位部分为内核栈， <code>1G</code>由内核使用；低位部分为用户栈， <code>3G</code>由各个进程使用。</p>
+<p><code>Q: 我插一句。。。</code></p>
+<p>c. 先别插话，讲最后一点，用户态和内核态切换的开销大。</p>
+<ul>
+<li>保留用户态现场（上下文、寄存器、用户栈等）</li>
+<li>复制用户态参数，用户栈切到内核栈，进入内核态</li>
+<li>额外的检查（因为内核代码对用户不信任）</li>
+<li>执行内核态代码</li>
+<li>复制内核态代码执行结果，回到用户态</li>
+<li>恢复用户态现场（上下文、寄存器、用户栈等）</li>
+</ul>
+<p><code>Q: 那我问一句。。。</code></p>
+<p>d.  还有！还有！关于什么情况会导致用户态到内核态切换？</p>
+<p>1-系统调用，如fork()创建新进程；</p>
+<p>2-异常，如缺页异常 ；</p>
+<p>3-CPU中断，如硬盘读写操作完成，中断处理后边程序。</p>
+<h4 id="Q-插一句，低位空间只能由用户态使用吗？内核态空间是独立的吗？"><a href="#Q-插一句，低位空间只能由用户态使用吗？内核态空间是独立的吗？" class="headerlink" title="Q: 插一句，低位空间只能由用户态使用吗？内核态空间是独立的吗？"></a>Q: 插一句，低位空间只能由用户态使用吗？内核态空间是独立的吗？</h4><p>（问这么细）</p>
+<p>都不是1. 用户态只能操作自己的3G空间，内核态是能操作4G的所有范围；2. 内核态自己的1G是所有进程共享的，指所有进程的内核态逻辑地址是共享同一块内存地址，记住，这是虚拟映射空间！！！这里存放在整个内核的代码和所有的内核模块，以及内核所维护的数据。所以，这个地址空间，包括整个进程的虚拟地址空间，对于每个进程来说都是逻辑独立的，而且，每个进程看到的逻辑地址空间都是一样的，实际上，物理内存有共享部分和独立部分。</p>
+<h4 id="Q：再插一句，问题来了，不同进程-有相同的逻辑地址，但是却又不同的内容，这怎么实现呢？※"><a href="#Q：再插一句，问题来了，不同进程-有相同的逻辑地址，但是却又不同的内容，这怎么实现呢？※" class="headerlink" title="Q：再插一句，问题来了，不同进程 有相同的逻辑地址，但是却又不同的内容，这怎么实现呢？※"></a>Q：再插一句，问题来了，不同进程 有相同的逻辑地址，但是却又不同的内容，这怎么实现呢？※</h4><p>（啊啊啊，这势头，内存继续深挖…）</p>
+<p>这就要靠 每个进程的的<strong>页表</strong>了，每个进程都有一个自己的页表，使得某逻辑地址对应于某个物理内存。</p>
+<p>首先，我们要对进程的虚拟内存空间有清晰的认识：</p>
+<ul>
+<li><p>操作系统为每个进程分配的内存空间是一样的；如32位Linux操作系统的内存空间是0-4G。</p>
+</li>
+<li><p>操作系统为每个进程分配的内存空间所提交的物理内存空间在用户的角度一般是不同的，在内核是相同的。</p>
+</li>
+<li><p>用户可以通过操作系统将同一块物理内存映射到不同的进程空间。</p>
+</li>
+</ul>
+<p>正因为 每个进程都有一个自己的页表，使得相同的逻辑地址映射到 不同 或 存在相同 的物理内存。对于线程 ，它也有自己的页表，只是页表的 逻辑地址 映射到的物理内存相同。</p>
+<h4 id="Q-大概讲下，虚拟内存映射过程？"><a href="#Q-大概讲下，虚拟内存映射过程？" class="headerlink" title="Q: 大概讲下，虚拟内存映射过程？"></a>Q: 大概讲下，虚拟内存映射过程？</h4><p>（挖了个大坑。。。预感还问页面置换算法。。。）</p>
+<ol>
+<li><p>进程要知道哪些内存地址上的数据在物理内存上，哪些不在，还有在物理内存上的哪里，需要用页表来记录</p>
+<blockquote>
+<p>页表的每一个表项分两部分，第一部分记录此页<a href="https://github.com/Durant35/durant35.github.io/issues/24">是否在物理内存</a>上，第二部分记录<a href="https://github.com/Durant35/durant35.github.io/issues/24">物理内存页的地址</a>（如果在的话）</p>
+</blockquote>
+<p>2.当进程访问某个虚拟地址，去看页表，如果发现对应的数据不在物理内存中，则<a href="https://github.com/Durant35/durant35.github.io/issues/24">缺页异常</a></p>
+</li>
+</ol>
+<blockquote>
+<p>缺页异常的处理过程，就是把进程需要的数据从磁盘上拷贝到物理内存中，如果内存已经满了，没有空地方了，那就找一个页覆盖，当然如果被覆盖的页曾经被修改过，需要将此页写回磁盘。这里用到一些<strong>页面置换算法</strong></p>
+</blockquote>
+<ol start="3">
+<li><p>辅助映射的硬件：内存管理单元MMU，通常是 CPU 的一部分，<strong>本身有少量的存储空间</strong>用来存放从虚拟地址到物理地址的查找表；</p>
+</li>
+<li><p>三种内存管理方式：分别是<strong>分段、分页、段页</strong></p>
+<p><strong>分段</strong></p>
+<p>分段管理下的虚拟地址由两部分组成，段号和段内偏移量</p>
+<p><a rel=分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 href="640.png" title="图片" data-fancybox="images"><img src="640.png" alt="图片"></a></p>
+<blockquote>
+<ol>
+<li>通过段号映射段表的项</li>
+<li>从项中获取到段基地址</li>
+<li>段基地址+段内偏移量=使用的物理内存</li>
+</ol>
+</blockquote>
+<p>有两个不足：</p>
+<p>一是容易产生内存碎片：没有足够一个段的空间映射就是内存碎片，解决方法是<strong>内存碎片整理</strong>，而内存碎片整理是通过<strong>内存交换</strong>的方式来实现，即内存部分数据加载硬盘，再读时，会紧挨另一个段形成连续物理内存。</p>
+<p>二是内存交换效率低：因为容易造成内存碎片，导致内存交换的频率较高，又因为因为硬盘的访问速度比内存慢太多了，把一大段连续的内存写入到硬盘，再又从硬盘读取出来，如果交换的是一个占内存空间很大的程序，这样整个机器都会显得卡顿，过程也很慢的，所以说分段方式内存交换效率低。</p>
+<p>为了解决内存分段管理造成的内存碎片与内存交换效率低的问题，就出现了内存分页。</p>
+</li>
+</ol>
+<hr>
+<p>   分页方式是这样解决的，如果内存空间不够时，操作系统会把其他正在运行的进程中的「最近没被使用」的内存页释放掉，也就是加载到硬盘，称为换出，一旦需要的时候再加载进来，称为换入。所以一次性写入硬盘的也只有一个页或几个页，内存的交换效率自然就提升了。</p>
+<p>   分页方式使加载程序的时候，不再需要一次性都把程序加载到物理内存中。完全可以在进行虚拟内存和物理内存的页之间的映射之后，并不真的把页加载到物理内存里，而是只有在程序运行中，需要用到对应虚拟内存页里面的指令和数据时，再加载到物理内存里面去（用大白话说，当你需要用到的时候才会去使用对应的物理内存）。</p>
+<hr>
+<p>   简单分页：是每个进程都会分配一个页表，虚拟地址会分为两部分，页号和页内偏移量，页号作为页表的索引,页表包含物理页每页所在物理内存的基地址，页内偏移量+物理内存基地址就组成了物理内存地址，如下图所示</p>
+<p>   <a rel=分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 href="640.png" title="图片" data-fancybox="images"><img src="640.png" alt="图片"></a></p>
+<p>   就是下面这几步</p>
+<blockquote>
+<ol>
+<li>页号找到页表中的页项</li>
+<li>获取页项的物理页号基地址</li>
+<li>偏移量+物理页号基地址计算出物理内存地址</li>
+</ol>
+</blockquote>
+<p>   不足之处：</p>
+<p>   每个进程分配一个页表会有空间上的缺陷，因为操作系统上可以运行非常多的进程，那不就意味着页表数量非常多。</p>
+<blockquote>
+<p>以32 位的环境为例，虚拟地址空间范围共有 4GB，假设一个页的大小是 4KB（2^12），那么就需要大约 100 万 （2^20） 个页，每个「页表项」需要 4 个字节大小来存储，那么整个 4GB 空间范围的映射就要/有 4MB 的内存来存储页表。</p>
+</blockquote>
+<blockquote>
+<p>4MB看起来不大，但是数量上来了就很恐怖了，假设 100 个进程的话，就需要 400MB 的内存来存储页表，这是非常大的内存了，更别说 64 位的环境了。</p>
+</blockquote>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">贴心提示：</span><br><span class="line"> 1B(Byte 字节)=8bit，</span><br><span class="line"> 1KB (Kilobyte 千字节)=1024B，</span><br><span class="line"> 1MB (Megabyte 兆字节 简称“兆”)=1024KB，</span><br><span class="line"> 1GB (Gigabyte 吉字节 又称“千兆”)=1024MB</span><br></pre></td></tr></table></figure>
+<p>   为了解决空间上的问题，在对分页方式的基础上，进行优化，出现了多级页表方式</p>
+<h4 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h4><p>   在页表的基础上做一次二级分页，把刚刚提到的100万「页表项」分为<strong>一级页表</strong>「1024个页表项」,「一级页表项」下又关联<strong>二级页表</strong>「1024个页表项」，这样一级页表的1024个页表项就覆盖到了4GB的空间范围映射，并且<strong>二级页表按需加载</strong>，这样页表占用的空间就大大降低。</p>
+<p>   做个简单的计算，假设只有 20% 的一级页表项被用到了，那么页表占用的内存空间就只有 4KB（一级页表） + 20% * 4MB（二级页表）= 0.804MB，这对比单级页表的 4MB 就是一个巨大的节约。</p>
+<p>   <a rel=分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 href="image-20220222221928062.png" title="image-20220222221928062" data-fancybox="images"><img src="image-20220222221928062.png" alt="image-20220222221928062"></a></p>
+<p>   在二级的基础上是不是又可以继续分级呢，能分二级，必然也能分三级、四级，在64位操作系统是做了四级分页。</p>
+<h4 id="TBL快表-：一种CPU的高速缓存"><a href="#TBL快表-：一种CPU的高速缓存" class="headerlink" title="TBL快表 ：一种CPU的高速缓存"></a>TBL快表 ：一种CPU的高速缓存</h4><p>   多级页表虽然解决了空间上的问题，但是我们发现这种方式需要走多道转换才能找到映射的物理内存地址，经过的多道转换造成了时间上的开销。</p>
+<p>   程序是局部性的，即在一段时间内，整个程序的执行仅限于程序的某一部分。相应的，执行所访问的存储空间也局限于某个内存区域。</p>
+<p>   操作系统就利用这一特性，把最多使用的几个页表项放到TBL快表缓存, CPU 在寻址时，会先查 TLB快表，如果没找到，才会继续查常规的页表，TLB 的命中率其实很高的，因为程序最常访问的页就那么几个。</p>
+<h4 id="内存段页"><a href="#内存段页" class="headerlink" title="内存段页"></a><strong>内存段页</strong></h4><p>   段式与页式并不是相对的，他们也可以组合在一起使用，在段的基础上进行分页分级。</p>
+<ol>
+<li>先将程序划分为多个有逻辑意义的段，也就是前面提到的分段机制</li>
+<li><p>接着再把每个段划分为多个页，也就是对分段划分出来的连续空间，再划分固定大小的页</p>
+<p>虚拟地址结构由段号、段内页号和页内位移三部分组成</p>
+<p><a rel=分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 href="640.png" title="图片" data-fancybox="images"><img src="640.png" alt="图片"></a></p>
+<p>就是下面这几步</p>
+<blockquote>
+<ol>
+<li>通过段号获取段表的段项</li>
+<li>通过段项获取到页表地址</li>
+<li>通过页表地址找到段页表</li>
+<li>通过段内页号找到段页表的段页项</li>
+<li>通过段页项获取物理页基地址</li>
+<li>通过物理页基地址+偏移量计算出物理内存地址</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>   多级分页通过树+懒加载+缓存解决了空间占用与时间消耗的问题，虚拟地址很好的做到了让进程与物理内存地址解耦，正因如此，多进程使用物理内存时才不会有冲突，很好的做到了相互独立与隔离。正因如此，多进程使用物理内存时才不会有冲突，很好的做到了相互独立与隔离。</p>
+<h4 id="Q：虚拟内存的好处？"><a href="#Q：虚拟内存的好处？" class="headerlink" title="Q：虚拟内存的好处？"></a>Q：虚拟内存的好处？</h4><ul>
+<li>既然每个进程的内存空间都是一致而且固定的，所以<a href="https://github.com/Durant35/durant35.github.io/issues/24">链接器在链接可执行文件时，可以设定内存地址</a>，而不用去管这些数据最终实际的内存地址，这是有独立内存空间的好处；</li>
+<li>当不同的进程使用同样的代码时，比如库文件中的代码，<a href="https://github.com/Durant35/durant35.github.io/issues/24">物理内存中可以只存储一份</a>这样的代码，不同的进程只需要把自己的虚拟内存映射过去就可以了，节省内存；</li>
+<li>在<a href="https://github.com/Durant35/durant35.github.io/issues/24">程序需要分配连续的内存空间</a>的时候，只需要在虚拟内存空间分配连续空间，而不需要实际物理内存的连续空间，可以利用碎片。</li>
+</ul>
+<h4 id="Q：页面置换算法？"><a href="#Q：页面置换算法？" class="headerlink" title="Q：页面置换算法？"></a>Q：页面置换算法？</h4><p>（ 。。。果然）</p>
+<p>当所需页不在内存，要将其调入，但如果内存没有空闲空间，为了保证进程所需的页能够调用，必须选择另外一些页调出。此时选择页面置换算法，算法的好坏直接影响系统性能，不适当的算法可能会产生系统“抖动”。</p>
+<p>内存进程过多，缺页越拼单，有效访问存储器的时间急速减少，换句话，就是大部分时间用于页面的换进/换出，而几乎不能完成任何有效的工作，这就是系统的“抖动状态”。</p>
+<blockquote>
+<ol>
+<li><p>最佳置换算法</p>
+<p>理论算法，选择不再使用或最长时间内不再使用的页淘汰</p>
+</li>
+<li><p>先进先出置换算法</p>
+<p>选择先进的页淘汰，与进程实际运行规律不符，缺页率高，抖动高</p>
+</li>
+<li><p>最近最久未使用置换算法LRU</p>
+<p>作用如名字所说，比较符合业务。</p>
+</li>
+<li><p>时钟置换算法</p>
+<p>所有页面用指针链接成一个循环队列。当某页被访问时，其访问位置为1，当需要淘汰一个页面时，只需检查页的访问位。如果是0，就选择该页换出；如果是1，则将它置为0，暂不换出，继续检查下一个页面，若第一轮扫描中所有页面都是1，则将这些页面的访问位依次置为0后，再进行第二轮扫描。</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="Q：问简单的，进程和线程的区别？"><a href="#Q：问简单的，进程和线程的区别？" class="headerlink" title="Q：问简单的，进程和线程的区别？"></a>Q：问简单的，进程和线程的区别？</h4><p>进程是最小的资源分配单位，线程是最小CPU调度单位</p>
+<p>进程：</p>
+<p>P C B是 进程 存在的唯一标识，这意味一个 进程 一定会有对应的PCB，进程消失，P C B也会随之消失。</p>
+<p>P C B通过链表的方式进行组织，把具有相同状态的进程链在一起，组成各种队列；</p>
+<ul>
+<li>将所有处于就绪状态的 进程 链在一起，称为就绪队列</li>
+<li>把所有因等待某事件而处于等待状态的 进程 链在一起就组成各种阻塞队列</li>
+</ul>
+<p>CPU把一个进程切换到另一个进程运行的过程，称为进程上下文切换；一个进程的上下文切换，同时可能影响其他CPU核心上的进程的执行效率。</p>
+<h3 id="Q：插一句，-什么是CPU上下文切换？"><a href="#Q：插一句，-什么是CPU上下文切换？" class="headerlink" title="Q：插一句， 什么是CPU上下文切换？"></a>Q：插一句， 什么是CPU上下文切换？</h3><p>C P U上下文 是指 C P U 寄存器 和 程序计数器</p>
+<ul>
+<li>C P U 寄存器 是 C P U 内置的容量小，速度极快的缓存</li>
+<li>程序计数器是用来存储 是 CPU 正在执行的指令位置或即将执行的下一条指令位置</li>
+</ul>
+<p>上下文切换就是把前一个任务的CPU上下文保存起来，然后加载新任务的上下文到这些指令寄存器(IR)和程序寄存器(PC)等寄存器中。这些被保存下来的上下文会存储在操作系统的内核中，等待任务重新调度执行时再次加载进来，这样就能保证任务的原来状态不受影响，让任务看起来是连续运行的。</p>
+<p>根据场景不同，CPU 上下文切换分成：进程上下文切换、线程上下文切换和中断上下文切换。</p>
+<p>进程是由内核管理与调度的，所以 进程上下文切换 发生在内核态，进程上下文切换的内容包含用户空间资源（虚拟内存、栈、全局变量等）与内核空间资源（内核堆栈、寄存器等）</p>
+<p>什么时候会发生进程调度？</p>
+<ul>
+<li>进程的CPU时间片耗尽，被系统挂起，切换到其他等待CPU的进程运行。</li>
+<li>进程所需要的系统资源不足。要等待资源满足后才可以运行。这个时候会被系统挂起。</li>
+<li>进程通过sleep函数主动将自己挂起。</li>
+<li>当有优先级更高的进程运行时，当前进程会被挂起，由高优先级的进程运行。</li>
+<li>硬中断发生时，CPU上的进程会被挂起，转而执行内核的中断服务程序。</li>
+</ul>
+<h3 id><a href="#" class="headerlink" title="***"></a>***</h3><p>特别需要注意的是<strong>操作系统会将当前任务的虚拟内存一并保存</strong>。而Linux中通过TLB快表来管理虚拟内存到物理内存的映射关系。TLB用于虚拟地址与实地址之间的交互，提供一个寻找实地址的缓存区，能够有效减少寻找物理地址所消耗时间。<strong>当虚拟内存被刷新后，TLB也会被更新。</strong>如果没有TLB，则每次取数据都需要<strong>两次访问内存</strong>，即查页表获得物理地址和取数据。在多核的技术下，这会极大的降低程序的执行效率。因为缓存L3 Cache 是被几个核共享的。当TLB被更新后，<strong>缓存中的TLB数据会失效</strong>，每个CPU都需要从主存中<strong>重新载入</strong>，一个进程的上下文切换，同时为保证缓存一致性，<strong>可能影响其他CPU核心上的进程</strong>的执行效率。</p>
+<p>线程：</p>
+<p>一个进程下面能有一个或多个线程，每个线程都有独立一套的寄存器和栈，这样可以确保线程的控制流是相对独立的。</p>
+<p>线程带来的好处有以下几点</p>
+<ul>
+<li>一个进程中可以同时存在多个线程</li>
+<li>让进程具备多任务并行处理能力</li>
+<li>同进程下的各个线程之间可以共享进程资源 （同进程内的多线程通信十分简单高效）</li>
+<li>更轻量与高效</li>
+</ul>
+<p>线程带来的坏处有以下几点</p>
+<ul>
+<li>因为进程资源共享，所以会产生资源竞争，需要通过锁机制来协同</li>
+<li>当进程中的一个线程奔溃时，会导致其所属进程的所有线程奔溃（一般游戏的用户设计不会采用多线程方式）</li>
+</ul>
+<h2 id="线程与进程的对比"><a href="#线程与进程的对比" class="headerlink" title="线程与进程的对比"></a><strong>线程与进程的对比</strong></h2><ul>
+<li>进程是最小的资源（包括内存、打开的文件等）分配单位，线程是最小的运行单位</li>
+<li>进程拥有一个完整的资源平台，而线程只独享必不可少的资源，如寄存器和栈</li>
+<li>线程同样具有就绪、阻塞、执行三种基本状态，同样具有状态之间的转换关系（和进程大同小异）</li>
+<li>线程的创建、终止时间比进程快，因为进程在创建的过程中，还需要资源管理信息，比如内存管理信息、文件管理信息，所以线程在创建的过程中，不会涉及这些资源管理信息，而是共享它们（线程管理的资源较少）</li>
+<li>同一个进程内的线程切换比进程切换快，因为线程具有相同的地址空间（虚拟内存共享），这意味着同一个进程的线程都具有同一个页表，那么在切换的时候不需要切换页表。而对于进程之间的切换，切换的时候要把页表给切换掉，而页表的切换过程开销是比较大的，一个是快表失效，二是重新载入几个核，三是为保证缓存一致性，影响其他CPU核心上的进程</li>
+<li>由于同一进程的各线程间共享内存和文件资源，那么在线程之间数据传递的时候，就不需要经过内核了，这就使得线程之间的数据交互效率更高了</li>
+</ul>
+<p>线程比进程不管是时间效率，还是空间效率都要高。</p>
+<h4 id="Q：刚聊到进程共享，进程之间的通信有哪些？"><a href="#Q：刚聊到进程共享，进程之间的通信有哪些？" class="headerlink" title="Q：刚聊到进程共享，进程之间的通信有哪些？"></a>Q：刚聊到进程共享，进程之间的通信有哪些？</h4><p>一般来说，每个进程都是独立的，操作系统为每个进程之间提供了「隔离」。所以进程之间不能直接互相访问，但可以借助它们共享的「内核空间」来实现通信。</p>
+<p><strong>1.管道</strong></p>
+<p>管道是用环形队列实现的，数据从写端流入，从读端流出，这样就实现了进程间通信。一个管道只能单向传输数据，进程之间的双向传输则需要创建两个管道。比如管道符 。</p>
+<p> <strong>2.消息队列</strong></p>
+<p>消息队列是存储在内核中的消息<strong>链表</strong>，遵循队列的<strong>先进先出</strong>原则。</p>
+<p>消息块遵循进程双方自定义的数据类型，有固定大小。</p>
+<p>消息队列不适合传输较大的数据，因为每个消息块的大小有限制。</p>
+<p>消息队列存在于内核中，所以进程的读写消息需要在用户态与内核态频繁切换，系统开销较大。</p>
+<p><strong>3.共享内存+信号量</strong></p>
+<p>mmap是一种内存映射文件的方法。利用mmap把普通文件映射到进程地址空间后，进程可以向访问内存的方式对文件进行访问。</p>
+<p>信号量有效解决了进程间竞争共享资源而导致的数据不同步，用于实现进程的访问共享资源的互斥与同步。</p>
+<p><strong>4. 信号</strong></p>
+<p>信号可以理解为给进程发送一个<strong>命令</strong>。</p>
+<p><strong>5.Socket</strong></p>
+<p>实现跨越网络的进程通信</p>
+<h4 id="Q：线程通信有哪些？"><a href="#Q：线程通信有哪些？" class="headerlink" title="Q：线程通信有哪些？"></a>Q：线程通信有哪些？</h4><p>1 锁与同步   包括互斥锁、条件变量、读写锁</p>
+<p>2 等待/通知机制    基于<code>Object</code>类的<code>wait()</code>方法和<code>notify()</code>, <code>notifyAll()</code>方法来实现的。</p>
+<p>3 信号量 Semaphore</p>
+<p>4 管道流 PipedOutputStream<code>、</code>PipedInputStream</p>
+<h2 id="你的代码如何保证原子性？"><a href="#你的代码如何保证原子性？" class="headerlink" title="你的代码如何保证原子性？"></a>你的代码如何保证原子性？</h2><p>一个操作或者多个操作要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行</p>
+<ul>
+<li>synchronized同步代码块</li>
+<li>cas原子类工具</li>
+<li>lock锁机制</li>
+</ul>
+<h1 id="sychronized-和-lock区别"><a href="#sychronized-和-lock区别" class="headerlink" title="sychronized 和 lock区别"></a>sychronized 和 lock区别</h1><p>sychronized有两种方法，一种是作用在方法，另一种作用在代码块；<br>如进入临界区前，先判断ACC_SYCHRONIZED标记，有才可以进入moniter对象之后，执行moniterenter指令，把当前的计数器+1，然后开始执行方法，当结束时，先释放moniter对象，再执行moniterexit让计数器-1，然后结束方法。<br>出现异常，也能够自动释放，但有个问题，它无法中断。<br>而Lock，可以调用方法中断，当锁竞争激烈，性能较好。</p>
+<h1 id="讲讲代理模式"><a href="#讲讲代理模式" class="headerlink" title="讲讲代理模式"></a>讲讲代理模式</h1><p>当client 使用RealObj时，先创建proxy代理类，在使用时抽取出RealObj接口，叫做抽象主题类，原来RealObj叫做主题实现类。那么，代理类场景，比如1. I/O处理图片文件，设置虚拟代理，当真正需要使用才会创建出来； 2.设置访问权限，设置保护代理，实现防火墙网关；3.网络访问，grpc/dubbo远程调用，使用远程代理对方式；4. 日志记录代理，AOP实现； 5. 缓存数据，需要缓存代理，AOP实现；6. 事务创建到提交代理过程代理；<br>一种是静态代理，自己new对象作为代理对象，另一种是动态代理，JDK反射，实现Handler，调用newProxyInstance；Cglib操作asm框架在字节码层实现 spring AOP有实现接口就用JDK，无则Cglib。</p>
+<h1 id="TCP和UDP区别"><a href="#TCP和UDP区别" class="headerlink" title="TCP和UDP区别"></a>TCP和UDP区别</h1><p>TCP  强调传输字节流，连接可靠；<br>UDP 强调报文包的发送，连接不可靠；<br>UDP包含源端口，目的端口，数据的长度，为了防止数据出错的校验和，发送的数据<br>TCP包包含以上五项，还增加了序号，确保发送的顺序，确认序号几个字段，防止丢包，还有一些状态位，建立连接时的syn，确认响应时的ack，端位连接的fin，还增加窗口大小，用来流量和拥塞控制；</p>
+<p>TCP传输过程，建立连接三次握手，传输数据，释放连接四次挥手；</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2022-02-28T01:28:29.281Z" itemprop="dateUpdated">2022-02-28 09:28:29</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2022/02/13/distributed-volatile-series/" target="_blank" rel="external">https://github.com/missionOdd/2022/02/13/distributed-volatile-series/</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2022/02/13/distributed-volatile-series/&title=《分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2022/02/13/distributed-volatile-series/&title=《分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2022/02/15/p7-interview-skills-1/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">面经 | 基础面+调优经验，高P7开发一面摘录笔记</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2022/02/12/p8-interview-skills-2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">面经 | 结合业务，步步深入，P8架构师二面摘录笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#select-poll-epoll"><span class="post-toc-number">1.</span> <span class="post-toc-text">select/poll/epoll</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Spring-Cloud-微服务"><span class="post-toc-number">2.</span> <span class="post-toc-text">Spring Cloud 微服务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分布式事务"><span class="post-toc-number">3.</span> <span class="post-toc-text">分布式事务</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单例模式的原因"><span class="post-toc-number">4.</span> <span class="post-toc-text">单例模式的原因</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#volatile-保证可见性？"><span class="post-toc-number">5.</span> <span class="post-toc-text">volatile 保证可见性？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：问点简单的，细说8种原子操作？"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">Q：问点简单的，细说8种原子操作？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：解释缓存一致性协议和嗅探机制？"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">Q：解释缓存一致性协议和嗅探机制？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：有缓存锁？为什么还要总线锁？"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">Q：有缓存锁？为什么还要总线锁？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：从硬件架构来说，CPU为什么会重排序？"><span class="post-toc-number">5.4.</span> <span class="post-toc-text">Q：从硬件架构来说，CPU为什么会重排序？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：什么是三级缓存？"><span class="post-toc-number">5.5.</span> <span class="post-toc-text">Q：什么是三级缓存？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：既然提到缓存行，知道伪共享问题吗？如何解决？"><span class="post-toc-number">5.6.</span> <span class="post-toc-text">Q：既然提到缓存行，知道伪共享问题吗？如何解决？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：volatile的使用会导致什么问题？能避免吗？"><span class="post-toc-number">5.7.</span> <span class="post-toc-text">Q：volatile的使用会导致什么问题？能避免吗？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q-CAS底层？"><span class="post-toc-number">5.8.</span> <span class="post-toc-text">Q:CAS底层？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：上面有提到CPU上下文切换，来说说用户态和内核态？"><span class="post-toc-number">5.9.</span> <span class="post-toc-text">Q：上面有提到CPU上下文切换，来说说用户态和内核态？</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q-插一句，低位空间只能由用户态使用吗？内核态空间是独立的吗？"><span class="post-toc-number">5.9.1.</span> <span class="post-toc-text">Q: 插一句，低位空间只能由用户态使用吗？内核态空间是独立的吗？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q：再插一句，问题来了，不同进程-有相同的逻辑地址，但是却又不同的内容，这怎么实现呢？※"><span class="post-toc-number">5.9.2.</span> <span class="post-toc-text">Q：再插一句，问题来了，不同进程 有相同的逻辑地址，但是却又不同的内容，这怎么实现呢？※</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q-大概讲下，虚拟内存映射过程？"><span class="post-toc-number">5.9.3.</span> <span class="post-toc-text">Q: 大概讲下，虚拟内存映射过程？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#多级页表"><span class="post-toc-number">5.9.4.</span> <span class="post-toc-text">多级页表</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TBL快表-：一种CPU的高速缓存"><span class="post-toc-number">5.9.5.</span> <span class="post-toc-text">TBL快表 ：一种CPU的高速缓存</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内存段页"><span class="post-toc-number">5.9.6.</span> <span class="post-toc-text">内存段页</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#总结"><span class="post-toc-number">5.9.7.</span> <span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q：虚拟内存的好处？"><span class="post-toc-number">5.9.8.</span> <span class="post-toc-text">Q：虚拟内存的好处？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q：页面置换算法？"><span class="post-toc-number">5.9.9.</span> <span class="post-toc-text">Q：页面置换算法？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q：问简单的，进程和线程的区别？"><span class="post-toc-number">5.9.10.</span> <span class="post-toc-text">Q：问简单的，进程和线程的区别？</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：插一句，-什么是CPU上下文切换？"><span class="post-toc-number">5.10.</span> <span class="post-toc-text">Q：插一句， 什么是CPU上下文切换？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#null"><span class="post-toc-number">5.11.</span> <span class="post-toc-text">***</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程与进程的对比"><span class="post-toc-number">6.</span> <span class="post-toc-text">线程与进程的对比</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q：刚聊到进程共享，进程之间的通信有哪些？"><span class="post-toc-number">6.0.1.</span> <span class="post-toc-text">Q：刚聊到进程共享，进程之间的通信有哪些？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q：线程通信有哪些？"><span class="post-toc-number">6.0.2.</span> <span class="post-toc-text">Q：线程通信有哪些？</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#你的代码如何保证原子性？"><span class="post-toc-number">7.</span> <span class="post-toc-text">你的代码如何保证原子性？</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#sychronized-和-lock区别"><span class="post-toc-number"></span> <span class="post-toc-text">sychronized 和 lock区别</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#讲讲代理模式"><span class="post-toc-number"></span> <span class="post-toc-text">讲讲代理模式</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#TCP和UDP区别"><span class="post-toc-number"></span> <span class="post-toc-text">TCP和UDP区别</span></a>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2022
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2022/02/13/distributed-volatile-series/&title=《分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2022/02/13/distributed-volatile-series/&title=《分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3aQW7CUAwFQO5/6VbqqhIifc/OLywmK5RC8KRSbGw/HvHx9XM8n/l9/vk9159N3pn/dXXg4eHhjUJ/dSSYBJnArr/3+vzze/Dw8PBO865DefXh6AvWaWOThPDw8PDey0te54/sPOg8/eDh4eF9Mi9JBvl1rtMPHh4e3mfykmZEG2KOz0v2g70WPDw8vJjXDsA+4fXB+R4eHh7eYqreJomkLL4rzUTR4uHh4R3gJWVr+9RNqPsbdB1PsZWAh4eHN+K146tZ+btZUMjbFsNmLh4eHt6IN2tM3LVq0HYV7k0qeHh4eBve5hJJ6PmjP7mtSSR4eHh4J3ibtkKeHmbIFnxz1wQPDw9vVLC25WzbZm3TSd2MwMPDwzvMmzVYk8H/LNDZUgIeHh7eOV7+IN4UzUmCidangoRU/N/w8PDwRry8dZsXuG2ztQXnVDw8PLwTvLaBmywBbBoHs6Wrl7Hh4eHhHeDN2grJ+ZzRtjzaCPHw8PBO85KCeHbpzaJAezvw8PDwzvGSy22K5n1joh2J1QMwPDw8vBEvXzmdLQHsx2mz1IWHh4d3gpcf+bpAsrY1G2vNmhR4eHh453h3tWLb5YP8anmEeHh4eP/J2wz4N62KWaO2SCF4eHh4t/Jmo6nrInsWYlI6J5Hg4eHhneMlD/F2OWCzmJWQ8iUGPDw8vNO8dkWgbRwkNyhJKnh4eHjv5c2mZPnXz8b/7YxuOM3Dw8PDG/G+yqNt2rZNirtK9j9+MeDh4eEtePulq7bsbtNG/hoPDw/vP3lt66HYR7i1QJ+1M/Dw8PDO8TYP6FlYbSN4eODh4eG9lTcLMU8VeSuk+K2Ah4eH9wG8WbhJymnPRAU3Hh4e3jHeZsXqsT5mw7boduDh4eEd4O0HYLOmbb5AkMNuaFjg4eHhXfG+ARESIhYIaPw6AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+    
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/plugins/fireworks.js?v=1.4.4"></script>
+
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?18b812f3375b09bd66be7e3a46d7cc2d";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="60" src="//cdnjs.cloudflare.com/ajax/libs/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+</body>
+</html>

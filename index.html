@@ -383,6 +383,95 @@ Java吸收C++ 的很多优点 精简了很多东西（...
             </li>
         
             <li class="post-list-item fade  animated bounce">
+                <article id="post-distributed-volatile-series"
+  class="article-card article-type-post" itemprop="blogPost">
+  
+        
+<div class="item-thumb">
+    <a class="thumb-link" href="/2022/02/13/distributed-volatile-series/"></a>
+    <div class="thumb-hover">
+        <span class="icon icon-eye"></span>
+    </div>
+    <img src="/img/thumb/9.jpg" alt="图片路径不正确">
+    
+
+
+  
+    <h3 class="post-title ab-title" itemprop="name">
+      <a class="post-title-link" href="/2022/02/13/distributed-volatile-series/">分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄</a>
+    </h3>
+  
+
+
+
+</div>
+
+        
+    
+    
+    <div class="top" data-title="9">
+    <div class="top-wrap">
+        <p></p>
+    </div>
+</div>
+    
+    
+    <div class="post-meta">
+        <time class="post-time" title="2022-02-13 13:50:37" datetime="2022-02-13T05:50:37.000Z"  itemprop="datePublished">2022-02-13</time>
+
+        
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/并发编程/">并发编程</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/并发编程/技术/">技术</a></li></ul></li></ul>
+
+
+
+        
+
+        
+<span class="post-comments-counter" id="/2022/02/13/distributed-volatile-series/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/02/13/distributed-volatile-series/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/02/13/distributed-volatile-series/#comment">
+            <span class="valine-comment-count" data-xid="/2022/02/13/distributed-volatile-series/"></span>
+        </a>
+    </span>
+
+
+        
+        
+    </div>
+
+    <div class="post-content" id="post-content" itemprop="postContent">
+    
+    
+        select/poll/epoll在客户端请求服务端时，就是在服务端写入对应的客户端文件描述符FD，如果多个客户端同时请求一个服务端，每一次请求开一个线程，会耗费CPU资源，因此，用一个线程监听多个服务器资源，就是IO多路复用，通信模型有三种，select/poll/epoll。第一种select，在需要判断是否有节点就绪时，会把文件描述符FD从用户态拷贝到内核态中，因为在内核态中判断，效率...
+    
+    <a href="/2022/02/13/distributed-volatile-series/" class="post-more waves-effect waves-button">
+        more
+    </a>
+    </div>
+</article>
+
+<div class="post-footer">
+    
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+
+</div>
+
+
+            </li>
+        
+            <li class="post-list-item fade  animated bounce">
                 <article id="post-jvm-notes"
   class="article-card article-type-post" itemprop="blogPost">
   
@@ -392,7 +481,7 @@ Java吸收C++ 的很多优点 精简了很多东西（...
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
-    <img src="/img/thumb/9.jpg" alt="图片路径不正确">
+    <img src="/img/thumb/8.jpg" alt="图片路径不正确">
     
 
 
@@ -486,7 +575,7 @@ https://blog.csdn.net/lioncatch/art...
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
-    <img src="/img/thumb/8.jpg" alt="图片路径不正确">
+    <img src="/img/thumb/7.jpg" alt="图片路径不正确">
     
 
 
@@ -579,7 +668,7 @@ https://blog.csdn.net/lioncatch/art...
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
-    <img src="/img/thumb/7.jpg" alt="图片路径不正确">
+    <img src="/img/thumb/6.jpg" alt="图片路径不正确">
     
 
 
@@ -668,7 +757,7 @@ https://blog.csdn.net/lioncatch/art...
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
-    <img src="/img/thumb/6.jpg" alt="图片路径不正确">
+    <img src="/img/thumb/5.jpg" alt="图片路径不正确">
     
 
 
@@ -757,7 +846,7 @@ https://blog.csdn.net/lioncatch/art...
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
-    <img src="/img/thumb/5.jpg" alt="图片路径不正确">
+    <img src="/img/thumb/4.jpg" alt="图片路径不正确">
     
 
 
@@ -854,7 +943,7 @@ https://blog.csdn.net/lioncatch/art...
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
-    <img src="/img/thumb/4.jpg" alt="图片路径不正确">
+    <img src="/img/thumb/3.jpg" alt="图片路径不正确">
     
 
 
@@ -983,7 +1072,7 @@ Why Docker
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
-    <img src="/img/thumb/3.jpg" alt="图片路径不正确">
+    <img src="/img/thumb/2.jpg" alt="图片路径不正确">
     
 
 
@@ -1078,7 +1167,7 @@ Why Docker
     <div class="thumb-hover">
         <span class="icon icon-eye"></span>
     </div>
-    <img src="/img/thumb/2.jpg" alt="图片路径不正确">
+    <img src="/img/thumb/1.jpg" alt="图片路径不正确">
     
 
 
@@ -1151,104 +1240,6 @@ Why Docker
 <div class="post-footer">
     
 	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MQ/">MQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息队列/">消息队列</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高可用/">高可用</a></li></ul>
-
-</div>
-
-
-            </li>
-        
-            <li class="post-list-item fade  animated bounce">
-                <article id="post-debit-creditbookkeeping"
-  class="article-card article-type-post" itemprop="blogPost">
-  
-        
-<div class="item-thumb">
-    <a class="thumb-link" href="/2020/02/01/debit-creditbookkeeping/"></a>
-    <div class="thumb-hover">
-        <span class="icon icon-eye"></span>
-    </div>
-    <img src="/img/thumb/1.jpg" alt="图片路径不正确">
-    
-
-
-  
-    <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2020/02/01/debit-creditbookkeeping/">会计学| 复式记账法</a>
-    </h3>
-  
-
-
-
-</div>
-
-        
-    
-    
-    <div class="top" data-title="1">
-    <div class="top-wrap">
-        <p></p>
-    </div>
-</div>
-    
-    
-    <div class="post-meta">
-        <time class="post-time" title="2020-02-01 13:40:32" datetime="2020-02-01T05:40:32.000Z"  itemprop="datePublished">2020-02-01</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/会计学/">会计学</a></li></ul>
-
-
-
-        
-
-        
-<span class="post-comments-counter" id="/2020/02/01/debit-creditbookkeeping/">
-    <span class="post-meta-item-icon">
-        <i class="icon icon-comment-o"></i>
-    </span>
-    
-    <a href="/2020/02/01/debit-creditbookkeeping/#gitment-display-button" onclick="ShowGitment()">
-        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
-    </a>
-</span>
-
-
-
-    <span class="leancloud-comment">
-        <i class="icon icon-comment-o"></i>
-        <a href="/2020/02/01/debit-creditbookkeeping/#comment">
-            <span class="valine-comment-count" data-xid="/2020/02/01/debit-creditbookkeeping/"></span>
-        </a>
-    </span>
-
-
-        
-        
-    </div>
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-    
-    
-        借贷记账法
-泛金融类企业的账务或者财务系统常常使用“借贷”记账法，又称复式记账法。
-看一下财务系统的一条分录信息：
-
-借（D）：xx账号 1000元
-贷（C）：xx账号 1000元
-
-什么是贷？什么是借？千万别被字面意思误导，忘记什么“贷”就是减少，“借”是“增加”等的错误印象。
-在学习复式记账法，会计学的几个基础需要先弄明白。
-第一点：“借”、“贷” 只是一个符号“借”“贷”二字，由于借贷...
-    
-    <a href="/2020/02/01/debit-creditbookkeeping/" class="post-more waves-effect waves-button">
-        more
-    </a>
-    </div>
-</article>
-
-<div class="post-footer">
-    
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/会计学/">会计学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/思维/">思维</a></li></ul>
 
 </div>
 
