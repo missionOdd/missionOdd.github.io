@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>经验 | 性能优化的整体脉络的梳理 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="技术,原理,系统,性能">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="🎉 Missionary's Blog 😆" type="application/atom+xml">
+</head>
+
+<script src="//cdnjs.cat.net/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<link href="//cdnjs.cat.net/ajax/libs/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cat.net/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://leetcode-cn.com/u/missionary" target="_blank">
+                  <i class="icon icon-lg icon-gg-circle"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://leetcode-cn.com/u/missionary/" target="_blank">
+                <i class="icon icon-lg icon-gg-circle"></i>
+                LEETCODE
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>经验 | 性能优化的整体脉络的梳理</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">经验 | 性能优化的整体脉络的梳理</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2022-02-01T05:50:37.000Z" itemprop="datePublished" class="page-time">
+  2022-02-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/优化/">优化</a></li></ul></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-overall-performance-optimization"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">经验 | 性能优化的整体脉络的梳理</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2022-02-01 13:50:37" datetime="2022-02-01T05:50:37.000Z"  itemprop="datePublished">2022-02-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/优化/">优化</a></li></ul></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2022/02/01/overall-performance-optimization/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/02/01/overall-performance-optimization/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/02/01/overall-performance-optimization/#comment">
+            <span class="valine-comment-count" data-xid="/2022/02/01/overall-performance-optimization/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>性能优化要求我们关注整体效果，兼顾可靠性，扩展性，以及极端情况的异常场景。<br>笔记特点：大部分是已掌握的内容，一些知识只会概括提及。</p>
+<h2 id="衡量指标※"><a href="#衡量指标※" class="headerlink" title="衡量指标※"></a>衡量指标※</h2><p>性能：有限资源，有限时间完成工作。</p>
+<p>体现在横坐标为时间，纵坐标多种指标。</p>
+<p>加载性能低，会导致搜索排名下降。</p>
+<p>性能指标：</p>
+<p>吞吐率 和 响应速度</p>
+<p>响应速度是串行的优化，通过优化步骤解决问题；<br>吞吐率是并行的优化，充分利用计算机资源；</p>
+<p>侧重于优化响应速度，就能提高吞吐率</p>
+<p>这两点，构成了高并发。</p>
+<p>类比，十字路口，开车排队到经过红绿灯时间，就是一个请求的响应时间；如果灯信号时间短一点，一些车可能通过快一点，如果灯信号切换过于频繁（限流力度过大），单位时间内通过的车过少，导致后面的车排队时间更长，这个就是吞吐量减少</p>
+<p>吞吐率:</p>
+<p>QPS，TPS，<br>HPS： HTTP请求数</p>
+<p>细化指标：</p>
+<ul>
+<li>平均响应时间：所有耗时的平均，但不能体现出方差，抖动大小，</li>
+<li>响应时间百分位数，TP值：理解为一种阈值，像合格率（水位），反应出应用接口的整体响应情况。指数目标是 干掉严重影响系统的长尾请求。</li>
+</ul>
+<blockquote>
+<p>例若有100个请求， 每一个请求的响应时间分别是 1-100 平均分布 平均响应时间： 1-100 的平均值，即 50.5 95% percentile ： 按从小到大排序，累计第95百分位，也就是 95 （即样本里95% 的数据都不高于这个值）</p>
+</blockquote>
+<ul>
+<li>并发量：同时进入的请求数量，指在同一个时间点，同时请求服务的客户数量。</li>
+</ul>
+<p>注意：吞吐率和并发数是两个完全独立的概念。拿银行柜台来举个例子，并发数指同时有多少人往银行柜台涌来。吞吐率则指银行柜台在一段时间内可以服务多少个人。</p>
+<ul>
+<li><p>秒开率：APP启动速度，页面加载速度。</p>
+<p>使用CDN加载；用mokey脚本检查白屏，用动画或加载骨架，减少白屏情况；HTTP2的缓存推送机制提前推送JS，CSS；</p>
+</li>
+<li><p>正确性：接口请求无BUG。</p>
+<p>比如，一个事故，测出的并发量特别高，这是由于项目使用了熔断，压测过程触发熔断，又因为没有对接口正确性判断，造成低级错误的报告。</p>
+</li>
+</ul>
+<p>性能优化：</p>
+<p>基准测试，木桶理论，Amdahl定律</p>
+<p>基准测试：测试最佳性能。</p>
+<p>比如，要排除掉项目启动，进行缓存预热，消除JIT编译器影响。</p>
+<p>木桶理论：性能瓶颈取决于最慢的组件。</p>
+<p>比如，DB的I/O落盘。这是首先要解决的问题。</p>
+<p>性能优化注意点：</p>
+<p>一是依据数字不是猜</p>
+<p>二是个体数据不足信</p>
+<p>三不要过早优化和过度优化</p>
+<p>四保持良好编码习惯</p>
+<h2 id="7类技术优化手段※"><a href="#7类技术优化手段※" class="headerlink" title="7类技术优化手段※"></a><strong>7类技术优化手段</strong>※</h2><p>复用优化</p>
+<p>计算优化</p>
+<p>结果集优化</p>
+<p>资源冲突优化</p>
+<p>算法优化</p>
+<p>高效实现</p>
+<p>JVM优化</p>
+<hr>
+<p>其他：</p>
+<p>数据库优化</p>
+<p>操作系统优化</p>
+<p>架构优化</p>
+<p>协议优化</p>
+<p>等等</p>
+<p>展开：</p>
+<p><strong>复用优化</strong></p>
+<p>1、代码复用：抽成公共方法，抽成公共模块；</p>
+<p>2、数据复用：首先想到缓冲和缓存。</p>
+<blockquote>
+<p> <strong>缓冲(Buffer)</strong>：对数据暂存，然后批量传输或写入；<br> 多使用顺序方式，缓解不同设备频繁，缓慢地随机写。<br> <strong>缓存(Cache):</strong>对已读数据的复用；<br> 缓存在相对高速区域，针对读操作。</p>
+</blockquote>
+<p>3、池化复用：对象创建和销毁成本高。</p>
+<blockquote>
+<p>线程池，连接池，把对象预热存储，方便所有后续使用。</p>
+</blockquote>
+<p>4、对象复用：clone思想的原型模式，共享技术的享元模式</p>
+<p><strong>计算优化</strong></p>
+<p>1、并行优化：想加快任务执行，最快最优就是让它并行执行。</p>
+<blockquote>
+<p>硬件上是：CPU等设备多核，多机。</p>
+<p>模式上是：</p>
+<p>多机：采用负载均衡，将流量或大计算拆分多个部分，同时处理，比如Hadoop，用MapReduce将任务打散，多机并行计算；</p>
+<p>多进程：nginx的NIO进程模型，master进程统一管理worker进程，由worker进程真正代理，利用了CPU多核。</p>
+<p>redis的主进程读写，子进程RDB快照写时复制技术；</p>
+<p>多线程：Netty的Reactor的NIO模型。boss线程接收请求，worker线程真正计算。</p>
+<p>多协程：更轻量，比如GO语言</p>
+</blockquote>
+<p>2、同步变异步：涉及编程模型的改变</p>
+<p>同步简单，但对突发的，时间段倾斜的流量，问题大，容易失败。</p>
+<p>3、异步方式：请求横向扩容，缓解瞬时压力，使流量平滑。</p>
+<p>4、惰性加载：单例模式，代理模式，分页加载</p>
+<p>加载图片文件，可以先加载占位符，再通过后台线程慢慢加载所需要资源。</p>
+<p><strong>结果集优化</strong></p>
+<p>让体积更小，传输效率和解析效率更高</p>
+<p>1、protobuf二进制优先于JSON，优先于XML</p>
+<p>2、Nginx，开启HTTP的GZIP压缩，保持数据紧凑</p>
+<p>3、批量处理的方式：对于时效性要求不高，对业务能力要求高的业务，要减少网络连接的交互，先存缓冲区，再批量交付。</p>
+<p>4、数据结构优化：对于要二次使用的结果集，会存入缓存，可以根据使用场景，存储索引，bitmap位图，二进制数，B+树，跳表，压缩列表来加快读速度。大对象优化为只保留有用属性粒度</p>
+<p><strong>资源冲突优化</strong></p>
+<p>涉及共享资源，如：单机HashMap，mysql的数据行，单资源Redis的某key的setnx，多个资源协调的事务和分布式事务。</p>
+<p>就要选择合适的锁。</p>
+<p>锁应用各种地方，mysql的行锁表锁，java各种锁，底层cpu锁，jvm锁，操作系统内部锁</p>
+<p>按照锁级别，分为乐观锁和悲观锁，乐观锁效率更高</p>
+<p>按照锁类型，分为公平锁和非公平锁，任务调度上有差别</p>
+<p>锁越重，性能消耗越大，</p>
+<p>实现无锁的机制，对性能提升巨大的。</p>
+<p><strong>算法优化</strong></p>
+<p>提高复杂业务的性能，一般采用空间换时间，加快处理速度。</p>
+<p>算法是代码调优，考验开发者的编程技巧和API掌握程度。</p>
+<p>常用的递归，二分，快排，动态规划，贪心等。</p>
+<p><strong>高效实现</strong></p>
+<p>1、技术选型，尽量选择设计良好，性能优越的组件；</p>
+<p>Netty作为非阻塞web容器，</p>
+<p>语法分析器javacc，效率比正则表达式更好</p>
+<p>2、维护性，采用适配器模式，以便在测压找到瓶颈点，用更高性能的组件进行替换。</p>
+<p><strong>JVM优化</strong></p>
+<p>配置参数，一定程度提高JAVA程序的性能。</p>
+<p>如果不当，可能OOM。</p>
+<p>1、G1垃圾回收器，内存高效回收，CMS已经被java14移除</p>
+<p>2、堆大小调整，minorGC和fullGC</p>
+<p>3、大对象阈值设置</p>
+<p>4、代码层面优化</p>
+<p>5、监控线上堆栈信息</p>
+<p>6、开启补齐，避免伪共享</p>
+<hr>
+<h2 id="分析哪些资源，容易成为瓶颈"><a href="#分析哪些资源，容易成为瓶颈" class="headerlink" title="分析哪些资源，容易成为瓶颈"></a>分析哪些资源，容易成为瓶颈</h2><p>1、系统组件之间的速度不均衡；</p>
+<p><strong>CPU，内存，IO组件，容易成为瓶颈。</strong></p>
+<p>CPU：</p>
+<p>top命令，CPU性能</p>
+<p>uptime命令，看负载，评估任务排队情况</p>
+<p>vmstat，CPU繁忙程度，上下文切换程度。</p>
+<p><strong>缓存行伪共享问题</strong></p>
+<p>内存：</p>
+<p>top命令，看进程实际占用内存</p>
+<p>free命令，看剩余内存</p>
+<p>大内存时代，采用<strong>HugePage</strong>将4kb快表页增大2MB，但竞争加剧会增加性能。</p>
+<p><strong>JVM预分配好内存</strong>，加快运行速度</p>
+<p>IO设备：</p>
+<p>IO设备是包括所有外围设备</p>
+<p>缓冲区解决差异的唯一工具，但断电容易丢失。</p>
+<p>iostat命令工具，查看IO性能。</p>
+<p>网络：</p>
+<p>iotop命令，看网络流量最高的进程</p>
+<p>netstat命令，看机器网络连接汇总</p>
+<p><strong>零拷贝技术</strong>，kafka，Nginx</p>
+<p>优化IO+网络</p>
+<p>kafka操作磁盘 吞吐量高的原因?</p>
+<p>磁盘慢是慢在寻道操作，磁盘顺序写和随机写的速度差达到6千倍，kafka采用顺序写。</p>
+<h2 id="性能工具"><a href="#性能工具" class="headerlink" title="性能工具"></a>性能工具</h2><p>nmon获取系统性能数据工具</p>
+<p>jvisualvm 获取JVM性能数据</p>
+<p>CPU分析：代码执行时长和热度</p>
+<p>内存快照分析：内存泄漏</p>
+<p>线程分析：死锁情况</p>
+<p>HotSpot VM 的JMC，获取java性能详细数据</p>
+<p>web容器，线程，内存，锁，socket IO，方法，垃圾回收</p>
+<p>JIT，TLAB</p>
+<p>arthas 获取单个请求的调用链耗时</p>
+<p>trace命令获取调用链</p>
+<p>wrk HTTP压测工具，获取web接口性能工具</p>
+<h2 id="基准测试"><a href="#基准测试" class="headerlink" title="基准测试"></a>基准测试</h2><p>为了测量某一段代码的具体执行情况。</p>
+<ul>
+<li>最简单，编写统计执行代码时间。</li>
+</ul>
+<p>​    这不一定正确，代码块频繁时，JVM会有JIT编译和内联优化，要想得到稳定结果，需要执行上万次循环预热；</p>
+<p>​    有大量埋点，统计指标单一</p>
+<ul>
+<li><p>JMH基准测试工具。JDK12内置，低版本需要引入。通过注解形式单独配置，OptionSBuilder全局配置</p>
+<p>通过开启多个进程多个线程的子任务完成预热，然后真正的迭代，最终结果合并</p>
+<p>精度高，纳秒级，多指标，可图形化结果</p>
+</li>
+</ul>
+<h2 id="缓冲区"><a href="#缓冲区" class="headerlink" title="缓冲区"></a>缓冲区</h2><p>保持各自节奏，顺序不打乱</p>
+<p>结合批量处理，减少网络IO操作</p>
+<p>优化用户体验，音视频的提前缓冲</p>
+<ul>
+<li>文件IO流  是装饰器模式</li>
+</ul>
+<p>缓冲区读取一块一块的部分数据</p>
+<ul>
+<li>日志缓冲</li>
+</ul>
+<p>Logback异步采样，写入缓冲区达到阈值，才持久化。</p>
+<ul>
+<li><p>kafka发送缓冲</p>
+<p>生产者发送前有个缓冲区，如果生产者断电，消息丢失；</p>
+<p>解决：</p>
+<p>缓冲区设置非常小，退化到单条，影响网络性能</p>
+<p>发送前持久化消息日志，发送后处理完回调再记录一条日志，扫描对比。</p>
+</li>
+<li><p>Mysql的innodb_buffer调整大小，减少换页；</p>
+</li>
+<li><p>StringBuilder 和StringBuffer，字符缓冲区，提供拼接字符串的性能</p>
+</li>
+<li><p>磁盘，网络IO，缓冲区提高信息流转效率，可以flush强制刷新数据。半连接队列，全连接队列</p>
+</li>
+<li><p>ID生成器，缓冲一部分ID段，避免频繁耗时的交互。</p>
+</li>
+</ul>
+<p>缓冲区饱和策略：丢弃，异常，等待</p>
+<p>缓冲区数据丢失解决：</p>
+<p>优雅关闭，没完全解决；</p>
+<p>预写日志，故障后重启，根据日志恢复数据。</p>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><ul>
+<li>让页面秒开</li>
+<li>减少数据库压力</li>
+<li>处理冷热数据</li>
+</ul>
+<p>堆内缓存</p>
+<p>大多数对内缓存，会将对象的引用设置为弱引用或软引用，当缓存非常频繁，而且数据量大，如果发生GC回收，缓存空间被释放，又瞬速沾满，从而再次垃圾回收。</p>
+<p>设置缓存小一些，减轻JVM负担。</p>
+<p>进一步加速</p>
+<p>linux文件缓存：</p>
+<p>预读算法，从磁盘智能加载到缓存</p>
+<p>缓存算法影响命中率和性能，</p>
+<p>目前最好的是Caffeine（咖啡呢）使用的W-TinyLFU算法，性能非常高</p>
+<p>例子</p>
+<p>HTTP 304 Not Modified，请求头if-Modified-Since判断客户端缓存是否最新</p>
+<p>CDN，用户最近最快节点，读取静态文件内容，贵</p>
+<p>双写缓存不一致问题：延迟双删，binlog-MQ</p>
+<h2 id="数据冷热分离"><a href="#数据冷热分离" class="headerlink" title="数据冷热分离"></a>数据冷热分离</h2><p>数据双写</p>
+<p>冷热库CRUD在统一事务</p>
+<p>由于热库和冷库类型不同，事务大概率是分布式，缺陷：难以改造。</p>
+<p>写入MQ分发</p>
+<p>通过MQ发布订阅，分发到冷热库，逻辑非常清晰</p>
+<p>binlog订阅</p>
+<p>canal组件获取数据，结合MQ，同步到其他数据源</p>
+<h2 id="池化技术"><a href="#池化技术" class="headerlink" title="池化技术"></a>池化技术</h2><p>减少创建对象的成本，资源反复利用。</p>
+<p>公共对象池化包 Commons Pool 2，Jedis连接池使用到。</p>
+<p>maxTotal：对象上限</p>
+<p>maxIdle ：最大空闲数</p>
+<p>maxIdle： 最小空闲数（核心对象数）</p>
+<p>maxWaitMillis：资源用尽时，最大等待直到对象空闲时间，-1表示永远不超时。超时快速失败</p>
+<p>minEvictableIdleTimeMillis 资源池中资源最小空闲时间(单位为毫秒)，达到此值后空闲资源将被移除，默认30min</p>
+<p><strong>HikariCP连接池为什么快？ （Hi卡乐CP）</strong></p>
+<p>1，有效减少数据库连接创建，消耗的资源消耗；</p>
+<p>2，FastList代替ArrayList，通过初始化的默认值，减少越界检查。通常情况下，同一个Connection创建了多个Statement时，后打开的Statement会先关闭，FastList从数组的尾部开始遍历删除，更为高效</p>
+<p>3，优化并精简字节码，使用javassist，减少动态代理的性能消耗，比如invokestatic指令代替invokevirtual，指令更便于JVM去做更底层的优化。这个优化甚至把<strong>栈帧中的栈深度从5降到了4，减少了push和pop指令</strong>。</p>
+<p>4，无锁的ConcurrentBag，减少并发场景下的锁竞争，减少伪共享</p>
+<p>​    ConcurrentBag，有三个重要的成员变量：</p>
+<ul>
+<li><p>ThreadLocal 缓存，加快本地连接获取速度</p>
+</li>
+<li><p>CopyOnWriteArrayList，sharedList共享写时拷贝List</p>
+</li>
+<li><p>SynchronousQueue，无存储的等待队列</p>
+<p> ConcurrentBag 的优化思路就是CAS尝试从ThreadLocal中找空闲连接来避免锁竞争，如果没有可用元素则再次从共享的CopyOnWriteArrayList中获取，还找不到就放入SynchronousQueue等着。</p>
+<p>通过将连接本地存储化来减少竞争，又根据连接池读多写少的特性用 CopyOnWriteArrayList 来实现 sharedList 。</p>
+<p>这里还有个<strong>中途窃取的概念</strong>，其实没什么花头，就是充分利用连接。</p>
+<p>根传统锁模型不同，它用了标记模型，抢占资源只是CAS操作进行”标记状态“ <code>STATE_IN_USE</code>。</p>
+<p><strong>中途窃取</strong>无非就是本来属于某个线程的本地连接，当它归还连接的时，恰巧有另一个线程从 sharedList 遍历找到这个连接，这时候连接的状态是 <code>STATE_NOT_IN_USE</code>，那么这个连接就会被另一个线程也保存到 ThreadLocal 中了。 否则是没有窃取，就唤醒等待队列的线程。</p>
+</li>
+</ul>
+<p>冷门技巧优化：根据业务的类型设置多个连接池，减少连接资源争抢。</p>
+<ul>
+<li>快速响应时间，把数据快速返回给用户</li>
+<li>可以慢慢执行，耗时比较长，对时效性要求不高</li>
+</ul>
+<p>池一般存储的是执行对象，缓存一般存储的是数据对象</p>
+<p>结果缓存池：保存某个执行步骤的结果，使得下次无需从头执行；</p>
+<p>比如：热点文章页面静态化，无需再从头渲染。</p>
+<h2 id="大对象复用与聚焦"><a href="#大对象复用与聚焦" class="headerlink" title="大对象复用与聚焦"></a>大对象复用与聚焦</h2><p>substring方法，JDK 8 是new复制出部分字符串，在JDK 6直接获取源字符串，</p>
+<p>借鉴意义：在大对象中获取部分信息，根据业务情况，决定是否有原对象的引用关系。</p>
+<p>扩容，StringBuilder，StringBuffer，HashMap，ArrayList等：扩容操作需要重新组织数据，注意线程安全问题；</p>
+<p>优化：</p>
+<p>查询用户的字段，Redis存储的用户的JSON字符串数据打散， 改为Hash对象结构，方便hget</p>
+<p>bitmap  </p>
+<p>java Bitset</p>
+<p>potobuf</p>
+<p>数据结构优化：对于要二次使用的结果集，会存入缓存，可以根据使用场景，存储索引，bitmap位图，二进制数，B+树，跳表，压缩列表来加快读速度。大对象优化为只保留有用属性粒度</p>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><p>大多数设计模式并不能增加性能，下面列举性能相关的设计模式：</p>
+<p>代理模式，单例模式，享元模式，原型模式</p>
+<p>代理模式</p>
+<p>通过一个代理类，控制一个对象的访问</p>
+<p>jdk面向接口，CGLib字节码增强，新版本性能差不多。</p>
+<p>Spring AOP如果引入CGLIB，就是用CGLIB对java字节码增强，完成一个切面编程。比如权限，日志等切面。</p>
+<p>虽然方便代码，但动态代理模式的处理更慢。</p>
+<p>可以通过arthas分析慢逻辑来优化。</p>
+<p>单例模式</p>
+<p>scope注解指定bean的作用域，标识多例还是单例</p>
+<p>默认是单例，线程安全。</p>
+<p>单例有懒汉和饿汉加载方式：</p>
+<p>饿汉会造成空间资源的浪费。</p>
+<p>懒汉需要DCL或者静态内部类创建实例。</p>
+<p>享元模式</p>
+<p>通过共享技术，最大限度复用对象一般使用唯一的标识码进行判断，然后返回对应的对象。</p>
+<p>比如，池化对象。</p>
+<p><strong>何时使用：</strong> 1、系统中有大量对象。 2、这些对象消耗大量内存。 3、这些对象的状态大部分可以外部化。 4、这些对象可以按照内蕴状态分为很多组，当把外蕴对象从对象中剔除出来时，每一组对象都可以用一个对象来代替。 5、系统不依赖于这些对象身份，这些对象是不可分辨的。</p>
+<p>很多设计都使用享元模式，只是语境下差别。</p>
+<p>原型模式</p>
+<p>首先缓存一个实例，然后通过这个实例克隆出新对象，</p>
+<p>一般可配合工厂模式。</p>
+<p>必须实现 Cloneable 接口，</p>
+<p>由于 Object 本身没有实现 Cloneable 接口，所以不重写 clone 方法并且进行调用的话会发生异常。</p>
+<p>clone如果只拷贝当前对象，实现的就是浅拷贝。</p>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>IO密集型，计算密集型</p>
+<p>线程池</p>
+<p>写时复制</p>
+<p>StringBuilder 对 StringBuffer</p>
+<p>HashMap对CurrentHashMap</p>
+<p>ArrayList对CopyOnWriteList</p>
+<p>FastThreadLocal</p>
+<p>首先ThreadLocalMap没有链表红黑树，使用了开放地址法。</p>
+<p>FastThreadLocal 底层是数组，定位数据直接根据数组下标 index 获取；</p>
+<p>而且，写了9个多余long类型，对伪共享问题优化</p>
+<p>Foin/Join</p>
+<p>CompletableFuture</p>
+<p>不正确使用问题：</p>
+<p>线程池不正确，造成资源分配不可控</p>
+<p>IO密集，线程池太小，造成请求频繁失败</p>
+<p>线程池用等待线程释放饱和策略，造成业务阻塞</p>
+<p>SimpleDateFormat的时间错乱： 多个线程之间共享变量calendar，并修改calendar。因此在多线程环境下，当多个线程同时使用相同的SimpleDateFormat对象（如static修饰）的话，如调用format方法时，多个线程会同时调用calender.setTime方法，导致time被别的线程修改，因此线程是不安全的。</p>
+<p>解决方案：</p>
+<p>　　1、将SimpleDateFormat定义成局部变量</p>
+<p>　　2、 加一把线程同步锁：synchronized(lock)</p>
+<p>　　3、使用ThreadLocal，每个线程都拥有自己的SimpleDateFormat对象副本。</p>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><p>锁分层升级</p>
+<p>乐观锁</p>
+<p>悲观锁</p>
+<p>Redis分布式锁，lua脚本，看门狗续期锁</p>
+<p>无锁</p>
+<h2 id="NIO模型"><a href="#NIO模型" class="headerlink" title="NIO模型"></a>NIO模型</h2><p>BIO到NIO，再到AIO</p>
+<p>Netty Rector模型</p>
+<p>select/epoll</p>
+<p>响应式编程：WebFlux底层使用Netty，一种面向数据流和变化传播，表达为生产者消费者之间进行流量控制（背压问题），通过全面操作异步化，来减少无效的等待和资源消耗。</p>
+<p>Spring Gateway 的RouteLocator</p>
+<p>背压是反应流中的一个重要概念，可以理解为，生产者可以感受到消费者反馈的消费压力，并根据压力进行动态调整生产速率。</p>
+<h2 id="Springboot-性能优化"><a href="#Springboot-性能优化" class="headerlink" title="Springboot 性能优化"></a>Springboot 性能优化</h2><p>1，首先要暴露数据，比如缓存命中率，连接池参数，业务数据，然后开启监控。</p>
+<p>可以用普罗米修斯暴露数据，配合Grafana数据展示。</p>
+<p>可以看火焰图找到性能瓶颈；</p>
+<p>2，优化请求链路</p>
+<p>HTTP优化：使用HTTP2</p>
+<ul>
+<li><p>CDN，Cache-control浏览器缓存</p>
+</li>
+<li><p>减少单页面请求的域名数，4个之内。因为每次请求域名，查DNS找IP，再调用服务器。若没有本地DNS缓存，产生一定的调用链路开销。</p>
+</li>
+<li>开启GZIP，减少传输效率，Nginx或者Okhttp</li>
+<li>对JS，CSS等资源压缩，应用在前后端分离模式。</li>
+<li>使用keep alive 长连接，减少连接创建和关闭消耗</li>
+</ul>
+<p>JVM优化</p>
+<pre><code>- G1
+- 堆大小
+- 堆比例
+- 进入老年代阈值调整
+- -XX:+AlwaysPreTouch 在服务启动的时候真实的分配物理内存给JVM
+</code></pre><p>访问数据库慢优化</p>
+<p>​    - 本地缓存</p>
+<p>分布式</p>
+<p>​    - skywalking 全链路追踪</p>
+<p>Controller</p>
+<ul>
+<li>保持结果集精简 JSON</li>
+</ul>
+<p>Service</p>
+<pre><code>- 单例
+- 设计模式组织代码
+- 分布式事务，保证最终一致性：
+</code></pre><p>Dao</p>
+<pre><code>-  使用合理缓存，避免缓存穿透
+-  注意sql在分库分表环境执行的性能
+</code></pre><p>使用HikariCP连接池</p>
+<h2 id="常用代码优化法则"><a href="#常用代码优化法则" class="headerlink" title="常用代码优化法则"></a>常用代码优化法则</h2><ul>
+<li>多使用局部变量：栈分配，可避免堆上分配，堆是垃圾回收主要区域，也避免过多对象造成GC压力。</li>
+<li>减少变量的作用范围：在if分支内，减少创建。</li>
+<li>访问静态变量用类名，不要用this，否则导致多了一步找类的寻址指令。</li>
+<li>StringBuilder或StringBuffer拼接字符串，减少字符串创建</li>
+<li>重写HashCode，要重写equals</li>
+<li>HashMap等集合初始化，指定初始值</li>
+<li>不要在多线程下使用同一个Random，否则seed会在并发访问发生竞争，建议ThreadLocalRandom，配置jvm参数使用速度快的urandom随机生成器</li>
+<li>自增推荐LongAddr，这是synchronized和volatile组合；AtomicLong是CAS替换，导致自旋。</li>
+<li>不要捕捉RuntimeException，要提前判断</li>
+<li>能复用的SQL合理PreparedStatement预编译，能对SQL执行提速，对能复用的SQL语句<strong>放入缓存执行计划中</strong>，下次执行跳过解析动作，所谓预编译语句就是将这类语句的值用占位符替代,可以视为将sql语句模板或者说参数化，防止SQL注入</li>
+<li>日志打印优化，使用占位符，避免多余的字符串拼接操作；减少日志打印，减少占用IO资源</li>
+<li>减少事务作用范围</li>
+<li>位移操作代替乘除法</li>
+<li>不要打印大集合</li>
+<li>少用反射，它通过解析字节码实现，性能不理想，若使用，可加缓存优化</li>
+<li>正则表达式预先编译，初始化一次即可，加快速度；正则解析很慢，可改为状态机</li>
+<li>invokestatic指令调用静态绑定方法 ，代替invokevirtual调用实例动态绑定方法</li>
+</ul>
+<h2 id="JIT编译"><a href="#JIT编译" class="headerlink" title="JIT编译"></a>JIT编译</h2><p>inline –方法内联：对于短小方法体，采用直接追加代码的方式。</p>
+<p>分层编译层次：</p>
+<p>1字节码解释执行</p>
+<p>2执行不带profiling的C1代码</p>
+<p>3执行仅带方法调用以及循环次数profiling的C1代码</p>
+<p>4执行带所有profiling的C1代码</p>
+<p>5执行C2代码</p>
+<p>profiling是指运行时程序执行状态的数据：循环调用次数，方法调用次数，分支跳转次数，类型转换次数。</p>
+<h2 id="逃逸分析："><a href="#逃逸分析：" class="headerlink" title="逃逸分析："></a>逃逸分析：</h2><p><strong>对象，除了基本类型，一定是在堆上分配吗？错。</strong></p>
+<p>经过逃逸分析，可分析出对象的作用范围，来决定是否讲对象分配到堆上。</p>
+<p>成员变量可以分配到栈上，方法返回对象可以分配到堆上。</p>
+<ol>
+<li>对象是否被存入堆中（静态字段或堆中对象的实例字段）</li>
+<li>对象是否被传入未知代码中（方法的调用者和参数）</li>
+</ol>
+<p>总体分3点：</p>
+<p><strong>对象可能分配在栈上</strong></p>
+<p>JVM通过逃逸分析，分析出新对象的使用范围，就可能将对象在栈上进行分配。栈分配可以快速地在栈帧上创建和销毁对象，不用再将对象分配到堆空间，可以有效地减少 JVM 垃圾回收的压力。</p>
+<p><strong>分离对象或标量替换</strong></p>
+<p>当JVM通过逃逸分析，确定要将对象分配到栈上时，即时编译可以将对象打散，将对象替换为一个个很小的局部变量，我们将这个打散的过程叫做标量替换。将对象替换为一个个局部变量后，就可以非常方便的在栈上进行分配了。</p>
+<p><strong>同步锁消除</strong></p>
+<p>如果JVM通过逃逸分析，发现一个对象只能从一个线程被访问到，则访问这个对象时，可以不加同步锁。如果程序中使用了synchronized锁，则JVM会将synchronized锁消除。</p>
+<p><strong>这里，需要注意的是：这种情况针对的是synchronized锁，而对于Lock锁，则JVM并不能消除。</strong></p>
+<h2 id="什么是JVM预热"><a href="#什么是JVM预热" class="headerlink" title="什么是JVM预热"></a>什么是JVM预热</h2><p><strong>JVM预热</strong> ： JVM Warm Up</p>
+<p>一旦类加载完成，所有重要的类（在进程启动时使用）都会被推送到JVM缓存（本机代码）中，这使得它们在运行时可以更快地访问。其他类是根据每个请求加载的。<br>对Java Web应用程序的第一个请求通常比进程的生命周期中的平均响应时间慢得多。这个预热期通常可以归因于延迟类加载和及时编译。<br>记住，对于低延迟应用程序，我们需要预先缓存所有类，以便在运行时访问时立即可用。<br>这种调优JVM的过程称为预热。</p>
+<figure class="image-box">
+                <a rel=经验 | 性能优化的整体脉络的梳理 href="watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pob3VmYW55YW5nX2NoaW5h,size_16,color_FFFFFF,t_70.png" title="" data-fancybox="images"><img src="watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pob3VmYW55YW5nX2NoaW5h,size_16,color_FFFFFF,t_70.png" alt title class></a>
+                <p></p>
+            </figure>
+<p><strong>基于采样的热点探测</strong>：<br> 周期采样，检测各线程栈顶方法，经常出现的方法即为热点方法。好处是简单高效，缺点是不精确，容易受线程运行状态的影响。</p>
+<p><strong>基于计数的热点探测</strong>：<br> （包括方法调用计数器和回边计数器）每个方法建立计数器，用来统计调用次数。如果该方法执行次数超过阈值，则该方法被认定为热点方法。好处是足够精确。缺点是空间损耗大，且实现较难。</p>
+<p>另外，可以通过如XX:CompileThreshold等参数来修改阈值，不过，没有绝对把握，还是不要动为好。</p>
+<p>TLAB的全称是Thread Local Allocation Buffer，即线程本地分配缓存区，这是一个线程专用的内存分配区域。</p>
+<p>是对Eden区域继续进行划分，<strong>JVM为每个线程分配了一个私有缓存区域</strong>，它包含在Eden空间内。</p>
+<p>JIT指导代码优化</p>
+<p>为什么我们在刚写代码的时候，总是被建议不要写很大的方法体？方法内联的JIT优化策略就是其中一个重要的原因。（还有GC友好等原因）</p>
+<p>JVM内的每一次方法调用，都是栈帧在内存中出栈入栈的过程，方法多了性能损耗自然大，所以要进行方法内联，即把方法执行逻辑直接复制到调用方内部，避免方法调用。</p>
+<p>但是，方法内联是有方法大小限制的，超过了一定大小的方法，没法做内联优化。所以，平常应该注意，尽量避免写很大很冗长的方法。</p>
+<p>方法内联虽然只是一种简单优化，但是，是后续其他优化的基石。</p>
+<p>而JVM的分层优化涉及的点非常多[1]：</p>
+<p>局部优化：关注局部数据流分析，数组越界检查消除；寄存器优化，优化跳转、循环、异常处理等；代码简化，如公共表达式提取等等等。</p>
+<p>控制流优化：专注于代码重排序、循环缩减、循环展开、异常定位优化等等等。</p>
+<p>全局优化：主要关注冗余消除，如方法调用、锁；逃逸分析；GC和内存分配优化等等等。</p>
+<h2 id="综合思考性能优化"><a href="#综合思考性能优化" class="headerlink" title="综合思考性能优化"></a>综合思考性能优化</h2><ul>
+<li>业务需求层面</li>
+</ul>
+<p>报表业务，查询缓慢，有时候造成内存溢出</p>
+<p>经过分析，查询时间跨度范围太大造成，缩小到1个月，速度快多了。</p>
+<ul>
+<li>硬件层面</li>
+</ul>
+<p>有一个定时任务，每次将CPU用满，由于系统架构硬伤，无法横向扩容，经过技术评估，如果改成按照数据分片执行的模式，则需要消耗长达1个月工时。</p>
+<p>那么，这个时候，增加硬件。</p>
+<p>尽可能在效果，手段，工时权衡。</p>
+<p>如何找到优化目标？</p>
+<p>利用率：一般是瞬时值，属于采样范围，用来判断有没有峰值</p>
+<p>饱和度：一般指资源是否被合理利用，能否分担更多工作</p>
+<p>错误信息：严重的特别关注</p>
+<p>联想信息：靠经验去猜，然后用工具验证。</p>
+<h2 id="基本解决方式"><a href="#基本解决方式" class="headerlink" title="基本解决方式"></a>基本解决方式</h2><p><strong>CPU问题</strong></p>
+<p>top-Hp命令获取CPU占用最高线程，针对性优化</p>
+<p>棘手问题经验：线程阻塞在ForkJoin线程池上</p>
+<p>代码在等待I/O时，采用并行流（parallelStream）处理，但Java默认所有的方式是所有并行流的地方，共用同一套线程池。这个线程池的并行度只有CPU的两倍。并发量增加，造成任务排队，产生积压。</p>
+<p><strong>内存问题</strong></p>
+<p>通常是OOM。如果内存资源紧张，CPU利用率低，考虑时间换空间。</p>
+<p>一般在高并发应用，会把Swap关掉，因为它很容易引起卡顿。</p>
+<p><strong>IO问题</strong></p>
+<p>一般情况，磁盘IO小，网络IO大</p>
+<p>通过调整日志级别，清理无用日志代码，缓解磁盘IO的压力</p>
+<p>通过RPC调用一个远程服务，期望使用NIO减少无效的等待，或者并行方式加快信息读取</p>
+<p>类似ES数据库，写入造成繁重的磁盘IO，可以增加硬件的配置，换成SSD固态磁盘，或增加新的磁盘；调整segment块大小，translog的刷新速度等。</p>
+<p>对于网络IO，</p>
+<p>springboot和OkHttp开启gzip压缩，</p>
+<p>结果集合并</p>
+<p>使用批量的方式</p>
+<p>netstat命令，获取进程网络状态</p>
+<p><strong>中间层</strong></p>
+<p>加入中间层，缓冲/缓冲，池化，牺牲信息的时效性，加快信息处理的处理速度。</p>
+<p><strong>资源同步</strong></p>
+<p>切分冲突资源的粒度</p>
+<p>减少资源锁定的时间</p>
+<p>将读写分开</p>
+<p><strong>组织优化</strong></p>
+<p>重构–设计模式</p>
+<p>异步化</p>
+<p><strong>资源利用不足</strong></p>
+<p>资源不能合理利用，就是浪费。</p>
+<p>轮转：一定压力下系统的最优状态</p>
+<p>IO密集：并行</p>
+<p>合理利用空闲空间：高位要加大容量</p>
+<h2 id="PDCA-循环方法论"><a href="#PDCA-循环方法论" class="headerlink" title="PDCA 循环方法论"></a>PDCA 循环方法论</h2><p>管理性能优化的过程</p>
+<p>P计划阶段：收集指标，找性能问题，设定改进目标，制定改进措施</p>
+<p>D执行阶段：执行计划</p>
+<p>C检查阶段：检查优化效果，及时发现改进过程的经验和问题</p>
+<p>A处理阶段：将成熟经验推广，有点及面覆盖，为负面形成解决方法，将错误方法形成经验。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2022-03-17T03:44:07.949Z" itemprop="dateUpdated">2022-03-17 11:44:07</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2022/02/01/overall-performance-optimization/" target="_blank" rel="external">https://github.com/missionOdd/2022/02/01/overall-performance-optimization/</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能/">性能</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/系统/">系统</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2022/02/01/overall-performance-optimization/&title=《经验 | 性能优化的整体脉络的梳理》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2022/02/01/overall-performance-optimization/&title=《经验 | 性能优化的整体脉络的梳理》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="prev">
+      <a href="/2022/02/01/jvm-notes/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">jvm | 虚拟机全面扫盲+深入理解的原创笔记</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="next">
+      <a href="/2022/01/26/distributed-volatile-series/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#衡量指标※"><span class="post-toc-number">2.</span> <span class="post-toc-text">衡量指标※</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7类技术优化手段※"><span class="post-toc-number">3.</span> <span class="post-toc-text">7类技术优化手段※</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析哪些资源，容易成为瓶颈"><span class="post-toc-number">4.</span> <span class="post-toc-text">分析哪些资源，容易成为瓶颈</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#性能工具"><span class="post-toc-number">5.</span> <span class="post-toc-text">性能工具</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基准测试"><span class="post-toc-number">6.</span> <span class="post-toc-text">基准测试</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#缓冲区"><span class="post-toc-number">7.</span> <span class="post-toc-text">缓冲区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#缓存"><span class="post-toc-number">8.</span> <span class="post-toc-text">缓存</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据冷热分离"><span class="post-toc-number">9.</span> <span class="post-toc-text">数据冷热分离</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#池化技术"><span class="post-toc-number">10.</span> <span class="post-toc-text">池化技术</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#大对象复用与聚焦"><span class="post-toc-number">11.</span> <span class="post-toc-text">大对象复用与聚焦</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#设计模式"><span class="post-toc-number">12.</span> <span class="post-toc-text">设计模式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多线程"><span class="post-toc-number">13.</span> <span class="post-toc-text">多线程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#锁"><span class="post-toc-number">14.</span> <span class="post-toc-text">锁</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#NIO模型"><span class="post-toc-number">15.</span> <span class="post-toc-text">NIO模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Springboot-性能优化"><span class="post-toc-number">16.</span> <span class="post-toc-text">Springboot 性能优化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常用代码优化法则"><span class="post-toc-number">17.</span> <span class="post-toc-text">常用代码优化法则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JIT编译"><span class="post-toc-number">18.</span> <span class="post-toc-text">JIT编译</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#逃逸分析："><span class="post-toc-number">19.</span> <span class="post-toc-text">逃逸分析：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是JVM预热"><span class="post-toc-number">20.</span> <span class="post-toc-text">什么是JVM预热</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#综合思考性能优化"><span class="post-toc-number">21.</span> <span class="post-toc-text">综合思考性能优化</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本解决方式"><span class="post-toc-number">22.</span> <span class="post-toc-text">基本解决方式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PDCA-循环方法论"><span class="post-toc-number">23.</span> <span class="post-toc-text">PDCA 循环方法论</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2022
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2022/02/01/overall-performance-optimization/&title=《经验 | 性能优化的整体脉络的梳理》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2022/02/01/overall-performance-optimization/&title=《经验 | 性能优化的整体脉络的梳理》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsklEQVR42u3awa4aMQwF0Pn/n26l7qpXwrUdUxZnVgjQkJPFOFz7eeLr15/r1fs/r/OnP7+Z3+3ZuPDw8PBaS89vff6ZnNdbW/nOeHh4eGu8fKFn8Plx32PnRQIPDw/v23jJcnv37BUGPDw8vO/nnd/JY4X5Qx8PDw/vG3iTQDaPfc/H7rwYrGQteHh4eNMEtXC8/vzrxf4eHh4e3qCrPikA1UGBc0lorhYPDw9vgZcccCfBwXmhSeTRa8gVzu94eHh4RV51ocmmJGME+ThCdWv+eo2Hh4e3wOuNT/UGC3rxRw+Mh4eH90lejuzxqhFtr1zh4eHh7fF6o1R5hHGrI9e8Mx4eHt4Cb06dDDwlw1U55s0a8PDw8K7ybg19JuOkvUbaaDvw8PDwrvLyr57BebRavVtveKvckcPDw8MrrjBvViWP+0JrKt6mfIi20N/Dw8PDa/Hyw+48qpg32JJVPbduhIeHhxfz8oZ9wq6OEfSC48I/Bjw8PLwFXv4Qr8a+SVGpbtybdeLh4eEt8G6lndVDdh5A9AKLy2EuHh4e3ouhgd5DvBfyVg/Z1c19Wffw8PDwLvF6zapq5JqXn7zwvAkm8PDw8BZ4tw7NeaiRBwrJSpIDNx4eHt5dXt5Sqj6se22zfBgr+hQPDw9vjdcbF9goFc/dCw8PD+8jvPm4VR5J9ApG4WiOh4eHt8DrLWVeNm4NWkVgPDw8vKu8XqMrX3R+vM6HtJpZCx4eHt4CLz/mJi2r+dbMm2F4eHh4G7x54JsfuHth7vl38fDw8P4X725rvxofVKnlwAIPDw9vjddbdPWdvFRUa1o0eoWHh4f3cd5G2Jr/SvWojYeHh/c9vGr0cGsQIS9a/5iMwMPDw1vg9YafqqFDdcsmUQgeHh7eHm/yV38S+/YC3yYADw8P7w7vNx/ac6ifKq6PAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+    
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+   <script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/plugins/fireworks.js?v=1.4.4"></script>
+
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?18b812f3375b09bd66be7e3a46d7cc2d";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdnjs.cat.net/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="20" src="//cdnjs.cat.net/ajax/libs/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+</body>
+</html>

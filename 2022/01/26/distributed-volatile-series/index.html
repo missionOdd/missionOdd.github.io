@@ -22,7 +22,7 @@
     <title>分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="技术,原理,java,分布式">
+    <meta name="keywords" content="java,技术,原理,分布式">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -50,13 +50,13 @@
 <link rel="alternate" href="/atom.xml" title="🎉 Missionary's Blog 😆" type="application/atom+xml">
 </head>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
-<link href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<script src="//cdnjs.cat.net/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<link href="//cdnjs.cat.net/ajax/libs/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
 <link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
-<link rel="stylesheet"  href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet"  href="//cdnjs.cat.net/ajax/libs/animate.css/3.5.2/animate.min.css">
 <link rel="stylesheet" href="/css/custom.css?v=1.4.4">
-<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
-<link href="//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+<link href="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
 
 <body>
     <div id="loading" class="active mdui-progress">
@@ -426,10 +426,10 @@
 <ol>
 <li>写final的重排规则：<br>JMM禁止编译器把final域的写重排序到构造函数之外。<br>在final域的写之后，插入一个StoreStore屏障。<br>也就是说确保：在对象引用为任意线程可见之前，对象的final域已经被正确初始化过了。</li>
 <li>读final的重排规则：<br>在一个线程中，初次读对象引用与初次读该对象包含的final域，JMM禁止处理器重排序这两个操作（注意，这个规则仅仅针对处理器）。<br>在读final域操作的前面插入一个LoadLoad屏障。<br>也就是说确保：在读一个对象的final域之前，一定会先读包含这个final域的对象的引用。</li>
-<li>如果final域是引用类型，那么增加如下约束：<br>在构造函数内对一个final引用的对象的成员域的写入，与随后在构造函数外把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。<br>就是确保在构造函数外把这个被构造对象的引用赋值给一个引用变量之前，final域已经完全初始化并且赋值给了当前构造对象的成员域，至于初始化和赋值这两个操作则不确保先后顺序。）<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalWrapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> T value;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FinalWrapper</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> FinalWrapper&lt;Helper&gt; helperWrapper;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Helper <span class="title">getHelper</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      FinalWrapper&lt;Helper&gt; wrapper = helperWrapper;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (wrapper == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">              <span class="keyword">if</span> (helperWrapper == <span class="keyword">null</span>) &#123;</span><br><span class="line">                  helperWrapper = <span class="keyword">new</span> FinalWrapper&lt;Helper&gt;(<span class="keyword">new</span> Helper());</span><br><span class="line">              &#125;</span><br><span class="line">              wrapper = helperWrapper;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> wrapper.value;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>如果final域是引用类型，那么增加如下约束：<br>在构造函数内对一个final引用的对象的成员域的写入，与随后在构造函数外把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。<br>就是确保在构造函数外把这个被构造对象的引用赋值给一个引用变量之前，final域已经完全初始化并且赋值给了当前构造对象的成员域，至于初始化和赋值这两个操作则不确保先后顺序。）</li>
 </ol>
 </blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalWrapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> T value;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FinalWrapper</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> FinalWrapper&lt;Helper&gt; helperWrapper;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Helper <span class="title">getHelper</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      FinalWrapper&lt;Helper&gt; wrapper = helperWrapper;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (wrapper == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">              <span class="keyword">if</span> (helperWrapper == <span class="keyword">null</span>) &#123;</span><br><span class="line">                  helperWrapper = <span class="keyword">new</span> FinalWrapper&lt;Helper&gt;(<span class="keyword">new</span> Helper());</span><br><span class="line">              &#125;</span><br><span class="line">              wrapper = helperWrapper;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> wrapper.value;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Q: DCL是否是实现单例的最佳方案？是否有代替？<br>不是。DCL的目的是懒加载和提高性能，但现代JMM加强volatile保证可靠，但副作用是性能开销变大，且加上了同步块的开销。</p>
 </blockquote>
@@ -438,8 +438,8 @@
 <h2 id="volatile-保证可见性？"><a href="#volatile-保证可见性？" class="headerlink" title="volatile 保证可见性？"></a>volatile 保证可见性？</h2><p>层层深入讲。</p>
 <ol>
 <li>可见性是指解决多线程在操作同一变量时，多个工作内存中的值不一样的问题。</li>
-<li>JMM中定义了8种原子操作保证可见性：<br> 除了lock和unlock，<br> 还定义了<br> read load use 作为一种读原子操作<br> assign store write 作为一种写原子操作<br> 避免在中间操作被打断。<br> 虽然use 和assign存在 被打断的可能，但工作内存和主内存依旧想等。<br> 因此在循环内，适合flag赋值，不适合a++等非原子操作，运算结果a会对中间加数a产生依赖。</li>
-<li>原子操作的底层实现需要两种方式：<br> 一个是通过总线的，总线上有一个<strong>缓存一致性协议</strong>。总线有一个数据修改，所有的数据修改都是从总线推到主存，这个时候，其他cpu会<strong>嗅探</strong>总线上的修改，然后推送给其他cpu置旧的缓存不可用，下次再使用，就会从主存里读取（这部分可展开CPU底层）。还有一个是通过<strong>内存屏障</strong>，<strong>禁止指令重排序</strong>。<br> <strong>内存屏障有4种，load和store指令之前执行，比如：volidate 有读和写操作，在写前加store屏障，保证写写操作，不能重排序；在写后加store-Load屏障，保证先写再读。在第一个读后加入load-Load，保证读读的顺序；读后加入lock-Store，虽然是全能屏障，但开销大。基本上这就是volidate的禁止重排序的配合。</strong></li>
+<li>JMM中定义了8种原子操作保证可见性：<br> 除了lock和unlock，<br> 还定义了<br> read load use 作为一种读原子操作<br> assign store write 作为一种写原子操作<br> 主存值read到执行引擎，执行引擎值load到一个栈存副本变量，栈存值use 到执行引擎，以便计算处理；<br> 执行引擎值 assign到栈存副本变量，栈存副本值store到主存，主存值write 到主存的变量，以便共享；<br> 避免在 读过程 或 写过程 中间操作被打断。<br> 虽然use 和assign存在 被打断的可能，但工作内存和主内存依旧想等。<br> 因此在多线程内，适合flag赋值，不适合a++等非原子操作，运算结果a会对中间加数a产生依赖。</li>
+<li>原子操作的底层实现需要两种方式：<br> 一个是通过总线的，总线上有一个<strong>缓存一致性协议</strong>。总线有一个数据修改，所有的数据修改都是从总线推到主存，这个时候，其他cpu会<strong>嗅探</strong>总线上的修改，然后推送给其他cpu置旧的缓存不可用，下次再使用，就会从主存里读取（这部分可展开CPU底层）。还有一个是通过<strong>内存屏障</strong>，<strong>禁止指令重排序</strong>。<br> <strong>内存屏障有4种，load和store指令之前执行，比如：volidate 有读和写操作，在写前加store屏障，保证写写操作，不能重排序；在写后加storeLoad屏障，保证先写再读。在第一个读后加入loadLoad，保证读读的顺序；读后加入loadStore，保证读写顺序，StoreLoad虽然是全能屏障，同时具有其他3个屏障的效果，但开销大，因为处理器通常要把当前的写缓冲区的内容全部刷新到内存。基本上这就是volidate的禁止重排序的配合。</strong></li>
 </ol>
 <h3 id="Q：问点简单的，细说8种原子操作？"><a href="#Q：问点简单的，细说8种原子操作？" class="headerlink" title="Q：问点简单的，细说8种原子操作？"></a>Q：问点简单的，细说8种原子操作？</h3><p>（这要背了。。。）</p>
 <ol>
@@ -729,7 +729,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2022-02-28T01:55:31.859Z" itemprop="dateUpdated">2022-02-28 09:55:31</time>
+    Last updated: <time datetime="2022-03-17T03:37:11.360Z" itemprop="dateUpdated">2022-03-17 11:37:11</time>
 </span><br>
 
 
@@ -830,18 +830,18 @@
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="prev">
-      <a href="/2022/02/01/jvm-notes/" id="post-prev" class="post-nav-link">
+      <a href="/2022/02/01/overall-performance-optimization/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">jvm | 虚拟机全面扫盲+深入理解的原创笔记</h4>
+        <h4 class="title">经验 | 性能优化的整体脉络的梳理</h4>
       </a>
     </div>
   
 
   
     <div class="next">
-      <a href="/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/" id="post-next" class="post-nav-link">
+      <a href="/2022/01/23/spring-notes/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">设计栈 |  模拟栈的压入、弹出序列</h4>
+        <h4 class="title">Spring | 高频知识口述</h4>
       </a>
     </div>
   
@@ -1027,17 +1027,17 @@
 
     
    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
-   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/animejs/2.2.0/anime.min.js"></script>
    <script type="text/javascript" src="/js/plugins/fireworks.js?v=1.4.4"></script>
 
 
     <!-- main-js -->
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
 <script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
 
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
 
 <script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
 <script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
@@ -1110,7 +1110,7 @@ var _hmt = _hmt || [];
     });
 </script>
 
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
 
@@ -1143,16 +1143,16 @@ var _hmt = _hmt || [];
 </script>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//cdnjs.cat.net/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
 <script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+<script src="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
 
 <script type="text/javascript">
 jQuery.noConflict();     //将变量$的控制权让渡
 </script>
-<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="60" src="//cdnjs.cloudflare.com/ajax/libs/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="20" src="//cdnjs.cat.net/ajax/libs/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 <!-- <script type="text/javascript">
 
 jQuery(function($){
