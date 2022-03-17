@@ -22,7 +22,7 @@
     <title>Python 基础笔记 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="keywords" content="python，基础">
+    <meta name="keywords" content="python,基础">
     <link rel="shortcut icon" href="/img/favicon.ico">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/css/style.css?v=1.4.4">
@@ -677,8 +677,15 @@
                 <a rel=Python 基础笔记 href="Image[84].png" title="" data-fancybox="images"><img src="Image[84].png" alt title class></a>
                 <p></p>
             </figure>
-<p> <a rel=Python 基础笔记 href="Image[85].png" title="" data-fancybox="images"><img src="Image[85].png" alt></a></p>
-<p> <a rel=Python 基础笔记 href="Image[86].png" title="" data-fancybox="images"><img src="Image[86].png" alt></a><br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> name：一般变量，在类中，类外都可以使用，对象直接可以访问</span><br><span class="line"> </span><br><span class="line">__name:双下划线私有变量，在类中可以访问，类外不能直接访问</span><br><span class="line"></span><br><span class="line">_name:单下划线的变量，与双下划线有点类似也是私有变量，区别在于from 模块 import *时不能导入，类和对象能直接访问</span><br><span class="line"></span><br><span class="line">__init__:类似这样的两边都有的双下划线的方法时系统具有特殊功能的方法，一般不要这样自定义方法，如__new__用来创建对象，__init__用来初始化对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">xx_:单后置下划线,用于避免与Python关键词的冲突</span><br></pre></td></tr></table></figure></p>
+ <figure class="image-box">
+                <a rel=Python 基础笔记 href="Image[85].png" title="" data-fancybox="images"><img src="Image[85].png" alt title class></a>
+                <p></p>
+            </figure>
+ <figure class="image-box">
+                <a rel=Python 基础笔记 href="Image[86].png" title="" data-fancybox="images"><img src="Image[86].png" alt title class></a>
+                <p></p>
+            </figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> name：一般变量，在类中，类外都可以使用，对象直接可以访问</span><br><span class="line"></span><br><span class="line">__name:双下划线私有变量，在类中可以访问，类外不能直接访问</span><br><span class="line"></span><br><span class="line">_name:单下划线的变量，与双下划线有点类似也是私有变量，区别在于from 模块 import *时不能导入，类和对象能直接访问</span><br><span class="line"></span><br><span class="line">__init__:类似这样的两边都有的双下划线的方法时系统具有特殊功能的方法，一般不要这样自定义方法，如__new__用来创建对象，__init__用来初始化对象</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">xx_:单后置下划线,用于避免与Python关键词的冲突</span><br></pre></td></tr></table></figure>
 <h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> class Parent:</span><br><span class="line">    def hello(self):</span><br><span class="line">        print(&quot;调用父类&quot;)</span><br><span class="line"></span><br><span class="line">    def say(self):</span><br><span class="line">        print(&quot;调用父类say&quot;)</span><br><span class="line"></span><br><span class="line">class Child(Parent):</span><br><span class="line">    def hello(self):</span><br><span class="line">        print(&quot;调用子类&quot;)</span><br><span class="line"></span><br><span class="line">c=Child()</span><br><span class="line">c.hello();</span><br><span class="line">c.say();</span><br></pre></td></tr></table></figure>
 <h2 id="重写构造方法"><a href="#重写构造方法" class="headerlink" title="重写构造方法"></a>重写构造方法</h2> <figure class="image-box">
                 <a rel=Python 基础笔记 href="Image87.png" title="" data-fancybox="images"><img src="Image87.png" alt title class></a>
@@ -848,7 +855,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2021-11-03T13:31:28.263Z" itemprop="dateUpdated">2021-11-03 21:31:28</time>
+    最後更新時間：<time datetime="2022-03-17T14:33:45.345Z" itemprop="dateUpdated">2022-03-17 22:33:45</time>
 </span><br>
 
 
@@ -880,7 +887,7 @@
         
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python，基础/">python，基础</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/基础/">基础</a></li></ul>
 
             <div class="page-share-wrap">
     

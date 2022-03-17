@@ -1,6 +1,5 @@
-## Welcome to my Blog Pages
+## Welcome to My Blog Pages
 
 > The blog page Code submitted by Hexo.
 
-
-missionodd.github.io
+> If you like it，could you give me a star？
