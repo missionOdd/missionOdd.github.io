@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>并发编程| volatile&amp;锁升级&amp;DCL&amp;线程池调优 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="技术,原理,高并发">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="🎉 Missionary's Blog 😆" type="application/atom+xml">
+</head>
+
+<script src="//cdnjs.cat.net/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<link href="//cdnjs.cat.net/ajax/libs/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cat.net/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://leetcode-cn.com/u/missionary" target="_blank">
+                  <i class="icon icon-lg icon-gg-circle"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://leetcode-cn.com/u/missionary/" target="_blank">
+                <i class="icon icon-lg icon-gg-circle"></i>
+                LEETCODE
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>并发编程| volatile&amp;锁升级&amp;DCL&amp;线程池调优</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">并发编程| volatile&amp;锁升级&amp;DCL&amp;线程池调优</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2022-03-23T04:50:37.000Z" itemprop="datePublished" class="page-time">
+  2022-03-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/">高并发</a></li></ul></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-concurrent-programming"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">并发编程| volatile&锁升级&DCL&线程池调优</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2022-03-23 12:50:37" datetime="2022-03-23T04:50:37.000Z"  itemprop="datePublished">2022-03-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/">高并发</a></li></ul></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2022/03/23/concurrent-programming/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/03/23/concurrent-programming/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/03/23/concurrent-programming/#comment">
+            <span class="valine-comment-count" data-xid="/2022/03/23/concurrent-programming/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><p>一是保证可见性。<br>二是禁止指令重拍序。<br>可见性，是让其他线程可见，一般我们是多核CPU，一旦volatile修饰的变量被一个CPU修改，修改完的值需要立即推送到主存，推送过程要经过一个总线。那么，我们说的可见性就是体现在总线这一层上。因为，我们其他的CPU一直在嗅探总线的数据流通，在缓存一致性的保障下， 能够嗅探到数据的修改，然后，如果自己的缓存行有这条数据，就置为失效。<br>如果下次有线程对该数据读或写，那么它会先从主存拉取数据保存到CPU自己的缓存行里边，然后再做进一步处理。<br>就是嗅探和MESI缓存一致性协议共同保证了CPU层的可见性。<br>总线如何知道volatile修饰呢？关键用了lock 前缀的指令，有两层含义。一个是将数据的修改推送到主存，一个是lock指令过控制总线的时候，其他CPU会嗅探lock指令，然后置缓存行失效。</p>
+<p>禁止指令重排序<br>首先，它是禁止在编译阶段，Class结构中方法表的属性表的Code属性，存放着JVM指令，在编译期时，volatile就完成了一个内存屏障的编译。<br>对于volatile的写，写前加入storeStore屏障，保证写写顺序，写后加入storeLoad，保证先写后读顺序；对于volatile的读，在第一个读后加入loadLoad屏障，保证读读顺序，读后loadStore，保证先读后写顺序，StoreLoad这是个全能型屏障，开销很大，同时具有其他3个屏障的效果。执行该屏障的花销比较昂贵，因为处理器通常要把当前的写缓冲区的内容全部刷新到[内存]中（Buffer Fully Flush，一般不会单独使用。</p>
+<blockquote>
+<p>引申：<br>final 域的写之后，构造函数 return 之前，插入一个 StoreStore 屏障。<br>在 初次读 final 域操作的前面插入一个 LoadLoad 屏障</p>
+</blockquote>
+<p>特殊情况下，可以保证原子性。<br>如果是单条JVM指令字节码，可以保证原子性；如果是多条JVM指令字节码，不能保证原子性；（建议别深入，怕深问到指令出入栈）<br>如果是对 flag = true的读写，可保证，因为读和写都是1条指令字节码。<br>如果a++，不保证，这里涉及了3条JVM指令字节码，iload 读取a，iadd 进行a+1，istore 写a。</p>
+<p>下面这个答案有点不理解：<br>read load use 作为一种读原子操作<br>assign store write 作为一种写原子操作<br>主存值read到执行引擎，执行引擎值load到一个栈存副本变量，栈存值use 到执行引擎，以便计算处理；<br>执行引擎值 assign到栈存副本变量，栈存副本值store到主存，主存值write 到主存的变量，以便共享；</p>
+<p>原子操作避免 读过程 或 写过程 在中间操作被打断。<br>虽然use 和assign存在 被打断的可能，但工作内存和主内存依旧想等。<br>    因此在多线程内，适合flag赋值，不适合a++等非原子操作，运算结果a会对中间加数a产生依赖。</p>
+<blockquote>
+<p><strong>Java内存模型即Java Memory Model，简称JMM。</strong><br><strong>JMM定义了Java 虚拟机(JVM)在计算机内存(RAM)中的工作方式。JVM 是整个计算机虚拟模型，所以 JMM 是隶属于 JVM 的。</strong><br>一、JVM构成：<br><strong>1、类加载器（ClassLoader）</strong>:在 JVM 启动时或者在类运行将需要的 class 加载到JVM 中。<br><strong>2、执行引擎</strong>：负责执行 class 文件中包含的字节码指令.<br><strong>3、内存区（也叫运行时数据区）</strong>：是在 JVM 运行的时候操作所分配的内存区。<br><strong>（1）、方法区(MethodArea)</strong>：用于存储类结构信息的地方，包括常量池、静态常量、构造函数等。虽然 JVM 规范把方法区描述为堆的一个辑部分， 但它却有个别名non-heap（非堆），所以大家不要搞混淆了。方法区还包含一个运行时常量池。<br><strong>（2）、java 堆(Heap)</strong>：存储 java 实例或者对象的地方。这块是 GC 的主要区域。从存储的内容我们可以很容易知道，方法和堆是被所有 java 线程共享的。<br><strong>（3）、java 栈(Stack)</strong>：java 栈总是和线程关联在一起，每当创一个线程时，JVM 就会为这个线程创建一个对应的 java 栈在这个 java 栈中,其中又会包含多个栈帧，每运行一个方法就建一个栈帧，用于存储局部变量表、操作栈、方法返回等。每一个<br>方法从调用直至执行完成的过程，就对应一栈帧在 java 栈中入栈到出栈的过程。所以 java 栈是线程有的。<br><strong>（4）、程序计数器(PCRegister)</strong>：用于保存当前线程执行的内存地址。由于 JVM 程序是多线程执行的（线程轮流切换），所以为了保证程切换回来后，还能恢复到原先状态，就需要一个独立计数器，记录之前中断的地方，可见程序计数器也是线程私有的。<br><strong>（5）、本地方法栈(Native MethodStack)</strong>：和 java 栈的作用差不多，只不过是为 JVM 使用到 native 方法服务的。<br><strong>4、本地方法接口</strong>：主要是调用 C 或 C++实现的本地方法及回调结果。<br><strong>开线程影响哪块内存？</strong><br>每当有线程被创建的时候，JVM 就需要为其在内存中分配虚拟机栈和本地方法栈来记录调用方法的内容，分配程序计数器记录指令执行的位置，这样的内存消耗就是创建线程的内存代价。<br>Java 线程之间的通信总是隐式进行，并且采用的是共享内存模型。这里提到的共享内存模型指的就是 Java 内存模型(简称 JMM)，JMM 决定一个线程对共享变量的写入何时对另一个线程可见。从抽象的角度来看，JMM 定义了线程和主内存之间的抽象关系：线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），本地内存中存储了该线程以读/写共享变量的副本。本地内存是 JMM 的一个抽象概念，并不真实存在。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。总之，JMM 就是一组规则，这组规则意在解决在并发编程可能出现的线程安全问题，并提供了内置解决方案（happen-before 原则）及其外部可使用的同步手段(synchronized/volatile 等)，确保了程序执行在多线程环境中的应有的原子性，可视性及其有序性。</p>
+</blockquote>
+<p>比较：<br>synchronized  一定条件是重量级+可重用锁<br>作用到普通方法上，静态方法上。<br>普通方法是对象锁，<br>静态方法是当前class锁；</p>
+<p>对单个值读写，<br>读多写少，用volatile，缓存行直接读；<br>读少写多，用sychronized作用到读写方法。<br>volatile锁总线，CPU嗅探，伪共享问题；<br>sychronized只会线程的block状态，有用户态和内核态的上下文切换，有一个线程执行的记忆，这个过程耗资源耗时间，所以提出CAS。如果写过程短，CPU执行非常快，线程blocked非常短。</p>
+<p>总结<br>重量级锁能提高程序的吞吐量。</p>
+<p>————</p>
+<h3 id="Q：synchronized-和-lock-的区别？"><a href="#Q：synchronized-和-lock-的区别？" class="headerlink" title="Q：synchronized 和 lock 的区别？"></a>Q：synchronized 和 lock 的区别？</h3><p>1，基本使用，关键字；接口<br>    lock接口有6个方法：lock，unlock，trylock非阻塞加锁，trylock(time)非阻塞可超时加锁，lockInterruptibly可中断加锁；<br>    Rentrantlock 实现<br>2，隐式加锁，显式加锁<br>    lock在try里，unlock在finally里<br>3，作用方法上多种方式，lock只能作用到代码块<br>对于synchronized<br>    普通方法，静态方法，方法块上有什么不同。<br>    代码块反编译同步指令，monitorenter，monitorexit；<br>    一定有两个出口，正常和异常。<br>    方法上会有ACC_SYNCHRONIZED访问标志。</p>
+<p>4，lock 支持非阻塞式加锁（信号量），支持可超时加锁，支持可中断加锁；<br>不阻塞，少一次上下文切换。可超时可中断，更灵活；</p>
+<p>5，从底层原理，synchronized一定条件下 采用对象监视器monitor，lock采用AQS；<br>Object 的monitor，线程竞争失败，调用wait方法释放锁，会放到等待队列，等待唤醒，再进行锁竞争，会放到同步队列。</p>
+<p>6，synchronized在进行加锁解锁或通知等待时，只有一个同步队列Entry Set 一个等待队列Wait Set；<br>lock有一个同步队列Entry Set，多个等待队列Wait Set；<br>创建一个condition就多一个等待队列<br>7，锁竞争，synchronized只支持非公平锁，lock支持公平锁和非公平锁；<br>对于在排队的A线程，新来的线程B，AB竞争机会相同，对A不公平；如果A总是被插队，A总是在排队，A就是饥饿线程。<br>对于在排队的A线程，新来的线程B，B在队列末端排队，对A公平。</p>
+<p>8，等待唤醒机制，sychronized与Object进行配合，使用notifyAll方法操作；lock需要用contdition接口配合，也是wait/notify机制，只是方法名不同await/signalAll。<br>如果线程获取锁，并condition的await方法，线程去哪？<br>在await方法前，线程加入condition的等待队列，不需要CAS，直接加，此时持有当前锁，说明自己竞争成功。当调用await后，它会进行锁释放。<br>场景：线程A获取锁后，调用wait，A被唤醒，继续执行释放了，A经历了什么？<br>wait前，A提前加入condition的等待队列尾部，不需CAS；当A在队列头部，就是被唤醒，就会进行一轮线程竞争，如果竞争失败，会加入到锁的同步队列尾部，需要CAS；A排队到头部，被唤醒，看公平锁还是非公平锁，如果是非公平锁，可能还会保持一段时间饥饿，如果是公平锁，直接获取锁，直接跳转wait方法释放，直到把锁释放。</p>
+<figure class="image-box">
+                <a rel=并发编程| volatile&锁升级&DCL&线程池调优 href="image-20220305082139330.png" title="image-20220305082139330" data-fancybox="images"><img src="image-20220305082139330.png" alt="image-20220305082139330" title class></a>
+                <p>image-20220305082139330</p>
+            </figure>
+<p>9，个性化定制方面，AQS是使用模版方法模式，可以自定义lock。<br>lock下的读写锁，能支持并发读，是共享排他锁。<br>AQS的可重写方法，tryacquireShared /tryreleaseshared，tryacquire/tryrelease</p>
+<blockquote>
+<p>每个对象都与一个<strong>monitor</strong> 相关联。当且仅当拥有所有者时（被拥有），monitor才会被锁定。执行到monitorenter指令的线程，会尝试去获得对应的monitor，如下：</p>
+<blockquote>
+<p>每个对象维护着一个记录着被锁次数的计数器, 对象未被锁定时，该计数器为0。线程进入monitor（执行monitorenter指令）时，会把计数器设置为1.</p>
+<p>当同一个线程再次获得该对象的锁的时候，计数器再次自增.</p>
+<p>当其他线程想获得该monitor的时候，就会阻塞，直到计数器为0才能成功。</p>
+</blockquote>
+</blockquote>
+<h2 id="锁升级详解"><a href="#锁升级详解" class="headerlink" title="锁升级详解"></a>锁升级详解</h2><blockquote>
+<p><strong>synchronized锁有四种状态，无锁，偏向锁，轻量级锁，重量级锁</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>无锁，偏向锁，轻量级锁（CAS）都是在用户空间完成</strong><br><strong>重量级锁是需要向内核申请的</strong></p>
+</blockquote>
+<p>简单的讲：<br><strong>当线程A启动后，获得了对象的锁，此时线程A的线程ID将保存到对象的对象头中，对象头中的偏向锁标志位变为1。此时如果第二个线程B想访问这个对象，线程A、B之间就存在一个竞争的关系，但是此时偏向锁是偏向于线程A的，即A是优先的，偏向锁将会升级为轻量级锁，以此来保证持有对象锁的的线程A运行。此时线程B将会进行CAS，CAS也叫做自旋锁，B会去检查对象的锁是否还是属于A的，如果是，那B将会继续自选，直到对象锁被释放，B马上就会获取对象的锁。但是假如长时间无法获取到对象的锁，CAS是会消耗CPU的性能的，尤其当许多个线程竞争同一个对象的锁时，CPU资源占用会大大提高，此时锁将会再次升级，对象锁将升级为重量级锁。此时，所有竞争的线程将进入阻塞队列，等待cpu的调度。</strong><br><figure class="image-box">
+                <a rel=并发编程| volatile&锁升级&DCL&线程池调优 href="200B5CB0-C1CD-4BAB-B6D0-0F9571CA6BE7_20220306170653.png?v=1&type=image&token=V1:3a9aOLmt56Y9r0-FQjdOX46UTQordIh0AVMM9wUpw3I" title="输入图片描述" data-fancybox="images"><img src="200B5CB0-C1CD-4BAB-B6D0-0F9571CA6BE7_20220306170653.png?v=1&type=image&token=V1:3a9aOLmt56Y9r0-FQjdOX46UTQordIh0AVMM9wUpw3I" alt="输入图片描述" title class></a>
+                <p>输入图片描述</p>
+            </figure></p>
+<figure class="image-box">
+                <a rel=并发编程| volatile&锁升级&DCL&线程池调优 href="7D5886D5-B82C-4991-BB30-A941167F9C49_20220306165657.png?v=1&type=image&token=V1:-L4TERytUf4m7oc5qmaAP0u8qsvL9-ami3kxpq7ZVYc" title="输入图片描述" data-fancybox="images"><img src="7D5886D5-B82C-4991-BB30-A941167F9C49_20220306165657.png?v=1&type=image&token=V1:-L4TERytUf4m7oc5qmaAP0u8qsvL9-ami3kxpq7ZVYc" alt="输入图片描述" title class></a>
+                <p>输入图片描述</p>
+            </figure>
+<p>具体展开：<br>32位系统下，<br>当我们创建对象的时候，它对象头有25位hashcode，4位分代年龄，1位偏向锁标记，2位锁标记位。</p>
+<p>如果对象进行new关键字，对象头有无25位hashcode？<br>仅仅new对象，如果没有显式或隐式调用hashcode方法，该标记位并没有真实标记hashcode。就是说，只有调用Object类hashcode，才会有标记，比如存入Hashmap，否则是0。</p>
+<p>分代年龄，没有经过minorgc，就是0。</p>
+<p>偏向锁位：<br>无锁状态，偏向锁位 0<br>偏向锁态，偏向锁位1</p>
+<p>无锁状态升级为偏向锁状态<br>想要成为偏向锁态，mark word中无hashcode记录，这是一个前提。<br>23位线程ID+2位epoch 占据了无锁态的hashcode位。</p>
+<p>锁标志位：<br>标记什么锁状态。</p>
+<p><strong>偏向锁：</strong><br>单线程操作环境，不存在锁竞争，偏向锁有一个非常好的性能，<code>偏向锁</code>会直接来往markword里贴上线程ID，表示锁住了，<strong>每次只需检查线程ID是否偏向自己，没有CAS自旋和操作系统调用这些耗时的锁竞争机制</strong>。<strong>如果出现其他线程竞争，也不一定升级锁</strong>。比如线程A在对象已贴上线程ID，线程B发现被贴上A线程ID，就会检查线程A的存活状态，如果线程A已在临界区外，线程B把对象置为匿名偏向锁状态，<code>‘宁为玉碎，不为瓦全’</code>，再准备竞争，如果竞争成功，线程B把对象置为偏向自己。如果竞争失败，假如线程C进来并抢到，B还在争抢，此时，线程B会进行偏向锁撤销的stw操作：B线程挂起，等待线程C到达安全点后，线程C的栈会被遍历，找偏向锁对象记录，就会导致3种情况：</p>
+<p>一是对象升级为轻量级锁，但只是锁标记00，前30位置空，没有指向锁记录栈帧，此时也算无锁状态；</p>
+<p>二是线程重新偏向到线程B。</p>
+<p>涉及到<strong>批量重偏向</strong>和<strong>批量撤销</strong>的操作。<br>除了对象markword有epoch计数器，class信息中也有epoch值，class的epoch维护两个阈值，批量重偏向阈值是20，批量撤销阈值40。</p>
+<p>比如：同一个类创建40对象，线程A对40对象加锁并保持执行，线程B对40个对象批量撤销，会把前19个对象进行偏向锁撤销，每次撤销class的epoch会+1，之后达到class批量重偏向阈值，JVM认为class偏向锁有问题，触发批量重偏向，后20到39对象通过CAS直接偏向线程B，这就是批量重偏向的过程。当执行40个，达到class批量撤销阈值，JVM这个类的竞争激烈，标记该class为偏向不可用，在之后创建41个对象时，会直接把锁标记置00启用轻量级锁，这就是批量撤销过程。</p>
+<p>此外，触发批量重偏向阈值20后，还配合一个time超时阈值25s，如果超时未达40的批量撤销阈值，重置class的epoch，下次重新计数。</p>
+<p>三是直接将该类置为不可使用偏向锁。<br>这个就是批量撤销之后。</p>
+<p>偏向锁升级为轻量级锁：<br>锁标记置00，线程ID+Epoch置为00。</p>
+<p>轻量锁：<br>多线程竞争获取这个锁时，由于该锁已经是偏向锁，当发现对象头 Mark Word 中的线程 ID 不是自己的线程 ID，会CAS尝试获得锁，如果持有锁的线程在全局安全点检查时，不需要再使用该锁了则获取成功，程序继续执行，反之则获取锁失败，撤销偏向状态，升级为轻量级锁，即自旋锁。</p>
+<p>此时，将锁对象markWord中32位修改成指向自己线程栈中Lock Record的指针（CAS抢）执行在用户态，消耗CPU的资源。此时，锁标记位00.<br>JDK1.6引入了聪明的<strong>自适应自旋锁</strong>。能减少长任务的自旋次数。<br>他的自旋次数是会变的，我用大白话来讲一下，就是线程如果上次自旋成功了，那么这次自旋的次数会更加多，因为虚拟机认为既然上次成功了，那么这次自旋也很有可能会再次成功。反之，如果某个锁很少有自旋成功，那么以后的自旋的次数会减少甚至省略掉自旋过程，以免浪费处理器资源。</p>
+<p>轻量级锁的加锁过程：<br>线程A进入同步块，如果同步对象锁状态为无锁状态，虚拟机首先将在当前线程的栈帧中建立一个名为锁记录（Lock Record）的空间，用于存储锁对象目前的Mark Word的拷贝，官方称之为 Displaced Mark Word。然后拷贝对象头中的Mark Word复制到锁记录中；<br>之后，虚拟机将使用CAS操作尝试将对象的Mark Word中的32位更新为指向线程A的Lock Record的指针，并将线程A的Lock record里的owner指针指向object mark word。此时，线程A持有锁。<br>此时线程B进来尝试CAS更新，<br>如果更新成功，那么线程B就拥有了该对象的锁，并且对象Mark Word的锁标志位置为“00”，即表示此对象处于轻量级锁定状态。<br>如果这个更新操作失败了，JVM首先会检查对象的Mark Word是否指向当前线程的栈帧，如果是，说明当前线程已经拥有了这个对象的锁，那就可以直接进入同步块继续执行。<br>此时为了提高获取锁的效率，线程B会不断地循环去获取锁，尝试CAS, 这个循环是有次数限制的，比如10次，如果在循环结束之前CAS操作成功， 那么线程B就获取到锁；<br>如果循环结束依然获取不到锁, 则线程B获取锁失败, 对象的MarkWord中的记录会被修改为指向互斥量（重量级锁）的指针，锁标志的状态值变为10，然后线程B被挂起，后面来的线程也会直接被挂起。在这个状态下，未抢到锁的线程都会进入 Monitor，之后会被阻塞在 _WaitSet 队列中。</p>
+<p>此时，线程A的displaced mark word和原来对象的markword不一样了。</p>
+<p>解锁<br>也是通过CAS操作来进行的，如果对象的Mark Word仍然<code>指向着线程</code>的<code>锁记录</code>，那就用CAS操作把对象当前的Mark Word和线程中复制的Displaced Mark Word<code>替换回来</code>。</p>
+<p>因为线程B把对象 markword改成重量级锁，那么线程A<code>替换失败</code>，那么就把自己栈桢的Displaced Mark Word拷贝到对象头的<strong>Monitor</strong>对象的header变量，并且<strong>Monitor</strong>对象的owner变量指向自己。保证displaced mark word不丢失。</p>
+<p>重量级锁：<br>CAS发生10次后，轻量级锁升级为重量级锁，把锁指针指向重量级锁Object的monitor。</p>
+<p>在Java虚拟机(HotSpot)中，Monitor对象其实就是ObjectMonitor对象，这个对象是一个C++对象，定义在虚拟机源码中。</p>
+<h3 id="synchronized可重入"><a href="#synchronized可重入" class="headerlink" title="synchronized可重入"></a>synchronized可重入</h3><p>synchronized是可重入锁，那么它是如何实现可重入的呢？其实上面详细的过程已经说过了，这里再总结一下（之前的判断逻辑就省略掉了）：</p>
+<p>偏向锁：检查markWord中的线程ID是否是当前线程，如果是的话就获取锁，继续执行代码；<br>轻量级锁：检查markWord中指向lockRecord的指针是否是指向当前线程的lockRecord，是的话继续执行代码；<br>重量级锁：检查_owner属性，如果该属性指向了本线程，_count属性+1，并继续执行代码。</p>
+<p>总结<br>synchronized的执行过程：</p>
+<ol>
+<li>检测Mark Word里面是不是当前线程的ID，如果是，表示当前线程处于偏向锁</li>
+<li>如果不是，则使用CAS将当前线程的ID替换Mard Word，如果成功则表示当前线程获得偏向锁，置偏向标志位1</li>
+<li>如果失败，则说明发生竞争，撤销偏向锁，进而升级为轻量级锁。</li>
+<li>当前线程使用CAS将对象头的Mark Word替换为锁记录指针，如果成功，当前线程获得锁</li>
+<li>如果失败，表示其他线程竞争锁，当前线程便尝试使用自旋来获取锁。</li>
+<li>如果自旋成功则依然处于轻量级状态。</li>
+<li>如果自旋失败，则升级为重量级锁。</li>
+</ol>
+<p>上面几种锁都是JVM自己内部实现，当我们执行synchronized同步块的时候jvm会根据启用的锁和当前线程的争用情况，决定如何执行同步操作；</p>
+<p>在所有的锁都启用的情况下线程进入临界区时会先去获取偏向锁，如果已经存在偏向锁了，则会尝试获取轻量级锁，启用自旋锁，如果自旋也没有获取到锁，则使用重量级锁，没有获取到锁的线程阻塞挂起，直到持有锁的线程执行完同步块唤醒他们；</p>
+<p>synchronized锁升级实际上是把本来的悲观锁变成了 在一定条件下 使用无锁(同样线程获取相同资源的偏向锁)，以及使用乐观(自旋锁 cas)和一定条件下悲观(重量级锁)的形式。</p>
+<p>偏向锁:适用于单线程适用锁的情况，如果线程争用激烈，那么应该禁用偏向锁。</p>
+<p>轻量级锁：适用于竞争较不激烈的情况(这和乐观锁的使用范围类似)</p>
+<p>重量级锁：适用于竞争激烈的情况</p>
+<p><strong>锁优化</strong></p>
+<p>以上介绍的锁不是我们代码中能够控制的，但是借鉴上面的思想，我们可以优化我们自己线程的加锁操作；</p>
+<p><strong>锁消除</strong></p>
+<p>锁消除用大白话来讲，就是在一段程序里你用了锁，但是jvm检测到这段程序里不存在共享数据竞争问题，也就是变量没有逃逸出方法外，这个时候jvm就会把这个锁消除掉</p>
+<p>我们程序员写代码的时候自然是知道哪里需要上锁，哪里不需要，但是有时候我们虽然没有显示使用锁，但是我们不小心使了一些线程安全的API时，如StringBuffer、Vector、HashTable等，这个时候会隐形的加锁。比如下段代码：</p>
+<pre><code>public void sbTest(){
+    StringBuffer sb= new StringBuffer();
+    for(int i = 0 ; i &lt; 10 ; i++){
+        sb.append(i);
+    }
+
+    System.out.println(sb.toString());
+}
+</code></pre><p>上面这段代码，JVM可以明显检测到变量sb没有逃逸出方法sbTest()之外，所以JVM可以大胆地将sbTest内部的加锁操作消除。</p>
+<p><strong>减少锁的时间</strong></p>
+<p>不需要同步执行的代码，能不放在同步快里面执行就不要放在同步快内，可以让锁尽快释放；</p>
+<p><strong>减小锁的粒度</strong></p>
+<p>它的思想是将物理上的一个锁，拆成逻辑上的多个锁，增加并行度，从而降低锁竞争。它的思想也是用空间来换时间（如ConcurrentHashMap、LinkedBlockingQueue、LongAdder）；</p>
+<p><strong>锁粗化</strong></p>
+<p>大部分情况下我们是要让锁的粒度最小化，锁的粗化则是要增大锁的粒度; 在以下场景下需要粗化锁的粒度：<br>假如有一个循环，循环内的操作需要加锁，我们应该把锁放到循环外面，否则每次进出循环，都进出一次临界区，效率是非常差的；</p>
+<p><strong>使用读写锁</strong></p>
+<p>ReentrantReadWriteLock 是一个读写锁，读操作加读锁，可以并发读，写操作使用写锁，只能单线程写。</p>
+<h2 id="单例模式的原因"><a href="#单例模式的原因" class="headerlink" title="单例模式的原因"></a>单例模式的原因</h2><p>双重校验锁DCL ——double check lock<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SafeDoubleCheckedLocking</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> Instance instance;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Instance <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (SafeDoubleCheckedLocking<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="keyword">null</span>)</span><br><span class="line">                    instance = <span class="keyword">new</span> Instance();<span class="comment">//instance为volatile，现在没问题了</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>1.懒汉实现惰性加载资源。</p>
+<ol start="2">
+<li>volatile修饰，设置内存屏障。错误说法：<del>强制指令执行顺序，先分配内存空间，再创建对象，最后引用指向该对象。</del><br>正确：在这行代码的new指令前加入StoreStore屏障，在new指令后加入StoreLoad屏障，保证new指令内部的三步：分配内存空间，创建对象，引用指向该对象的完成，才有外部读操作，也就是if空判断的读取。<br>总体效果就是一个线程对volatile的读，优先于其他线程对volatile的写。<br>挖重点，StoreLoad是全能屏障，总线会有Lock前缀指令，确保写操作的主存刷新以及CPU缓存失效。</li>
+<li>static修饰，定义属于类变量，保证单例</li>
+<li>第一个判断null，过滤synchronized锁的性能消耗</li>
+<li>同步块，设置临界区，同时间只允许一个线程完成对象的创建。</li>
+<li>第二个判断null，防止多线程进入第一个判断null，而导致多对象的创建。</li>
+</ol>
+<blockquote>
+<p>Q: 过去DCL不安全的原因？<br>JVM1.4前，允许指令混乱情况。final：一个线程构造函数为final修饰变量赋值，另一个线程可能获取final的初始化0值；volatile：只保证读可见性，不保证写的顺序</p>
+</blockquote>
+<blockquote>
+<p>Q: 不用volatile，先临时变量，再赋值到单例变量，是否能解决指令重排？<br> 不能，JVM只是潜在的reorder推手之一，CPU和缓存也会导致重排</p>
+</blockquote>
+<blockquote>
+<p>Q: 新版本volatile如何保证DCL安全？<br>设置内存屏障，防止指令重拍，其中store-load屏障是保证读写顺序，实现volatile上的happens-before语义，即一个线程对volatile变量的写，先于其他线程对该变量的同时读。屏障的结果就是原来只保证volatile字段本身的可见性，现在保证本身以及所有相关字段的可见性，代价就是造成访问volatile字段的更大性能开销。</p>
+</blockquote>
+<blockquote>
+<p>Q：是否可以用final实现DCL？<br>能。<br>a.对final字段的写必然先于其它线程装载该final字段的共享引用。（final字段必须被正确地赋值后其它线程才能读取到它）<br>b. 构造函数执行完毕后，对 final 字段的所有写以及通过这些 final 字段间接可及的变量变为“冻结”，所有在冻结之后获得对这个对象的引用的线程都会保证看到所有冻结字段的冻结值。（所有线程对final及其间接字段有一致的可见性）<br>c. 初始化 final 字段的写将不会与构造函数关联的冻结后面的操作一起重排序。（构造函数内部，对某个final字段而言，它的冻结点之前的操作必然先于冻结点之后的操作）</p>
+</blockquote>
+<blockquote>
+<p> 再来说一下final域的重排规则：</p>
+<ol>
+<li>写final的重排规则：<br>JMM禁止编译器把final域的写重排序到构造函数之外。<br>在final域的写之后，插入一个StoreStore屏障。<br>也就是说确保：在对象引用为任意线程可见之前，对象的final域已经被正确初始化过了。</li>
+<li>读final的重排规则：<br>在一个线程中，初次读对象引用与初次读该对象包含的final域，JMM禁止处理器重排序这两个操作（注意，这个规则仅仅针对处理器）。<br>在读final域操作的前面插入一个LoadLoad屏障。<br>也就是说确保：在读一个对象的final域之前，一定会先读包含这个final域的对象的引用。</li>
+<li>如果final域是引用类型，那么增加如下约束：<br>在构造函数内对一个final引用的对象的成员域的写入，与随后在构造函数外把这个被构造对象的引用赋值给一个引用变量，这两个操作之间不能重排序。<br>就是确保在构造函数外把这个被构造对象的引用赋值给一个引用变量之前，final域已经完全初始化并且赋值给了当前构造对象的成员域，至于初始化和赋值这两个操作则不确保先后顺序。）</li>
+</ol>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalWrapper</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> T value;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">FinalWrapper</span><span class="params">(T value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> </span>&#123;</span><br><span class="line">   <span class="keyword">private</span> FinalWrapper&lt;Helper&gt; helperWrapper;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> Helper <span class="title">getHelper</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      FinalWrapper&lt;Helper&gt; wrapper = helperWrapper;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (wrapper == <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="keyword">synchronized</span>(<span class="keyword">this</span>) &#123;</span><br><span class="line">              <span class="keyword">if</span> (helperWrapper == <span class="keyword">null</span>) &#123;</span><br><span class="line">                  helperWrapper = <span class="keyword">new</span> FinalWrapper&lt;Helper&gt;(<span class="keyword">new</span> Helper());</span><br><span class="line">              &#125;</span><br><span class="line">              wrapper = helperWrapper;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> wrapper.value;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: DCL是否是实现单例的最佳方案？是否有代替？<br>不是。DCL的目的是懒加载和提高性能，但现代JMM加强volatile保证可靠，但副作用是性能开销变大，且加上了同步块的开销。</p>
+</blockquote>
+<p>完美方案：<br>推荐通过内部类实现惰性加载：<br>有一个大前提，JVM保证类的加载过程是线程互斥。<br>第一个调用getInstance，instance只被创建1次，且赋值给instance的内存已初始化完毕，避免reorder，此外，该方法第一次使用互斥机制，解决同步块带来的性能问题；<br>当然，只有第一次调用getInstance时才让instance加载，所以是惰性。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span></span>&#123;      </span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span></span>&#123;</span><br><span class="line">             …          </span><br><span class="line">&#125;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SingletonContainer</span></span>&#123;</span><br><span class="line">             <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();          </span><br><span class="line">&#125;          </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">             <span class="keyword">return</span> SingletonContainer.instance;          </span><br><span class="line">&#125;      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>参考：<a href="https://blog.csdn.net/doraeimo/article/details/5714239" target="_blank" rel="noopener">https://blog.csdn.net/doraeimo/article/details/5714239</a></p>
+<h2 id="线程池参数调优—雨露均沾，保绩效"><a href="#线程池参数调优—雨露均沾，保绩效" class="headerlink" title="线程池参数调优—雨露均沾，保绩效"></a>线程池参数调优—雨露均沾，保绩效</h2><p>通过压测，符合最终场景，调整参数。<br>如何进行初次压测时，线程池参数配置？<br>分两种场景：<br>一当前服务器，只为当前线程池服务。也就是说，线程池能够占用服务器的所有资源，比如Tomcat的IO池，并行Steam流。依据处理逻辑，是CPU密集还是IO密集。CPU密集就选CPU数+1，IO密集就选CPU数的2N+1，N越大，可以加2加3。根据一轮压测结果，做一个参数的合理调整。<br>二是存在微服务和多接口，比如一个场景：5个接口：2个重要，3个降级，高并发压力下就会对3个接口进行降级，保障2个重要尽可能分配到更多服务器资源。在一个重要接口里，需要创建线程池，提高单接口处理速度，这个时候，不能只看CPU核数，线程池设置参数需要具体一个依据：<br>首先，一个真正高并发项目，它的监控是非常完备的，首先拿到线上高并发压力下该服务所有接口的访问比例。比如刚提到5个接口，2000条请求打到服务里边，5个接口分别<strong>承载着不同比例的访问量</strong>，比如2:3:1:1:1。比如，在比3这一块，它有资格至少占用服务资源的3/8。它不能太大，否则占用过多而让其他线程无路可走。<br>那么此时，基本可确定maxPool<strong>最大线程数参数</strong>，占服务器线程资源的3/8。<br>至于整体服务器峰值最大承载多少线程，参照CPU核数以及QPS来说。比如QPS100，相当于1s内服务器内当前几个CPU线程能承载起100个请求线程，因为处理速度够快。所以，要衡量整体服务器最大QPS，即当前服务器的<strong>同一时刻活跃的线程数</strong>。当前活跃线程数可粗略理解为这是基于业务需求场景的资源数最大值。再根据3/8，可以确定接口最大分配线程参数的值，100*3/8约等于40。</p>
+<p>接下来，考虑<strong>核心线程数</strong>。初次压测时，设置为与最大线程数一般大，看能否撑住。撑住就尝试调小到资源不浪费，否则撑不住，要对任务排队队列Q设置，Q是存储排队的任务。Q不推荐无界队列，这相当于最大线程数失效，违背设计线程池的初衷，而且高并发导致Q的无限积压而OOM。<strong>Q设置为有界队列</strong>，这个界的依据又是什么呢？在生产上，像抢购秒杀都会有<strong>一个高峰访问时段</strong>，那么在压测的时候，需要模拟一个生产上的高峰访问时段。比如1小时抢购活动，就要至少持续1小时的压测。在无Q等待情况压测，大概算一下在分布式环境下的一个节点1小时该接口能够承载的最大值，如进来10w，只处理8w，失败2w，2w适当上调50%作为有界队列上限，为了访问节点倾斜的问题，如果均匀可改为10%，如果有节点<strong>访问尖刺</strong>就要调到尖刺最高位左右。要知道，实际的队列上界一般很大。</p>
+<p>这几个初次调整后，<strong>开始多轮压测</strong>，看是否达到性能需求目的。可适当调小线程数，避免浪费无用的线程资源，因为，后续要涉及接口降级和线程池导致高可用问题。一步步调到最好，这是最理想的。<br>但往往可能，没有达到预期，刚刚已经给3/8最大资源量，还不够。第一点，<strong>再次调高队列存储上限</strong>，前提是业务能够接受这种等待慢，先不要想增加同时线程数，而是通过任务空间缓冲，保持当前接口稳定运行，且不影响其他接口。第二点，不接受Q过大，想尽快处理任务，那么，要从单机单接口的<strong>代码的并发性调高</strong>，从吞吐量和RT入手，比如，DB访问是瓶颈，使用缓存；第三方接口是瓶颈，使用异步MQ处理；秒杀业务，开Gzip压缩和做静态页面。第三点，已竭尽所有，<strong>只能线程数适当调大一点</strong>。但不能太大，如果以当前接口利益为中心，而毁坏其他接口持有服务器资源的权利，这是比较糟糕的。所以，在对重要接口的线程数调大的同时，要对其他接口做<strong>降级处理</strong>，相当于降级接口去牺牲它的服务器资源，分摊给重要接口。<br>但其实，这做法不要做，应该向上级<strong>申请加节点</strong>，通过集群分摊。<br>因为，调大线程数，是让其他接口冒着风险。其他的接口设置线程数小了，很有可能走到抛异常的饱和策略，这样，它抛出异常比例升高，造成接口的熔断或降级。<br>这本来够用的服务资源，由于设置线程池参数不合理而导致异常熔断或降级，AC，年终绩效没有了，必背锅。线程数调得过大，这事更大，你占用了额外的资源，导致别的接口的请求积压。</p>
+<p>至于，keepAlive空闲线程存活时间，只是复用性的优化，根据测试，看有无触及阻塞队列阈值，如果频繁触及，说明业务总需要非核心线程，适当调大存活时间。一般默认即可，因为我已经确定当前最大线程数绝不会影响到服务的其他接口资源，它的调整优化作用非常有限。</p>
+<p>饱和策略，大多数业务抛异常，记录日志，熔断或降级处理，做重试机制。</p>
+<p>最后，理解以上这些，那么我们可以合理配置hystrix或sentinel。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2022-03-23T17:49:36.253Z" itemprop="dateUpdated">2022-03-24 01:49:36</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2022/03/23/concurrent-programming/" target="_blank" rel="external">https://github.com/missionOdd/2022/03/23/concurrent-programming/</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://github.com/missionOdd">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2022/03/23/concurrent-programming/&title=《并发编程| volatile&锁升级&DCL&线程池调优》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2022/03/23/concurrent-programming/&title=《并发编程| volatile&锁升级&DCL&线程池调优》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="next">
+      <a href="/2022/02/15/p7-interview-skills-1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">面经 | 基础面+调优经验，高P7开发一面摘录笔记</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#volatile"><span class="post-toc-number">1.</span> <span class="post-toc-text">volatile</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：synchronized-和-lock-的区别？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Q：synchronized 和 lock 的区别？</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#锁升级详解"><span class="post-toc-number">2.</span> <span class="post-toc-text">锁升级详解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#synchronized可重入"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">synchronized可重入</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单例模式的原因"><span class="post-toc-number">3.</span> <span class="post-toc-text">单例模式的原因</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程池参数调优—雨露均沾，保绩效"><span class="post-toc-number">4.</span> <span class="post-toc-text">线程池参数调优—雨露均沾，保绩效</span></a></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2022
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/2022/03/23/concurrent-programming/&title=《并发编程| volatile&锁升级&DCL&线程池调优》 — 🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/2022/03/23/concurrent-programming/&title=《并发编程| volatile&锁升级&DCL&线程池调优》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACvUlEQVR42u3a0WpbMRAEUP//T6cvhRbKdWZ2JRPKuU8mdmQdBbTKaF+v+Pn659m82z5/j/O68eDh4eGtp/409NMX5BPKp5v87vs54+Hh4d3mvf+CDWy2TO9/nswZDw8P76fx8knPCgMeHh7e/8RrQ4R25ISEh4eH9xN4swi1ndD7mKM9Uh/OWvDw8PAmO/Zrv5V/5vWV+z08PDy89a16suHOtub8Ymx2lP/9W3h4eHgXePmGuz92t1dl7w/ieeCLh4eHd5aXXGLlW/Cm6WoTQDyOhoeHh3eNtwlbN5debTNWXTDw8PDwPsjLqe1hejOHPJ7Aw8PD+wzv/fE3P/gm7VztJ/OjebG6eHh4eCNeMtHZ1pwfoE+N/E0RwsPDwzvEy0OBvIQk7+bgvAxEfzE8PDy8Na9tTt20tOY1Ko93h41feHh4eAtecrQ99ZXHtvU8qsDDw8O7wMuvr/bhb9t80JaNx0XEw8PDu8DLJx2dx8ugNi8S7ULg4eHh3ePNrr7aS7K81aCNQq7c7OHh4eE98Np8N/nk2auy2ScfsxY8PDy8NS9pIMhD3qTRqn2dH+6j8oCHh4e35s0OzW240E4rD4i/eRcPDw/vAu9UBhzVn/VEVxEGHh4e3iFei6lv1eIDeguOogo8PDy8C7x8WrMLqvbInl/LzQoSHh4e3ileGzREaxMsXIJpx6ljCDw8PLwF79QGPWs1aK/NksM6Hh4e3md4mzx4v63PYoUon8bDw8M7xPsqnzawmDVO5SN/MyYeHh7eBV67ibdNUW3A0Ya2p8IRPDw8vJaXFIN26H15mBWG+mCNh4eHt+DVGUZZTl7XnjprwcPDw/s4b9aGlZSc9louWko8PDy8H8ObMfZNBsOuWzw8PLwLvCSM2AQWs0uvdrkfCwMeHh7eUd7+H/5Zq8GNz1/JM/Dw8PD+PL8AN2nkKa9i36EAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+    
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+   <script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/plugins/fireworks.js?v=1.4.4"></script>
+
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?18b812f3375b09bd66be7e3a46d7cc2d";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdnjs.cat.net/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="20" src="//cdnjs.cat.net/ajax/libs/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+</body>
+</html>
