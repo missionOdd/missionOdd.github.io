@@ -3,11 +3,11 @@
   <title>🎉 Missionary&#39;s Blog 😆</title>
   
   <subtitle>Missionary 中国 👋</subtitle>
-  <link href="https://missionodd.github.io/missionOdd/atom.xml" rel="self"/>
+  <link href="https://missionodd.github.io/atom.xml" rel="self"/>
   
-  <link href="https://missionodd.github.io/missionOdd/"/>
+  <link href="https://missionodd.github.io/"/>
   <updated>2022-03-24T08:15:41.557Z</updated>
-  <id>https://missionodd.github.io/missionOdd/</id>
+  <id>https://missionodd.github.io/</id>
   
   <author>
     <name>Missionary</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>并发编程| 深理解volatile+锁升级+DCL单例+线程池调优</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/03/23/concurrent-programming/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/03/23/concurrent-programming/</id>
+    <link href="https://missionodd.github.io/2022/03/23/concurrent-programming/"/>
+    <id>https://missionodd.github.io/2022/03/23/concurrent-programming/</id>
     <published>2022-03-23T04:50:37.000Z</published>
     <updated>2022-03-24T08:15:41.557Z</updated>
     
@@ -33,25 +33,25 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="高并发" scheme="https://missionodd.github.io/missionOdd/categories/技术/高并发/"/>
+    <category term="高并发" scheme="https://missionodd.github.io/categories/技术/高并发/"/>
     
-    <category term="并发编程" scheme="https://missionodd.github.io/missionOdd/categories/技术/高并发/并发编程/"/>
+    <category term="并发编程" scheme="https://missionodd.github.io/categories/技术/高并发/并发编程/"/>
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
-    <category term="高并发" scheme="https://missionodd.github.io/missionOdd/tags/高并发/"/>
+    <category term="高并发" scheme="https://missionodd.github.io/tags/高并发/"/>
     
   </entry>
   
   <entry>
     <title>面经 | 基础面+调优经验，高P7开发一面摘录笔记</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/15/p7-interview-skills-1/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/15/p7-interview-skills-1/</id>
+    <link href="https://missionodd.github.io/2022/02/15/p7-interview-skills-1/"/>
+    <id>https://missionodd.github.io/2022/02/15/p7-interview-skills-1/</id>
     <published>2022-02-15T07:50:37.000Z</published>
     <updated>2022-02-28T02:22:02.318Z</updated>
     
@@ -62,25 +62,25 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="面经" scheme="https://missionodd.github.io/missionOdd/categories/技术/面经/"/>
+    <category term="面经" scheme="https://missionodd.github.io/categories/技术/面经/"/>
     
     
-    <category term="面经" scheme="https://missionodd.github.io/missionOdd/tags/面经/"/>
+    <category term="面经" scheme="https://missionodd.github.io/tags/面经/"/>
     
-    <category term="java" scheme="https://missionodd.github.io/missionOdd/tags/java/"/>
+    <category term="java" scheme="https://missionodd.github.io/tags/java/"/>
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
   </entry>
   
   <entry>
     <title>MYSQL| MYSQL优化思路+知识点梳理</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/14/mysql-notes/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/14/mysql-notes/</id>
+    <link href="https://missionodd.github.io/2022/02/14/mysql-notes/"/>
+    <id>https://missionodd.github.io/2022/02/14/mysql-notes/</id>
     <published>2022-02-14T05:50:37.000Z</published>
     <updated>2022-03-17T15:44:12.797Z</updated>
     
@@ -95,25 +95,25 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="中间件" scheme="https://missionodd.github.io/missionOdd/categories/技术/中间件/"/>
+    <category term="中间件" scheme="https://missionodd.github.io/categories/技术/中间件/"/>
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
-    <category term="mysql" scheme="https://missionodd.github.io/missionOdd/tags/mysql/"/>
+    <category term="mysql" scheme="https://missionodd.github.io/tags/mysql/"/>
     
-    <category term="优化" scheme="https://missionodd.github.io/missionOdd/tags/优化/"/>
+    <category term="优化" scheme="https://missionodd.github.io/tags/优化/"/>
     
   </entry>
   
   <entry>
     <title>面经 | 结合业务，步步深入，P8架构师二面摘录笔记</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/12/p8-interview-skills-2/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/12/p8-interview-skills-2/</id>
+    <link href="https://missionodd.github.io/2022/02/12/p8-interview-skills-2/"/>
+    <id>https://missionodd.github.io/2022/02/12/p8-interview-skills-2/</id>
     <published>2022-02-12T07:50:37.000Z</published>
     <updated>2022-02-28T02:22:02.866Z</updated>
     
@@ -124,25 +124,25 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="面经" scheme="https://missionodd.github.io/missionOdd/categories/技术/面经/"/>
+    <category term="面经" scheme="https://missionodd.github.io/categories/技术/面经/"/>
     
     
-    <category term="面经" scheme="https://missionodd.github.io/missionOdd/tags/面经/"/>
+    <category term="面经" scheme="https://missionodd.github.io/tags/面经/"/>
     
-    <category term="java" scheme="https://missionodd.github.io/missionOdd/tags/java/"/>
+    <category term="java" scheme="https://missionodd.github.io/tags/java/"/>
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
   </entry>
   
   <entry>
     <title>计算机网络 | 网络知识问答梳理</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/10/network/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/10/network/</id>
+    <link href="https://missionodd.github.io/2022/02/10/network/"/>
+    <id>https://missionodd.github.io/2022/02/10/network/</id>
     <published>2022-02-10T05:50:37.000Z</published>
     <updated>2022-03-17T14:30:03.601Z</updated>
     
@@ -156,23 +156,23 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="计算机网络" scheme="https://missionodd.github.io/missionOdd/categories/技术/计算机网络/"/>
+    <category term="计算机网络" scheme="https://missionodd.github.io/categories/技术/计算机网络/"/>
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
-    <category term="计算机网络" scheme="https://missionodd.github.io/missionOdd/tags/计算机网络/"/>
+    <category term="计算机网络" scheme="https://missionodd.github.io/tags/计算机网络/"/>
     
   </entry>
   
   <entry>
     <title>Redis | 底层数据结构 | 主从复制</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/10/redis-principle-cluster/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/10/redis-principle-cluster/</id>
+    <link href="https://missionodd.github.io/2022/02/10/redis-principle-cluster/"/>
+    <id>https://missionodd.github.io/2022/02/10/redis-principle-cluster/</id>
     <published>2022-02-10T05:50:37.000Z</published>
     <updated>2022-03-16T15:30:45.096Z</updated>
     
@@ -186,21 +186,21 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
-    <category term="Redis" scheme="https://missionodd.github.io/missionOdd/tags/Redis/"/>
+    <category term="Redis" scheme="https://missionodd.github.io/tags/Redis/"/>
     
   </entry>
   
   <entry>
     <title>设计跳表 | 栈记录插入前驱可能，丢硬币控制插入层级（java）</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/10/design-skiplist/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/10/design-skiplist/</id>
+    <link href="https://missionodd.github.io/2022/02/10/design-skiplist/"/>
+    <id>https://missionodd.github.io/2022/02/10/design-skiplist/</id>
     <published>2022-02-10T04:30:37.000Z</published>
     <updated>2022-02-16T10:19:23.648Z</updated>
     
@@ -215,21 +215,21 @@
     
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/categories/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/categories/算法/"/>
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/tags/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/tags/算法/"/>
     
-    <category term="跳表" scheme="https://missionodd.github.io/missionOdd/tags/跳表/"/>
+    <category term="跳表" scheme="https://missionodd.github.io/tags/跳表/"/>
     
-    <category term="模拟" scheme="https://missionodd.github.io/missionOdd/tags/模拟/"/>
+    <category term="模拟" scheme="https://missionodd.github.io/tags/模拟/"/>
     
   </entry>
   
   <entry>
     <title>用 Rand7() 实现 Rand10() | 分页 | 翻看日历的时候，把题做出来</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/04/implement-rand10-using-rand7/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/04/implement-rand10-using-rand7/</id>
+    <link href="https://missionodd.github.io/2022/02/04/implement-rand10-using-rand7/"/>
+    <id>https://missionodd.github.io/2022/02/04/implement-rand10-using-rand7/</id>
     <published>2022-02-04T04:30:37.000Z</published>
     <updated>2022-02-16T10:31:48.316Z</updated>
     
@@ -244,19 +244,19 @@
     
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/categories/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/categories/算法/"/>
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/tags/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/tags/算法/"/>
     
-    <category term="模拟" scheme="https://missionodd.github.io/missionOdd/tags/模拟/"/>
+    <category term="模拟" scheme="https://missionodd.github.io/tags/模拟/"/>
     
   </entry>
   
   <entry>
     <title>双端递减队列 | 滑动窗口最大值</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/02/sliding-window-maximum/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/02/sliding-window-maximum/</id>
+    <link href="https://missionodd.github.io/2022/02/02/sliding-window-maximum/"/>
+    <id>https://missionodd.github.io/2022/02/02/sliding-window-maximum/</id>
     <published>2022-02-02T04:30:37.000Z</published>
     <updated>2022-02-16T10:08:36.156Z</updated>
     
@@ -271,21 +271,21 @@
     
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/categories/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/categories/算法/"/>
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/tags/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/tags/算法/"/>
     
-    <category term="双端队列" scheme="https://missionodd.github.io/missionOdd/tags/双端队列/"/>
+    <category term="双端队列" scheme="https://missionodd.github.io/tags/双端队列/"/>
     
-    <category term="滑动窗口" scheme="https://missionodd.github.io/missionOdd/tags/滑动窗口/"/>
+    <category term="滑动窗口" scheme="https://missionodd.github.io/tags/滑动窗口/"/>
     
   </entry>
   
   <entry>
     <title>位运算 | 2bit标识3状态 | 有限状态自动机</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/</id>
+    <link href="https://missionodd.github.io/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/"/>
+    <id>https://missionodd.github.io/2022/02/02/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/</id>
     <published>2022-02-02T04:30:37.000Z</published>
     <updated>2022-02-16T10:13:26.193Z</updated>
     
@@ -299,19 +299,19 @@
     
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/categories/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/categories/算法/"/>
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/tags/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/tags/算法/"/>
     
-    <category term="位运算" scheme="https://missionodd.github.io/missionOdd/tags/位运算/"/>
+    <category term="位运算" scheme="https://missionodd.github.io/tags/位运算/"/>
     
   </entry>
   
   <entry>
     <title>jvm | 虚拟机全面扫盲+深入理解的原创笔记</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/01/jvm-notes/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/01/jvm-notes/</id>
+    <link href="https://missionodd.github.io/2022/02/01/jvm-notes/"/>
+    <id>https://missionodd.github.io/2022/02/01/jvm-notes/</id>
     <published>2022-02-01T05:50:37.000Z</published>
     <updated>2022-03-17T15:25:50.024Z</updated>
     
@@ -326,25 +326,25 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="jvm" scheme="https://missionodd.github.io/missionOdd/categories/技术/jvm/"/>
+    <category term="jvm" scheme="https://missionodd.github.io/categories/技术/jvm/"/>
     
     
-    <category term="java" scheme="https://missionodd.github.io/missionOdd/tags/java/"/>
+    <category term="java" scheme="https://missionodd.github.io/tags/java/"/>
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
-    <category term="jvm" scheme="https://missionodd.github.io/missionOdd/tags/jvm/"/>
+    <category term="jvm" scheme="https://missionodd.github.io/tags/jvm/"/>
     
   </entry>
   
   <entry>
     <title>经验 | 性能优化的整体脉络的梳理</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/02/01/overall-performance-optimization/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/02/01/overall-performance-optimization/</id>
+    <link href="https://missionodd.github.io/2022/02/01/overall-performance-optimization/"/>
+    <id>https://missionodd.github.io/2022/02/01/overall-performance-optimization/</id>
     <published>2022-02-01T05:50:37.000Z</published>
     <updated>2022-03-17T03:44:07.949Z</updated>
     
@@ -358,25 +358,25 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="优化" scheme="https://missionodd.github.io/missionOdd/categories/技术/优化/"/>
+    <category term="优化" scheme="https://missionodd.github.io/categories/技术/优化/"/>
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
-    <category term="系统" scheme="https://missionodd.github.io/missionOdd/tags/系统/"/>
+    <category term="系统" scheme="https://missionodd.github.io/tags/系统/"/>
     
-    <category term="性能" scheme="https://missionodd.github.io/missionOdd/tags/性能/"/>
+    <category term="性能" scheme="https://missionodd.github.io/tags/性能/"/>
     
   </entry>
   
   <entry>
     <title>分布式事务 | volatile | 单例模式 | OS | 杂笔摘抄</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/01/26/distributed-volatile-series/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/01/26/distributed-volatile-series/</id>
+    <link href="https://missionodd.github.io/2022/01/26/distributed-volatile-series/"/>
+    <id>https://missionodd.github.io/2022/01/26/distributed-volatile-series/</id>
     <published>2022-01-26T05:50:37.000Z</published>
     <updated>2022-03-17T03:37:11.360Z</updated>
     
@@ -390,27 +390,27 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="高并发" scheme="https://missionodd.github.io/missionOdd/categories/技术/高并发/"/>
+    <category term="高并发" scheme="https://missionodd.github.io/categories/技术/高并发/"/>
     
-    <category term="并发编程" scheme="https://missionodd.github.io/missionOdd/categories/技术/高并发/并发编程/"/>
+    <category term="并发编程" scheme="https://missionodd.github.io/categories/技术/高并发/并发编程/"/>
     
     
-    <category term="java" scheme="https://missionodd.github.io/missionOdd/tags/java/"/>
+    <category term="java" scheme="https://missionodd.github.io/tags/java/"/>
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
-    <category term="分布式" scheme="https://missionodd.github.io/missionOdd/tags/分布式/"/>
+    <category term="分布式" scheme="https://missionodd.github.io/tags/分布式/"/>
     
   </entry>
   
   <entry>
     <title>Spring | 高频知识口述</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/01/23/spring-notes/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/01/23/spring-notes/</id>
+    <link href="https://missionodd.github.io/2022/01/23/spring-notes/"/>
+    <id>https://missionodd.github.io/2022/01/23/spring-notes/</id>
     <published>2022-01-23T05:50:37.000Z</published>
     <updated>2022-03-16T19:18:03.448Z</updated>
     
@@ -424,21 +424,21 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
-    <category term="Spring" scheme="https://missionodd.github.io/missionOdd/tags/Spring/"/>
+    <category term="Spring" scheme="https://missionodd.github.io/tags/Spring/"/>
     
   </entry>
   
   <entry>
     <title>面经| 项目面-小公司毕业3年</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/01/13/10k-interview-skills/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/01/13/10k-interview-skills/</id>
+    <link href="https://missionodd.github.io/2022/01/13/10k-interview-skills/"/>
+    <id>https://missionodd.github.io/2022/01/13/10k-interview-skills/</id>
     <published>2022-01-13T07:50:37.000Z</published>
     <updated>2022-03-16T16:35:29.708Z</updated>
     
@@ -449,27 +449,27 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="面经" scheme="https://missionodd.github.io/missionOdd/categories/技术/面经/"/>
+    <category term="面经" scheme="https://missionodd.github.io/categories/技术/面经/"/>
     
     
-    <category term="面经" scheme="https://missionodd.github.io/missionOdd/tags/面经/"/>
+    <category term="面经" scheme="https://missionodd.github.io/tags/面经/"/>
     
-    <category term="java" scheme="https://missionodd.github.io/missionOdd/tags/java/"/>
+    <category term="java" scheme="https://missionodd.github.io/tags/java/"/>
     
-    <category term="MQ" scheme="https://missionodd.github.io/missionOdd/tags/MQ/"/>
+    <category term="MQ" scheme="https://missionodd.github.io/tags/MQ/"/>
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/tags/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/tags/技术/"/>
     
-    <category term="原理" scheme="https://missionodd.github.io/missionOdd/tags/原理/"/>
+    <category term="原理" scheme="https://missionodd.github.io/tags/原理/"/>
     
   </entry>
   
   <entry>
     <title>设计栈 |  模拟栈的压入、弹出序列</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/</id>
+    <link href="https://missionodd.github.io/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/"/>
+    <id>https://missionodd.github.io/2022/01/13/zhan-de-ya-ru-dan-chu-xu-lie-lcof/</id>
     <published>2022-01-13T04:30:37.000Z</published>
     <updated>2022-02-16T12:16:18.359Z</updated>
     
@@ -484,21 +484,21 @@
     
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/categories/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/categories/算法/"/>
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/tags/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/tags/算法/"/>
     
-    <category term="模拟" scheme="https://missionodd.github.io/missionOdd/tags/模拟/"/>
+    <category term="模拟" scheme="https://missionodd.github.io/tags/模拟/"/>
     
-    <category term="栈" scheme="https://missionodd.github.io/missionOdd/tags/栈/"/>
+    <category term="栈" scheme="https://missionodd.github.io/tags/栈/"/>
     
   </entry>
   
   <entry>
     <title>TCP粘包是什么？ 如何解决？</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/01/12/zhan-bao/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/01/12/zhan-bao/</id>
+    <link href="https://missionodd.github.io/2022/01/12/zhan-bao/"/>
+    <id>https://missionodd.github.io/2022/01/12/zhan-bao/</id>
     <published>2022-01-12T14:15:08.000Z</published>
     <updated>2022-03-17T14:30:45.061Z</updated>
     
@@ -509,21 +509,21 @@
     
     
     
-    <category term="技术" scheme="https://missionodd.github.io/missionOdd/categories/技术/"/>
+    <category term="技术" scheme="https://missionodd.github.io/categories/技术/"/>
     
-    <category term="计算机网络" scheme="https://missionodd.github.io/missionOdd/categories/技术/计算机网络/"/>
+    <category term="计算机网络" scheme="https://missionodd.github.io/categories/技术/计算机网络/"/>
     
     
-    <category term="TCP/IP" scheme="https://missionodd.github.io/missionOdd/tags/TCP-IP/"/>
+    <category term="TCP/IP" scheme="https://missionodd.github.io/tags/TCP-IP/"/>
     
-    <category term="粘包" scheme="https://missionodd.github.io/missionOdd/tags/粘包/"/>
+    <category term="粘包" scheme="https://missionodd.github.io/tags/粘包/"/>
     
   </entry>
   
   <entry>
     <title>完全背包思路| 剪绳子 （java）</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/01/12/jian-sheng-zi-lcof/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/01/12/jian-sheng-zi-lcof/</id>
+    <link href="https://missionodd.github.io/2022/01/12/jian-sheng-zi-lcof/"/>
+    <id>https://missionodd.github.io/2022/01/12/jian-sheng-zi-lcof/</id>
     <published>2022-01-12T04:30:37.000Z</published>
     <updated>2022-02-16T10:08:41.017Z</updated>
     
@@ -539,19 +539,19 @@
     
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/categories/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/categories/算法/"/>
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/tags/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/tags/算法/"/>
     
-    <category term="完全背包" scheme="https://missionodd.github.io/missionOdd/tags/完全背包/"/>
+    <category term="完全背包" scheme="https://missionodd.github.io/tags/完全背包/"/>
     
   </entry>
   
   <entry>
     <title>01背包 | 分割等和子集</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/01/09/partition-equal-subset-sum/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/01/09/partition-equal-subset-sum/</id>
+    <link href="https://missionodd.github.io/2022/01/09/partition-equal-subset-sum/"/>
+    <id>https://missionodd.github.io/2022/01/09/partition-equal-subset-sum/</id>
     <published>2022-01-09T04:30:37.000Z</published>
     <updated>2022-02-16T10:06:49.531Z</updated>
     
@@ -566,19 +566,19 @@
     
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/categories/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/categories/算法/"/>
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/tags/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/tags/算法/"/>
     
-    <category term="01背包" scheme="https://missionodd.github.io/missionOdd/tags/01背包/"/>
+    <category term="01背包" scheme="https://missionodd.github.io/tags/01背包/"/>
     
   </entry>
   
   <entry>
     <title>动态规划 |  双串题 | 不同的子序列</title>
-    <link href="https://missionodd.github.io/missionOdd/2022/01/05/distinct-subsequences/"/>
-    <id>https://missionodd.github.io/missionOdd/2022/01/05/distinct-subsequences/</id>
+    <link href="https://missionodd.github.io/2022/01/05/distinct-subsequences/"/>
+    <id>https://missionodd.github.io/2022/01/05/distinct-subsequences/</id>
     <published>2022-01-05T07:50:37.000Z</published>
     <updated>2022-02-08T01:49:22.110Z</updated>
     
@@ -592,12 +592,12 @@
     
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/categories/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/categories/算法/"/>
     
     
-    <category term="算法" scheme="https://missionodd.github.io/missionOdd/tags/算法/"/>
+    <category term="算法" scheme="https://missionodd.github.io/tags/算法/"/>
     
-    <category term="动态规划" scheme="https://missionodd.github.io/missionOdd/tags/动态规划/"/>
+    <category term="动态规划" scheme="https://missionodd.github.io/tags/动态规划/"/>
     
   </entry>
   
