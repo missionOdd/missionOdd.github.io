@@ -272,7 +272,7 @@
 <div class="tabs-bar container">
     <nav class="tags-list">
         <a href="/categories" style="-webkit-order:-1;order:-1" class="tags-list-item waves-effect waves-button waves-light
-            ">All</a>
+            ">全部</a>
         
             <a href="/categories/技术/" backup-style="-webkit-order:0;order:0" class="tags-list-item waves-effect waves-button waves-light">技术</a>
             
@@ -838,7 +838,7 @@ HTTP特点无状态，双向传输基于TCP/IP，灵活，明文传输不安全
 
   
     <h3 class="post-title ab-title" itemprop="name">
-      <a class="post-title-link" href="/2022/03/23/concurrent-programming/">并发编程| volatile&amp;锁升级&amp;DCL&amp;线程池调优</a>
+      <a class="post-title-link" href="/2022/03/23/concurrent-programming/">并发编程| 深理解volatile+锁升级+DCL单例+线程池调优</a>
     </h3>
   
 
@@ -860,7 +860,7 @@ HTTP特点无状态，双向传输基于TCP/IP，灵活，明文传输不安全
         <time class="post-time" title="2022-03-23 12:50:37" datetime="2022-03-23T04:50:37.000Z"  itemprop="datePublished">2022-03-23</time>
 
         
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/">高并发</a></li></ul></li></ul>
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/">高并发</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/并发编程/">并发编程</a></li></ul></li></ul></li></ul>
 
 
 
@@ -894,7 +894,7 @@ HTTP特点无状态，双向传输基于TCP/IP，灵活，明文传输不安全
     <div class="post-content" id="post-content" itemprop="postContent">
     
     
-        volatile一是保证可见性。二是禁止指令重拍序。可见性，是让其他线程可见，一般我们是多核CPU，一旦volatile修饰的变量被一个CPU修改，修改完的值需要立即推送到主存，推送过程要经过一个总线。那么，我们说的可见性就是体现在总线这一层上。因为，我们其他的CPU一直在嗅探总线的数据流通，在缓存一致性的保障下， 能够嗅探到数据的修改，然后，如果自己的缓存行有这条数据，就置为失效。如果下次...
+        volatile一是保证可见性。二是禁止指令重排序。可见性，是让其他线程可见，一般我们是多核CPU，一旦volatile修饰的变量被一个CPU修改，修改完的值需要立即推送到主存，推送过程要经过一个总线。那么，我们说的可见性就是体现在总线这一层上。因为，我们其他的CPU一直在嗅探总线的数据流通，在缓存一致性的保障下， 能够嗅探到数据的修改，然后，如果自己的缓存行有这条数据，就置为失效。如果下次...
     
     <a href="/2022/03/23/concurrent-programming/" class="post-more waves-effect waves-button">
         more
@@ -1425,7 +1425,7 @@ Why Docker
     <ul class="reset share-icons">
       
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://github.com/missionOdd/&title=🎉 Missionary's Blog 😆&pic=https://github.com/missionOdd/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://missionodd.github.io/missionOdd/&title=🎉 Missionary's Blog 😆&pic=https://missionodd.github.io/missionOdd/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -1437,7 +1437,7 @@ Why Docker
       </li>
       
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://github.com/missionOdd/&title=🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://missionodd.github.io/missionOdd/&title=🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -1449,7 +1449,7 @@ Why Docker
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABxklEQVR42u3aS26EMBAFwLn/pck6UiDv+SdGKq/QDOAyi5a7259PPK7HcXdn/svigYuLO81NKHfXyfTPC2s/By4u7knu3TRjwSi58/kT3P6Oi4v7tdyxJeHi4n4jd2Z5SYKEi4v7Nm6S/LTBK0mZNuZquLi4E9y8Srnvekt9FxcXd4h7TYy85LFqXlxc3DPcNujk/7YNmHwuXFzcM9w8aSnCzeP9CwqyuLi4m7ljBdN8SUlhpUiKcHFxj3CTbUpb7mxToLrRgouLu5m76lBFHqpm2q64uLjnue2L8mbq2IGMIvnBxcVdxG3bn6tCVXs4AxcX923cJJAl+5CxQPbrGhcX9yA32YK0bdGxwFc3VnFxcTdz89QlD2pj7djbJeHi4h7hjrVIxxKkNu2p67u4uLiLuO22o01vooMUwaGQP3I1XFzcbdz5EsbY0asEevs2XFzczdyrHIPpStl8/WcvhouLu5nbbjjqEufEs1NoXFzcaW4SvObD2bItES4u7kFuXpjIpyyqtnl5BRcX92XcsSZrEsjyp3Bxcd/Gzdse+YapTZlwcXFPctsJVpU56qMeuLi4R7jtYYiZe8aOcXzmX4qLi5tyfwCiAC7lg2jJsgAAAABJRU5ErkJggg==" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAABwklEQVR42u3aSY7CQAwFUO5/6fQBUCrfrqGD9GqFQggPFpanzyc+1/CM76++u+Dg4uJOcxPK96OrV75f3115+DtwcXEPcu8ixjj05Ig7Vm7AxcV9M/cOnd8/DnO4uLi/xU2qknHyNP55uLi4b+Mmxc+4mOn1NzbWari4uBPc3qPXvt7S38XFxW1xr+mTN1DmvxcXF/cMtxp0eiXQ4tIIFxd3Mzf5QG/Uml/PxzC4uLgnudW2RbW1kSQ3UbjExcU9yK0OUJMAtGU5AxcX9wi317icGXhUQ2f5Ebi4uNPcpLDppSy9Ja1C8YOLi7uNW01WkrhYLWyaI1hcXNxt3N4ANQlP5XlOQsfFxT3OXZuO5IGvXPzg4uL+E7faMK2ObKujWVxc3JPc8q3xAtaOBQ5cXNwz3GrboloOVYc0D9+Ci4t7hDu/gLVs6Sof4eDi4m7mXsWTh7bez4v2RHBxcTdzVy1jrR2cLEDj4uJOc6vLVb3RSG9M+9DlxcXF3czNGxMzqcniWg0XF/cF3DwRyROgci6Gi4v7Mm6vWJpZ7HgYteLi4m7mzhQ/vZFqPqBdXKvh4uIumlZU6fOJ1IL+Li4ubof7B8vXvlUFKfLJAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 
