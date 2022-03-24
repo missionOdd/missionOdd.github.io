@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html>
+<!--
+　　　　　　　　  　　　/ヽ　　　　　　/ヽ
+　　　　　　 　　 　　/ 　ヽ　　　 　 / 　ヽ
+　   　＿＿＿＿＿＿ / 　 　 ヽ＿＿/　 　 　ヽ
+　   　|　＿＿＿＿／　　　 　 　 　　   :::::::::＼
+  　　| |　　　　 / ／　　　　　　＼ 　 　::::::::::::|
+　 　| |　QQ　　　| （ ●）　　　 （●）  　 ::::::::::::|
+　　| |191965461 |　 　　　 　　　　  　:::::::::::::|    本人一代码菜逼
+　　| |　　　　 　|　 　（__人__丿   　.....:::::::::::::/   1998生
+   | |＿＿＿＿　ヽ　　　　　    .....::::::::::::::::::::<    宅
+　 └＿＿＿／￣￣　　　　　　    　:::::::::::::::::::::::::|  欢迎勾搭
+　　|＼　　　 |　　　　　　　　　　　　:::::::::::::::::::::|
+　　＼ ＼　　＼＿＿＿　　　　 　　 ::::::::::::::::::::::::|
+
+-->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    
+    
+    <title>并发编程 | 线程问题排除，从Dubbo场景下手 | 🎉 Missionary&#39;s Blog 😆 | Missionary 中国 👋</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="技术,原理,高并发">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=1.4.4">
+
+    
+        <link rel="stylesheet" href="/css/third-party/gitment.css?v=1.4.4">
+    
+    <script type="text/javascript">
+        // Data Center
+        var DC = {
+            reward:	true,
+            lv: JSON.parse('{"enable":false,"app_id":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","app_key":"CGsuOukhiIkc4nE75fKtUtXy","icon":true}'),
+            v: JSON.parse('{"enable":true,"appid":"7yVfPXhFH02yrjkOWJ2agpo6-gzGzoHsz","appkey":"CGsuOukhiIkc4nE75fKtUtXy","notify":true,"verify":true,"placeholder":"give me some sugers plz...","avatar":"wavatar","highlight":true}'),
+            g: JSON.parse('{"enable":true,"lazy":true,"owner":"missionOdd","repo":"FAQ","oauth":{"client_id":"3dffefee0452a0a23205","client_secret":"1b1394230850e312a0a178bdd41c4e70893d759f"},"perPage":6}'),
+            d: JSON.parse('{"app_id":"8997440a"}')
+        };
+    </script>
+    <script type="text/javascript">
+        window.lazyScripts=[];
+    </script>
+    
+        <script type="text/javascript" src="/js/plugins/daovoice.js?v=1.4.4"></script>
+    
+
+<link rel="alternate" href="/atom.xml" title="🎉 Missionary's Blog 😆" type="application/atom+xml">
+</head>
+
+<script src="//cdnjs.cat.net/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<link href="//cdnjs.cat.net/ajax/libs/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/css/mdui.min.css">
+<link rel="stylesheet"  href="//cdnjs.cat.net/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/custom.css?v=1.4.4">
+<link href="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe.css" rel="stylesheet">
+<link href="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.css" rel="stylesheet">
+
+<body>
+    <div id="loading" class="active mdui-progress">
+  <div class="mdui-progress-determinate"></div>
+</div>
+
+    <aside id="menu" class="">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap">
+      
+      <img src="/img/brand.jpg" class="brand-bg">
+      
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light rubberBand ">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Missionary</h5>
+          <a href="mailto:z1165996866@hotmail.com" title="z1165996866@hotmail.com" class="mail">
+            
+              <span>z</span>
+            
+              <span>1</span>
+            
+              <span>1</span>
+            
+              <span>6</span>
+            
+              <span>5</span>
+            
+              <span>9</span>
+            
+              <span>9</span>
+            
+              <span>6</span>
+            
+              <span>8</span>
+            
+              <span>6</span>
+            
+              <span>6</span>
+            
+              <span>@</span>
+            
+              <span>h</span>
+            
+              <span>o</span>
+            
+              <span>t</span>
+            
+              <span>m</span>
+            
+              <span>a</span>
+            
+              <span>i</span>
+            
+              <span>l</span>
+            
+              <span>.</span>
+            
+              <span>c</span>
+            
+              <span>o</span>
+            
+              <span>m</span>
+            
+          </a>
+          <a href="/atom.xml" rel="alternate" class="mdui-btn mdui-btn-dense mdui-color-theme-accent mdui-ripple">
+              <i class="fa fa-rss"></i>
+              RSS订阅
+            </a>
+        </hgroup>
+        
+        <ul class="menu-link">
+          
+              <li>
+                <a href="https://github.com/missionOdd" target="_blank">
+                  <i class="icon icon-lg icon-github"></i>
+                </a>
+              </li>
+            
+              <li>
+                <a href="https://leetcode-cn.com/u/missionary" target="_blank">
+                  <i class="icon icon-lg icon-gg-circle"></i>
+                </a>
+              </li>
+            
+        </ul>
+        
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="">
+              <a href="/" >
+                <i class="icon icon-lg icon-home"></i>
+                HOME
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/photos" >
+                <i class="icon icon-lg icon-camera"></i>
+                PHOTOS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/books" >
+                <i class="icon icon-lg icon-book"></i>
+                BOOKS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/categories" >
+                <i class="icon icon-lg icon-th-list"></i>
+                CATEGORIES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/tags" >
+                <i class="icon icon-lg icon-tags"></i>
+                TAGS
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/archives" >
+                <i class="icon icon-lg icon-archives"></i>
+                ARCHIVES
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/about" >
+                <i class="icon icon-lg icon-user"></i>
+                ABOUT
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://github.com/missionOdd" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                GITHUB
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="https://leetcode-cn.com/u/missionary/" target="_blank">
+                <i class="icon icon-lg icon-gg-circle"></i>
+                LEETCODE
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="http://weibo.com/missionodd" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                WEIBO
+              </a>
+            </li>
+        
+            <li class="">
+              <a href="/custom" >
+                <i class="icon icon-lg icon-plus-square"></i>
+                LINKS
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row clearfix">
+        <a href="javascript:;" class="header-icon pull-left waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">
+            <span>并发编程 | 线程问题排除，从Dubbo场景下手</span>
+            
+        </div>
+        
+        <a href="javascript:;" id="site_search_btn" class="header-icon pull-right waves-effect waves-circle waves-light">
+            <i class="icon icon-lg icon-search"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+    <img src="/img/banner.jpg" class="header-bg">
+    <div class="container fade-scale">
+        <h1 class="title animated tada delay-5s">并发编程 | 线程问题排除，从Dubbo场景下手</h1>
+        <h5 class="subtitle animated swing delay-5s">
+            
+                <time datetime="2022-03-23T04:50:37.000Z" itemprop="datePublished" class="page-time">
+  2022-03-23
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/">高并发</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/并发编程/">并发编程</a></li></ul></li></ul></li></ul>
+
+
+            
+        </h5>
+        
+    </div>
+    
+
+</header>
+
+<div id="site_search">
+    <div class="search-title clearfix">
+        <span class="pull-left">
+          <i class="icon icon-lg icon-search"></i>
+        </span>
+        <input type="text" id="local-search-input" name="q" results="0" placeholder="search my blog..." class="form-control pull-left"/>
+        <a href="javascript:;" class="close pull-right waves-effect waves-circle waves-light">
+          <i class="icon icon-lg icon-close"></i>
+        </a>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+
+
+
+<div class="container body-wrap">
+    <article id="post-concurrency-troubleshooting"
+  class="post-article article-type-post" itemprop="blogPost">
+    <div class="post-card">
+        <h1 class="post-card-title">并发编程 | 线程问题排除，从Dubbo场景下手</h1>
+        <div class="post-meta">
+          
+            <time class="post-time" title="2022-03-23 12:50:37" datetime="2022-03-23T04:50:37.000Z"  itemprop="datePublished">2022-03-23</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/">技术</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/">高并发</a><ul class="article-category-list-child"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术/高并发/并发编程/">并发编程</a></li></ul></li></ul></li></ul>
+
+
+
+            
+
+            
+<span class="post-comments-counter" id="/2022/03/23/concurrency-troubleshooting/">
+    <span class="post-meta-item-icon">
+        <i class="icon icon-comment-o"></i>
+    </span>
+    
+    <a href="/2022/03/23/concurrency-troubleshooting/#gitment-display-button" onclick="ShowGitment()">
+        <span class="post-comments-count gitment-comments-count" itemprop="commentsCount"></span>
+    </a>
+</span>
+
+
+
+    <span class="leancloud-comment">
+        <i class="icon icon-comment-o"></i>
+        <a href="/2022/03/23/concurrency-troubleshooting/#comment">
+            <span class="valine-comment-count" data-xid="/2022/03/23/concurrency-troubleshooting/"></span>
+        </a>
+    </span>
+
+
+            
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            
+            <h2 id="场景一：关于并行流Parallel-Stream与Fork-Join线程池"><a href="#场景一：关于并行流Parallel-Stream与Fork-Join线程池" class="headerlink" title="场景一：关于并行流Parallel Stream与Fork-Join线程池"></a>场景一：关于并行流Parallel Stream与Fork-Join线程池</h2><p>假设，分布式服务中（rpc框架：dubbo），有一个微服务接口，用于批量处理数据，如果每次消费者调用都用了批量处理1000条记录的过滤，假设一条记录的过滤逻辑需要耗时4ms（ 涉及到redis缓存的读），如果有40个请求并发过滤，那就是40000条记录交给2个线程去处理(cpu核心线程数)，你猜下结果是什么？结果是，服务消费端报错，一堆的接口调用超时异常，导致服务雪崩。后果很严重。原因你猜到了吗？</p>
+<p>40个请求开启40个并行流parallerStream，40个并行流parallerStream使用同一个只有2个线程的Fork-Join线程池(2核8g机器)，意味着40个请求争抢着执行任务。</p>
+<p>假设一条记录的过滤耗时为4ms，在串行的情况下1000条记录应该只是4000ms。但如果是400000条记录争抢2个线程执行，我们转变一下，假设每线程每200000记录执行，由于是无序的，但可以想象对请求来说任务是被交替执行完成的。什么意思呢，比如当前执行1号请求的第一个任务，执行完后切换到2号个请求的第一个任务，接着3号请求的第一个任务，一轮完成后接着是1号请求的第二个任务…所以，最坏的情况下，一个请求需要200000*4ms才能执行完成。就会导致接口调用超时。</p>
+<p>总之，不要在高并发的接口中使用并行流，直接使用处理请求的线程执行就行，如果有需要，那就全局创建一个Fork-Join线程池自己切分任务来执行。</p>
+<p>刚刚说的例子只是40个并发，实现项目中都是上千上万的并发请求，如果这样使用并行流，服务直接崩掉。</p>
+<p>假设用的dubbo默认配置200个工作线程，那么是200个线程处理业务逻辑快呢，还是将200个线程的请求都交给只有2个线程的线程池处理快呢？毫无疑问。</p>
+<p>总结<br><strong>那些耗时很长的任务，请不要使用parallerStream。</strong>假设原本一个任务执行需要1分钟时间，有10个任务并行执行，如果你偷懒，只是使用parallerStream来将这10个任务并行执行，那你这个jvm进程中，其它同样使用parallerStream的地方也会因此被阻塞住，严重的将会导致整个服务瘫痪。</p>
+<p>关于stream的并行流parallerStream使用注意事项就说到这。切记，请不要乱用并行流，在使用之前一定、一定、一定要考虑清楚任务是否耗时，<strong>有i/o操作的一定不要使用并行流</strong>，有线程休眠的也一定不要使用并行流，原本就只有两个线程，还搞休眠，等着整个服务崩溃咯。</p>
+<p>除此之外，我们可以自定义线程池，让Java8中的parallel stream使我们的线程池，而不是使用公共的。这个技巧是基于ForkJoinTask.fork，它指定：”安排在当前任务运行的池中异步执行此任务(如果适用)，或者如果不是inForkJoinPool()则使用ForkJoinPool.commonPool()”</p>
+<hr>
+<p>Fork-Join机制<br>总体是归并算法。Parallel Stream实现任务的切分，并将任务提交到全局的ForkJoinPool线程池中执行，注意，是全局的线程池。关于ForkJoinPool，我这里简单介绍下，这个线程池其默认线程数为处理器核心数。</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="bea5e8778c41184aef2118e63bee7c99.png" title="img" data-fancybox="images"><img src="bea5e8778c41184aef2118e63bee7c99.png" alt="img" title class></a>
+                <p>img</p>
+            </figure>
+<p>在Fork-Join中，比如一个拥有4个线程的ForkJoinPool线程池，有一个任务队列，一个大的任务切分出的子任务会提交到线程池的任务队列中，4个线程从任务队列中获取任务执行，哪个线程执行的任务快，哪个线程执行的任务就多，只有队列中没有任务线程才是空闲的，这就是工作窃取。可以这样理解工作窃取，比如有4个人干8件事情，理应每个人干2件，但干活快的干完自己的事情后可以去帮别人干。</p>
+<p>正如图中所示，一个任务可以fork中很多个子任务，当然不只是图中看到的只有左右两个。假设，每个任务都只fork出两个子任务，如果负责fork子任务的当前任务不做任何事情，那么最终将只有叶子节点真正做事情，其它节点都只是负责fork子任务与合并结果（假设是有返回值的任务）。</p>
+<p>如果是没有返回值的任务，是没有图中“合并结果”这个流程的；而且，也不是必须要等待子任务执行完成。这些都是根据自己的需求来自定义使用的。要灵活去使用。</p>
+<h2 id="场景二：避免父子任务共用同一个线程池而产生死锁，线程隔离"><a href="#场景二：避免父子任务共用同一个线程池而产生死锁，线程隔离" class="headerlink" title="场景二：避免父子任务共用同一个线程池而产生死锁，线程隔离"></a>场景二：避免父子任务共用同一个线程池而产生死锁，线程隔离</h2><h3 id="一、问题发现"><a href="#一、问题发现" class="headerlink" title="一、问题发现"></a>一、问题发现</h3><p>线上监控到大量接口报错，定位到异常机器，将异常机器隔离后，线上服务恢复正常。 拿到业务报错日志如下<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="Fm3SIGw53R6pntywivFSPmwfjscg.png" title="alt" data-fancybox="images"><img src="Fm3SIGw53R6pntywivFSPmwfjscg.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure><br>异常信息显示Dubbo线程池活跃线程数已经达到最大线程数200，说明线程池资源已经耗尽。</p>
+<p>经过排查</p>
+<p>线程池资源耗尽，猜测Dubbo线程都被某个耗时方法阻塞了，或者线上有异常突发流量。<br>查看线上监控，发现服务请求流量正常，猜测<strong>Dubbo线程是被阻塞住了</strong>。</p>
+<p>先抛结论：业务线程池的线程全部都被阻塞住，导致使用该业务线程池的Dubbo线程也全部阻塞。</p>
+<h3 id="二、进一步排查"><a href="#二、进一步排查" class="headerlink" title="二、进一步排查"></a>二、进一步排查</h3><h4 id="2-1-Dubbo线程为何被阻塞？"><a href="#2-1-Dubbo线程为何被阻塞？" class="headerlink" title="2.1 Dubbo线程为何被阻塞？"></a>2.1 Dubbo线程为何被阻塞？</h4><p>通过<code>jstack</code>获取Dubbo线程堆栈信息，发现大量Dubbo线程的线程状态都为<code>WAITING</code>状态，阻塞在<code>CompletableFuture#join</code>。<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="Fqw5SmQ9cqaqcqLOOgCiQkIsR-66.png" title="alt" data-fancybox="images"><img src="Fqw5SmQ9cqaqcqLOOgCiQkIsR-66.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure><br>找到相关代码行，简化逻辑如下：<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="FopwPXM2xmJyFyuyXYi4Q-fbcw5_.png" title="alt" data-fancybox="images"><img src="FopwPXM2xmJyFyuyXYi4Q-fbcw5_.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure></p>
+<p>业务代码中自定义了一个<strong>线程数为8</strong>的<strong>固定线程池</strong><code>executorService</code>，为了方便表述，该线程池简称<strong>业务线程池</strong>，分配的线程简称<strong>业务线程</strong>。</p>
+<p><code>method2</code>通过从该线程池中获取线程执行多个耗时的子任务，并<code>join</code>阻塞等待多个线程执行结束。<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="Fh48JT_OqLI3zscmN7HbzoKU80sv.png" title="alt" data-fancybox="images"><img src="Fh48JT_OqLI3zscmN7HbzoKU80sv.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure>当接收到一个请求时，由Dubbo线程池分配线程执行<code>method1</code>方法，<code>method1</code>调用<code>method2</code>，<code>method2</code>从业务线程池中获取线程去执行子任务，并阻塞等待。</p>
+<p>Dubbo线程都阻塞在method2，那么说明method2中的多个子任务一直没有执行完成，导致Dubbo线程一直阻塞等待。</p>
+<p>那么method2中的子任务为什么一直没有执行完？是因为子任务执行得太慢吗？还是业务线程池出了什么问题？</p>
+<h4 id="2-2-子任务为什么一直没执行完成？"><a href="#2-2-子任务为什么一直没执行完成？" class="headerlink" title="2.2 子任务为什么一直没执行完成？"></a>2.2 子任务为什么一直没执行完成？</h4><p>分析业务线程堆栈信息，发现8个业务线程都处于<code>WAITING</code>状态，阻塞在<code>CompletableFuture#join</code>方法。<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="FkY80sk5gNFDgz5GJy4YIvoJivp1.png" title="alt" data-fancybox="images"><img src="FkY80sk5gNFDgz5GJy4YIvoJivp1.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure><br>通过业务线程堆栈信息找到相关代码，并将代码简化如下<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="FusLoS8DAO5NyfRvXiyPMRMbh7h0.png" title="alt" data-fancybox="images"><img src="FusLoS8DAO5NyfRvXiyPMRMbh7h0.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure><br><code>method3</code><strong>异步调用</strong><code>method2</code>，两个方法都用到了同一个<strong>业务线程池</strong>。<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="FtgtVTo8q5NlH1qNJU2i801_fwKB.png" title="alt" data-fancybox="images"><img src="FtgtVTo8q5NlH1qNJU2i801_fwKB.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure><br>当<code>method3</code>同时收到8个请求时，8条业务线程都被分配给<code>method3</code>去异步调用<code>method2</code>后，此时因为业务线程已经达到最大值，<code>method2</code>中的子任务会进入队列等待被业务线程拉取执行。而此时业务线程又都在<code>method2</code>阻塞等待子任务执行完成，两边就陷入了<strong>相互等待</strong>的状态，因此业务线程陷入永久阻塞状态。</p>
+<h4 id="2-3-小结"><a href="#2-3-小结" class="headerlink" title="2.3 小结"></a>2.3 小结</h4><p>结合以上分析，父子任务共用同一个线程池，父任务（或加上一部分子任务）拿走了所有线程，导致另外的一些子任务排队等待阻塞，原来占有线程的父任务又无法释放资源，最终业务线程池的线程全部都被阻塞住，导致使用该业务线程池的Dubbo线程也全部阻塞。</p>
+<h3 id="三、解决方式"><a href="#三、解决方式" class="headerlink" title="三、解决方式"></a>三、解决方式</h3><p><strong>隔离线程池</strong>.</p>
+<p>在真实的业务代码中其实远非简单的A调B，而是相对比较复杂的调用链<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="FvZJSaM2bwgILrlCNV86jzprICMF.png" title="image.png" data-fancybox="images"><img src="FvZJSaM2bwgILrlCNV86jzprICMF.png" alt="image.png" title class></a>
+                <p>image.png</p>
+            </figure></p>
+<p><code>method3</code>发起异步调用，经过多层中间接口调用到<code>method2</code>。其他接口发起同步调用，同样经过多层中间接口调用到<code>method2</code>。</p>
+<p>因为经过多层中间接口，所以不能直接将<code>method2</code>改成顺序执行多个子任务，会导致其他调用<code>method2</code>的接口处理时间延长。抽出一个顺序执行子任务的方法也不太合适，因为涉及到改动多个中间接口，改动相对比较大。</p>
+<p>解决方式是<strong>隔离线程池</strong>，将提交异步任务和多线程执行子任务拆分成两个线程池去处理。</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="Fofcf3BfLDV7Fvm2jyHDBTEJgaDE.png" title="image.png" data-fancybox="images"><img src="Fofcf3BfLDV7Fvm2jyHDBTEJgaDE.png" alt="image.png" title class></a>
+                <p>image.png</p>
+            </figure>
+<p>拆分成两个线程池之后，无论同时进来多少请求，在<code>method2</code>陷入阻塞的都是线程A，不会影响执行子任务的线程B。</p>
+<p>将异步调用改成由一个新的线程池提交，这样影响范围就控制在<code>method3</code>，改动也比较小，可以快速修复上线。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="Q：CompletableFuture的默认线程池也是共用的线程池，为什么父子任务可以正常执行？"><a href="#Q：CompletableFuture的默认线程池也是共用的线程池，为什么父子任务可以正常执行？" class="headerlink" title="Q：CompletableFuture的默认线程池也是共用的线程池，为什么父子任务可以正常执行？"></a>Q：<code>CompletableFuture</code>的默认线程池也是共用的线程池，为什么父子任务可以正常执行？</h4><p>使用<code>CompletableFuture</code>的默认线程池之所以不会出现互等的情况，是因为提交任务时，如果内部使用的是<code>ThreadPerTaskExecutor</code>是会<strong>不断创建新线程的</strong>，不会因为进入队列阻塞等待被执行而陷入等待。而如果内部使用的是<code>commonPool</code>则<code>CompletableFuture#join</code>方法在进入阻塞之前，判断当前线程是<code>ForkJoinWorkerThread</code>线程则会在满足条件时<strong>先尝试补偿线程</strong>，确保有足够的线程去保证任务可以正常执行。</p>
+<hr>
+<p>具体来讲：</p>
+<p><code>CompletableFuture</code>内部包含两种默认线程池，当<code>ForkJoinPool#getCommonPoolParallelism()</code><strong>大于1时</strong>使用<code>ForkJoinPool</code>的<code>commonPool</code>线程池，反之则使用内部类<code>ThreadPerTaskExecutor</code>执行任务。</p>
+<ul>
+<li><code>ThreadPerTaskExecutor</code>每次执行都会创建线程，因此不会出现任务等待线程空闲的情况。</li>
+<li><code>commonPool</code>是<code>ForkJoinPool</code>内部包含的默认线程池，在没有指定系统参数时<strong>并行数</strong>为<code>Runtime.getRuntime().availableProcessors()-1</code>。<code>availableProcessors()</code>这个方法的目的是获取可并行执行的线程数，这个数值跟主板集成的cpu个数、cpu核数、是否开启超线程都是相关的。</li>
+</ul>
+<p><code>ForkJoinPool#getCommonPoolParallelism()</code>获取的就是<code>commonPool</code>的并行数，我测试的机器获取到的<code>commonPool</code><strong>并行数</strong>为7，因此使用的是<code>ForkJoinPool</code>线程池。</p>
+<p>而<code>ForkJoinPool</code>线程池之所以可以正常执行，关键在<code>CompletableFuture#join</code>中的内部实现。截取<code>CompletableFuture#join</code>解决此问题的关键时序图如下<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="FlFAmQVcbLvo2IWZ9tGBIu3vP4ee.png" title="alt" data-fancybox="images"><img src="FlFAmQVcbLvo2IWZ9tGBIu3vP4ee.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure><br>关键就在于<code>ForkJoinPool</code>创建的线程为<code>ForkJoinWorkerThread</code>类型，而<code>ForkJoinPool#managedBlock</code>判断当前线程是<code>ForkJoinWorkerThread</code>类型时会调用<code>tryCompensate</code>方法，该方法在特定情况下会去补偿线程确保任务正常执行完成。</p>
+<p>截取<code>tryCompensate</code>源码如下：<br><figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="FgRUWhk-YB7dch3QmwJguMBlVTak.png" title="alt" data-fancybox="images"><img src="FgRUWhk-YB7dch3QmwJguMBlVTak.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure><br>根据<code>tryCompensate</code>的源码可以得出：</p>
+<p><code>tryCompensate</code>在经过一系列校验，认为当前陷入阻塞会导致任务无法正常执行时，会尝试补偿创建一条新的线程，确保不出现上述的互等情况。<br>普通<code>FokrJoinPool</code>线程池最多会补偿到<code>32767</code>条线程。<code>commonPool</code>最多会补偿到<code>并行数+256</code>条工作线程，超过则会抛出异常。</p>
+<p>因此<code>CompletableFuture</code>线程池可以正常执行是因为使用<code>ThreadPerTaskExecutor</code>时每次都会创建新的线程，而使用<code>commonPool</code>时，在<code>CompletableFuture#join</code>进入阻塞之前会去尝试补偿线程。但是也不是无限补偿，当补偿达到一定次数后就会抛出异常。</p>
+<hr>
+<h2 id="场景三：线程池参数调配不合理，导致服务积压"><a href="#场景三：线程池参数调配不合理，导致服务积压" class="headerlink" title="场景三：线程池参数调配不合理，导致服务积压"></a>场景三：线程池参数调配不合理，导致服务积压</h2><h3 id="一-问题发现"><a href="#一-问题发现" class="headerlink" title="一 问题发现"></a>一 问题发现</h3><p>某日，群上接到机器人警告，然后打开监控平台一探究竟。分销员系统某核心应用，接口响应全部超时，dubbo线程池被全部占满，并堆积了大量待处理任务，整个应用无法响应任何外部请求，处于“夯死”的状态。</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="p1.png" title="alt" data-fancybox="images"><img src="p1.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure>
+<p>以各种姿势查看应用的各项指标时，5分钟过去了，应用居然自己自动恢复了。</p>
+<p>猜想：流量激增，内存GC过慢，慢查询SQL，线程池阻塞，同步锁问题…</p>
+<h3 id="二-排查线索"><a href="#二-排查线索" class="headerlink" title="二 排查线索"></a>二 排查线索</h3><p><strong>QPS</strong>，的确，对于应用突然夯死，大家可能第一时间想到的就是流量突增。流量突增会给应用稳定性带来不小冲击，机器资源的消耗的增加至殆尽，当然也就响应不了新的请求。我们查看了QPS的状况。</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="p2.png" title="alt" data-fancybox="images"><img src="p2.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure>
+<p>事实是，应用的QPS指标并没有出现陡峰，处于一个相对平缓的上下浮动的状态，所以不是流量突增导致的。</p>
+<p><strong>GC</strong>，JVM在GC时，会因为Stop The World的出现，导致整个应用产生短暂的停顿时间。如果JVM频繁的发生Stop The World，或者停顿时间较长，会一定程度的影响应用处理请求的能力。但是我们查看了GC日志，并没有任何的异常，看来也不是GC异常导致的。</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="p3.png" title="alt" data-fancybox="images"><img src="p3.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure>
+<p><strong>慢查</strong>，当应用的高QPS接口出现慢查时，会导致处理请求的IO线程池中（dubbo线程池），大量堆积处理慢查的线程，占用线程池资源，使新的请求线程处于线程池队列末端的等待状态，情况恶劣时，请求得不到及时响应，引发超时。那么，看出问题的时间段，比如看SQL执行耗时，并未发生慢查。</p>
+<p><strong>TIMEDOUT</strong>，在排查机器日志时，发现了一个异常现象，某个平时不怎么报错的接口，在1秒内被外部调用了500多次，此后在那个时间段内，根据traceid这500多次请求产生了400多条错误业务日志，并且错误业务日志最长有延后好几分钟的。</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="p4.png" title="alt" data-fancybox="images"><img src="p4.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure>
+<p>这是怎么回事呢？这里有两个疑惑：</p>
+<p>（1）500QPS完全在这个接口承受范围内，压力还不够。</p>
+<p>（2）为什么产生的错误日志能够被延后好几分钟。</p>
+<p>日志中明显的指出，这个http请求Read timed out。http请求中读超时设置过长的话，最终的效果会和慢查一样，导致线程长时间占用线程池资源（dubbo线程池）。翻到代码：</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="p5.png" title="alt" data-fancybox="images"><img src="p5.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure>
+<p>但是代码中确实是设置了读超时的，那么延后的错误日志是怎么来的呢？</p>
+<h3 id="三-定位问题"><a href="#三-定位问题" class="headerlink" title="三 定位问题"></a>三 定位问题</h3><p>既然是HTTP请求，以我的经验，大概率是连接池的配置问题。针对这个RestTemplateBuilder工具类，将线上的情况回放到本地进行了模拟。我们构建了500个线程同时使用这个工具类去请求一个http接口，这个http接口让每个请求都等待2秒后再返回，具体的做法很简单就是Thread.sleep(2000)，然后观察每次请求的response和rt。</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="p6.png" title="alt" data-fancybox="images"><img src="p6.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure>
+<p>我们发现response都是正常返回的（没有触发Read timed out），rt是规律的5个一组并且有2秒的递增。这说明，里面有排队队列，猜想是一个池。 通过观察跟踪代码，成功验证猜测。</p>
+<figure class="image-box">
+                <a rel=并发编程 | 线程问题排除，从Dubbo场景下手 href="p7.png" title="alt" data-fancybox="images"><img src="p7.png" alt="alt" title class></a>
+                <p>alt</p>
+            </figure>
+<p>这个工具类默认使用了common pool对象池作为底层构造的连接池，去发起http请求，并且pool active size最大连接数仅有5。又是这个问题，池参数的最大线程数设置过小。</p>
+<p>还原下整个事件的经过：</p>
+<p>（1）500个并发的请求同时访问了我们应用的某个接口，将dubbo线程池迅速占满（dubbo线程池大小为200），这个接口内部逻辑需要访问一个内网的http接口</p>
+<p>（2）由于某些不可抗拒因素，这个时间段内这个内网的http接口全部返回超时</p>
+<p>（3）这个接口发起http请求时，连接池使用任务队列排队，并且pool active size仅有5，http请求耗时为2s，所以消耗完500个请求大约需要500/5x2s=200s，这200s内，应用本身承担着大约3000QPS的请求，会有大约3000*200=600000个任务会进入dubbo线程池队列。</p>
+<p>（4）消耗完这500个请求后，应用就开始慢慢恢复（恢复的速率与时间可以根据正常rt大致算一算，这里就不作展开了）。</p>
+<h3 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h3><p>Q：对象池是怎么用的呢？线程池是怎么用的呢？队列又是怎么用的呢？它们的核心参数是怎么设置的呢？</p>
+<p>核心参数的设置，需要根据场景来。</p>
+<p>拿本案举例，本案涉及两个方面，（1）发起http请求的连接池（2）dubbo线程池。</p>
+<p>（1）这个pool的场景是侧重IO的操作，IO操作的一个特性是需要有较长的等待时间，那我们就可以为了提高吞吐量，而适当的调大pool active size。那调大至多少合适呢？可以根据这个接口调用比例情况，平均QPS是多少，峰值QPS是多少，rt是多少等等元素，来调出一个合适的值，这一定是一个过程，而不是一次性决定的。假如是一个新接口，不知道历史数据怎么办？对于这种情况，如果条件允许的话，做模拟线上的压测。根据改变压测条件，来调试出一个相对靠谱的值，上线后对其观察，再决定是否需要调整。</p>
+<p>（2）在本案中，对于dubbo线程池的问题有两个，队列长度与拒绝策略。队列长度的问题显而易见，一个应用的负载能力，是可以通过各种手段衡量出来的。回到本案，如果我们调低了dubbo线程池的的队列长度，增加了适当的拒绝策略，并且可以把长时间排队的任务移除掉（这么做有一定风险），可以一定程度的提高系统恢复的速度，实现fast-fail机制。</p>
+<p>所以，我们在使用一些第三方工具包的时候，不难发现，对象池common pool的广泛应用，多多留意，避免因参数设置不全。</p>
+
+        </div>
+        
+<blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2022-03-24T14:07:02.031Z" itemprop="dateUpdated">2022-03-24 22:07:02</time>
+</span><br>
+
+
+        
+        转载注明出处，原文地址：<a href="/2022/03/23/concurrency-troubleshooting/" target="_blank" rel="external">https://missionodd.github.io/2022/03/23/concurrency-troubleshooting/</a>
+        
+    </div>
+    <div class="mdui-chip" id="accost-btn">
+      <span class="mdui-chip-icon mdui-color-red-a700"><i class="mdui-icon material-icons">&#xe311;</i></span>
+      <span class="mdui-chip-title">Accost</span>
+    </div>
+    <footer>
+      <div class="mdui-chip">
+        <a href="https://missionodd.github.io">
+            <img src="/img/avatar.jpg" alt="Missionary">
+             About Missionary
+        </a>
+        </div>
+    </footer>
+</blockquote>
+
+
+        
+            <div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+            
+        
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/原理/">原理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/高并发/">高并发</a></li></ul>
+
+            <div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://missionodd.github.io/2022/03/23/concurrency-troubleshooting/&title=《并发编程 | 线程问题排除，从Dubbo场景下手》 — 🎉 Missionary's Blog 😆&pic=https://missionodd.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://missionodd.github.io/2022/03/23/concurrency-troubleshooting/&title=《并发编程 | 线程问题排除，从Dubbo场景下手》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+        </div>
+        
+            <div class="mdui-container">
+  <div class="mdui-tab" id="tab">
+    <a href="#tab1-content" id="tab1" class="mdui-ripple">游客用户</a>
+    <a href="#tab2-content" id="tab2" class="mdui-tab-active mdui-ripple">GitHub账户</a>
+  </div>
+
+  <div id="tab1-content" class="mdui-p-a-2">
+    
+      <div id="comment" style=""></div>
+
+  </div>
+  <div id="tab2-content" class="mdui-p-a-2">
+    
+          
+    <div onclick="ShowGitment()" id="gitment-display-button" style="display: block;">
+        <span>显示 Gitment 评论</span>
+    </div>
+    <div id="gitment" class="hide"></div>
+
+
+    
+  </div>
+
+</div>
+
+        
+    </div>
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="next">
+      <a href="/2022/03/23/concurrent-programming/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">并发编程| 深理解volatile+锁升级+DCL单例+线程池调优</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+    
+    
+        <aside class="post-widget">
+            <nav class="post-toc-wrap" id="post-toc">
+                <strong>目录</strong>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#场景一：关于并行流Parallel-Stream与Fork-Join线程池"><span class="post-toc-number">1.</span> <span class="post-toc-text">场景一：关于并行流Parallel Stream与Fork-Join线程池</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#场景二：避免父子任务共用同一个线程池而产生死锁，线程隔离"><span class="post-toc-number">2.</span> <span class="post-toc-text">场景二：避免父子任务共用同一个线程池而产生死锁，线程隔离</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、问题发现"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">一、问题发现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、进一步排查"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">二、进一步排查</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-1-Dubbo线程为何被阻塞？"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">2.1 Dubbo线程为何被阻塞？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-2-子任务为什么一直没执行完成？"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">2.2 子任务为什么一直没执行完成？</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-3-小结"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">2.3 小结</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、解决方式"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">三、解决方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#思考"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">思考</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Q：CompletableFuture的默认线程池也是共用的线程池，为什么父子任务可以正常执行？"><span class="post-toc-number">2.4.1.</span> <span class="post-toc-text">Q：CompletableFuture的默认线程池也是共用的线程池，为什么父子任务可以正常执行？</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#场景三：线程池参数调配不合理，导致服务积压"><span class="post-toc-number">3.</span> <span class="post-toc-text">场景三：线程池参数调配不合理，导致服务积压</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一-问题发现"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">一 问题发现</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二-排查线索"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">二 排查线索</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三-定位问题"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">三 定位问题</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#思考-1"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">思考</span></a></li></ol></li></ol>
+            </nav>
+            <div class="toc-bar"><div>
+        </aside>
+    
+
+</article>
+
+    <div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        我们一起来让这个世界有趣一点
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/reward-wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/reward-wechat.jpg" data-alipay="/img/reward-alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+    
+
+</div>
+
+    </main>
+    <footer class="footer ">
+    
+    <div class="top">
+        
+            <p>
+    <span>Links：</span>
+    
+    <span class="blogroll-item">
+        <a href="https://github.com/missionOdd" target="_blank">HOME</a>
+    </span>
+    
+</p>
+
+        
+    </div>
+    
+    <div class="mdui-bottom-nav">
+  <a href="javascript:;" class="mdui-ripple mdui-bottom-nav-active">
+    <i class="mdui-icon material-icons">history</i>
+    <label>Recents</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">favorite</i>
+    <label>Favorites</label>
+  </a>
+  <a href="javascript:;" class="mdui-ripple">
+    <i class="mdui-icon material-icons">&#xe80e;</i>
+    <label>Hot</label>
+  </a>
+
+</div>
+    <div class="bottom">
+        <p>
+            <span>
+                Missionary &copy; 2018 - 2022
+            </span>
+           	
+           	<span>
+           		<a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备19008953号</a>
+           	</span>
+           	
+
+            
+
+            <span>
+	            Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/codefine/hexo-theme-mellow" target="_blank">mellow</a>
+            </span>
+            
+
+            
+            <span>
+	            Hosted by <a href="https://coding.net/pages" target="_blank">Coding Pages</a>
+            </span>
+            
+
+
+        </p>
+        <p>
+          
+              
+<span class="site-uv" title="总访客量">
+    <i class="icon icon-user"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>
+
+
+<span class="site-pv" title="总访问量">
+    <i class="icon icon-eye"></i>
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+          
+          <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+          <script>
+              var now = new Date();
+              function createtime() {
+                  var grt= new Date("09/15/2018 12:49:00");//此处修改你的建站时间或者网站上线时间
+                  now.setTime(now.getTime()+250);
+                  days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+                  hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+                  if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+                  mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+                  seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+                  snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+                  document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+                  document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+              }
+          setInterval("createtime()",250);
+          </script>
+        </p>
+    </div>
+
+</footer>
+
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light mdui-ripple"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://missionodd.github.io/2022/03/23/concurrency-troubleshooting/&title=《并发编程 | 线程问题排除，从Dubbo场景下手》 — 🎉 Missionary's Blog 😆&pic=https://missionodd.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://missionodd.github.io/2022/03/23/concurrency-troubleshooting/&title=《并发编程 | 线程问题排除，从Dubbo场景下手》 — 🎉 Missionary's Blog 😆&source=Web后端/Java在学/单身" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3aQW7DMAwEQP//0+25KJwuSTFxgfEpaFJZ44Mor3hd8fX167qK190Id6Plvzxw4eHh4Y1vfDd08pvfI7+ebvLgevPBw8PD2+bdDZosyvnkXj+UZJx8znh4eHjP4d0VgLxU9EoCHh4e3v/lJYPmBSDfZOPh4eE9jdcbOo93q2HHB7IWPDw8vNreNTpFes7nlfM9PDw8vPGperJYV/8yiTPKs8XDw8Nb4OUL7hyZbKbnzV54eHh47+ElL/z5Mt0Lcyd3jI7H8PDw8N7CO7u4V9l5FBKVDTw8PLxDvGRBr8YTObu69Of/hYeHh7fHKzcwtRbuaqvW5I7XhIGHh4cX3GXy8l+9fbKUVzfuf4QReHh4eGu8eetVvqznweu8XOHh4eHt8Xob1mS7PCkAk7aG27qHh4eHt8DLj7Kq7VaTUlQNgpu5Mh4eHt6YV+g7CEpI3ixVPfq6/YyHh4e3wJsc+eehQ1488sava1Jb8PDw8Ma8auTaayDoNVFVw45ClwQeHh7emDcfdLIhngQf0aPBw8PDO8rLF/TqoVR16vmmPG/AwsPDw3snbz7d6rRORSHNyeHh4eEFM8w30BvIPMzN490fv8TDw8Nb4OWLbNJQlcfBvTavXlSBh4eHt8ErvNgPwoXet5NjNjw8PLxP8ebLdDL1yUOMUgo8PDy8BV71214raq8pYXQXPDw8vGVeErP2try9+LV6DHZVKxIeHh5eC1ZtPM1DhGqDVHKXQjMWHh4e3gLv1BrbiyHmoe3h2oiHh4cX86pTn4QL+beFI67XYDw8PLw13vzAKVnue5Fx9YQLDw8P75m8JOrN09Q82K0WDDw8PLxn8uYb3wnmjy0+Hh4e3hovX7J7E8r/azLmbWHAw8PDO8o78MIfhxen4uADZ3p4eHh4Hd432hg1ymufM0sAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+    
+   <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+   <script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+   <script type="text/javascript" src="/js/plugins/fireworks.js?v=1.4.4"></script>
+
+
+    <!-- main-js -->
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/plugins/fastclick.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/ios-orientationchange-fix.js?v=1.4.4"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.2/dist/jquery.fancybox.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/node-waves/0.7.4/waves.min.js"></script>
+
+<script type="text/javascript" src="/js/method.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/blog.js?v=1.4.4"></script>
+
+<!-- third-party -->
+
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?18b812f3375b09bd66be7e3a46d7cc2d";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<script type="text/javascript" src="/js/plugins/local_search.js?v=1.4.4"></script>
+<script type="text/javascript">
+	var search_path = "search.xml";
+	if (search_path.length === 0) {
+		search_path = "search.xml";
+	}
+	var path = "/" + search_path;
+	searchFunc(path, "local-search-input", "local-search-result");
+</script>
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+    
+        <script type="text/javascript" src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script type="text/javascript" src="/js/plugins/valine.js?v=1.4.4"></script>
+
+    
+    
+        <script type="text/javascript" src="/js/plugins/gitmint.browser.js?v=1.4.4"></script>
+<script type="text/javascript" src="/js/plugins/gitment.js?v=1.4.4"></script>
+    
+
+
+
+
+
+    <!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="//cdnjs.cat.net/ajax/libs/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+    <script>
+    (function() {
+        var OriginTitile = document.title, titleTime;
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.title = '等你回来！';
+                clearTimeout(titleTime);
+            } else {
+                document.title = '(つェ⊂)欢迎!';
+                titleTime = setTimeout(function() {
+                    document.title = OriginTitile;
+                },2000);
+            }
+        });
+    })();
+</script>
+
+
+
+
+    <script type="text/javascript">
+  daovoice('init', {
+    app_id: "8997440a"
+  });
+  daovoice('update');
+</script>
+
+
+    <script src="//cdnjs.cat.net/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/js/custom.js?v=1.4.4"></script>
+<script src="//cdnjs.loli.net/ajax/libs/mdui/0.4.1/js/mdui.min.js"></script>
+<script src="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe.min.js"></script>
+<script src="//cdnjs.cat.net/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js"></script>
+
+<script type="text/javascript">
+jQuery.noConflict();     //将变量$的控制权让渡
+</script>
+<script type="text/javascript" color="213,0,0" opacity='0.7' zIndex="-2" count="20" src="//cdnjs.cat.net/ajax/libs/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<!-- <script type="text/javascript">
+
+jQuery(function($){
+
+
+});
+</script> -->
+
+</body>
+</html>

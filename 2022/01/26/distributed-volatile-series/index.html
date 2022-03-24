@@ -541,9 +541,9 @@
 <ol>
 <li><p>进程要知道哪些内存地址上的数据在物理内存上，哪些不在，还有在物理内存上的哪里，需要用页表来记录</p>
 <blockquote>
-<p>页表的每一个表项分两部分，第一部分记录此页<a href="https://github.com/Durant35/durant35.github.io/issues/24">是否在物理内存</a>上，第二部分记录<a href="https://github.com/Durant35/durant35.github.io/issues/24">物理内存页的地址</a>（如果在的话）</p>
+<p>页表的每一个表项分两部分，第一部分记录此页<a href="https://github.com/Durant35/durant35.github.io/issues/24" target="_blank" rel="noopener">是否在物理内存</a>上，第二部分记录<a href="https://github.com/Durant35/durant35.github.io/issues/24" target="_blank" rel="noopener">物理内存页的地址</a>（如果在的话）</p>
 </blockquote>
-<p>2.当进程访问某个虚拟地址，去看页表，如果发现对应的数据不在物理内存中，则<a href="https://github.com/Durant35/durant35.github.io/issues/24">缺页异常</a></p>
+<p>2.当进程访问某个虚拟地址，去看页表，如果发现对应的数据不在物理内存中，则<a href="https://github.com/Durant35/durant35.github.io/issues/24" target="_blank" rel="noopener">缺页异常</a></p>
 </li>
 </ol>
 <blockquote>
@@ -621,9 +621,9 @@
 </ol>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>   多级分页通过树+懒加载+缓存解决了空间占用与时间消耗的问题，虚拟地址很好的做到了让进程与物理内存地址解耦，正因如此，多进程使用物理内存时才不会有冲突，很好的做到了相互独立与隔离。正因如此，多进程使用物理内存时才不会有冲突，很好的做到了相互独立与隔离。</p>
 <h4 id="Q：虚拟内存的好处？"><a href="#Q：虚拟内存的好处？" class="headerlink" title="Q：虚拟内存的好处？"></a>Q：虚拟内存的好处？</h4><ul>
-<li>既然每个进程的内存空间都是一致而且固定的，所以<a href="https://github.com/Durant35/durant35.github.io/issues/24">链接器在链接可执行文件时，可以设定内存地址</a>，而不用去管这些数据最终实际的内存地址，这是有独立内存空间的好处；</li>
-<li>当不同的进程使用同样的代码时，比如库文件中的代码，<a href="https://github.com/Durant35/durant35.github.io/issues/24">物理内存中可以只存储一份</a>这样的代码，不同的进程只需要把自己的虚拟内存映射过去就可以了，节省内存；</li>
-<li>在<a href="https://github.com/Durant35/durant35.github.io/issues/24">程序需要分配连续的内存空间</a>的时候，只需要在虚拟内存空间分配连续空间，而不需要实际物理内存的连续空间，可以利用碎片。</li>
+<li>既然每个进程的内存空间都是一致而且固定的，所以<a href="https://github.com/Durant35/durant35.github.io/issues/24" target="_blank" rel="noopener">链接器在链接可执行文件时，可以设定内存地址</a>，而不用去管这些数据最终实际的内存地址，这是有独立内存空间的好处；</li>
+<li>当不同的进程使用同样的代码时，比如库文件中的代码，<a href="https://github.com/Durant35/durant35.github.io/issues/24" target="_blank" rel="noopener">物理内存中可以只存储一份</a>这样的代码，不同的进程只需要把自己的虚拟内存映射过去就可以了，节省内存；</li>
+<li>在<a href="https://github.com/Durant35/durant35.github.io/issues/24" target="_blank" rel="noopener">程序需要分配连续的内存空间</a>的时候，只需要在虚拟内存空间分配连续空间，而不需要实际物理内存的连续空间，可以利用碎片。</li>
 </ul>
 <h4 id="Q：页面置换算法？"><a href="#Q：页面置换算法？" class="headerlink" title="Q：页面置换算法？"></a>Q：页面置换算法？</h4><p>（ 。。。果然）</p>
 <p>当所需页不在内存，要将其调入，但如果内存没有空闲空间，为了保证进程所需的页能够调用，必须选择另外一些页调出。此时选择页面置换算法，算法的好坏直接影响系统性能，不适当的算法可能会产生系统“抖动”。</p>
@@ -729,7 +729,7 @@
     <div class="content">
         
 <span class="post-time">
-    最後更新時間：<time datetime="2022-03-17T03:37:11.360Z" itemprop="dateUpdated">2022-03-17 11:37:11</time>
+    Last updated: <time datetime="2022-03-17T03:37:11.360Z" itemprop="dateUpdated">2022-03-17 11:37:11</time>
 </span><br>
 
 
