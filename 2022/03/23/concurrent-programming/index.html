@@ -505,6 +505,7 @@
 <p>至于，keepAlive空闲线程存活时间，只是复用性的优化，根据测试，看有无触及阻塞队列阈值，如果频繁触及，说明业务总需要非核心线程，适当调大存活时间。一般默认即可，因为我已经确定当前最大线程数绝不会影响到服务的其他接口资源，它的调整优化作用非常有限。</p>
 <p>饱和策略，大多数业务抛异常，记录日志，熔断或降级处理，做重试机制。</p>
 <p>最后，理解以上这些，那么我们可以合理配置hystrix或sentinel。</p>
+<h3 id="Q：线程的状态转化，源码探索？"><a href="#Q：线程的状态转化，源码探索？" class="headerlink" title="Q：线程的状态转化，源码探索？"></a>Q：线程的状态转化，源码探索？</h3><p>待更新。。。</p>
 
         </div>
         
@@ -512,7 +513,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2022-03-24T08:15:41.557Z" itemprop="dateUpdated">2022-03-24 16:15:41</time>
+    最後更新時間：<time datetime="2022-03-26T16:03:56.796Z" itemprop="dateUpdated">2022-03-27 00:03:56</time>
 </span><br>
 
 
@@ -636,7 +637,7 @@
         <aside class="post-widget">
             <nav class="post-toc-wrap" id="post-toc">
                 <strong>目录</strong>
-                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#volatile"><span class="post-toc-number">1.</span> <span class="post-toc-text">volatile</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Q：synchronized-和-lock-的区别？"><span class="post-toc-number">2.</span> <span class="post-toc-text">Q：synchronized 和 lock 的区别？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#锁升级详解"><span class="post-toc-number">3.</span> <span class="post-toc-text">锁升级详解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#synchronized可重入"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">synchronized可重入</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单例模式的原因"><span class="post-toc-number">4.</span> <span class="post-toc-text">单例模式的原因</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程池参数调优—雨露均沾，保绩效"><span class="post-toc-number">5.</span> <span class="post-toc-text">线程池参数调优—雨露均沾，保绩效</span></a></li></ol>
+                <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#volatile"><span class="post-toc-number">1.</span> <span class="post-toc-text">volatile</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Q：synchronized-和-lock-的区别？"><span class="post-toc-number">2.</span> <span class="post-toc-text">Q：synchronized 和 lock 的区别？</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#锁升级详解"><span class="post-toc-number">3.</span> <span class="post-toc-text">锁升级详解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#synchronized可重入"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">synchronized可重入</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#单例模式的原因"><span class="post-toc-number">4.</span> <span class="post-toc-text">单例模式的原因</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程池参数调优—雨露均沾，保绩效"><span class="post-toc-number">5.</span> <span class="post-toc-text">线程池参数调优—雨露均沾，保绩效</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Q：线程的状态转化，源码探索？"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">Q：线程的状态转化，源码探索？</span></a></li></ol></li></ol>
             </nav>
             <div class="toc-bar"><div>
         </aside>
