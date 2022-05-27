@@ -349,9 +349,10 @@
 <hr>
 <h2 id="Q：synchronized-和-lock-的区别？"><a href="#Q：synchronized-和-lock-的区别？" class="headerlink" title="Q：synchronized 和 lock 的区别？"></a>Q：synchronized 和 lock 的区别？</h2><p>1，基本使用，关键字；接口<br>    lock接口有6个方法：lock，unlock，trylock非阻塞加锁，trylock(time)非阻塞可超时加锁，lockInterruptibly可中断加锁；<br>    Rentrantlock 实现<br>2，隐式加锁，显式加锁<br>    lock在try里，unlock在finally里<br>3，作用方法上多种方式，lock只能作用到代码块<br>对于synchronized<br>    普通方法，静态方法，方法块上有什么不同。<br>    代码块反编译同步指令，monitorenter，monitorexit；<br>    一定有两个出口，正常和异常。<br>    方法上会有ACC_SYNCHRONIZED访问标志。</p>
 <p>4，lock 支持非阻塞式加锁（信号量），支持可超时加锁，支持可中断加锁；<br>不阻塞，少一次上下文切换。可超时可中断，更灵活；</p>
-<p>5，从底层原理，synchronized一定条件下 采用对象监视器monitor，lock采用AQS；<br>Object 的monitor，线程竞争失败，调用wait方法释放锁，会放到等待队列，等待唤醒，再进行锁竞争，会放到同步队列。</p>
+<p>5，从底层原理，synchronized一定条件下 采用对象监视器monitor，lock采用AQS；<br>lock  新来线程A，state变量看锁对象是否持有，如果被其他人B持有，则加入到双端队列CLH尾部，需要CAS。<br>      之后，B释放锁，通知队头线程C，非公平锁下，C又与新来的线程D进行锁竞争；公平锁下，C调度，新来的D排到CLH尾部。<br>Object 的monitor，新来线程A，看锁对象是否持有，如果被其他人B持有，则加入到同步队列EntrySet尾部，需要CAS。<br>      之后，B释放锁，通知队头线程C，由于非公平锁，队头C和新来的线程D进行锁竞争。</p>
 <p>6，synchronized在进行加锁解锁或通知等待时，只有一个同步队列Entry Set 一个等待队列Wait Set；<br>lock有一个同步队列Entry Set，多个等待队列Wait Set；<br>创建一个condition就多一个等待队列<br>7，锁竞争，synchronized只支持非公平锁，lock支持公平锁和非公平锁；<br>对于在排队的A线程，新来的线程B，AB竞争机会相同，对A不公平；如果A总是被插队，A总是在排队，A就是饥饿线程。<br>对于在排队的A线程，新来的线程B，B在队列末端排队，对A公平。</p>
-<p>8，等待唤醒机制，sychronized与Object进行配合，使用notifyAll方法操作；lock需要用contdition接口配合，也是wait/notify机制，只是方法名不同await/signalAll。<br>如果线程获取锁，并condition的await方法，线程去哪？<br>在await方法前，线程加入condition的等待队列，不需要CAS，直接加，此时持有当前锁，说明自己竞争成功。当调用await后，它会进行锁释放。<br>场景：线程A获取锁后，调用wait，A被唤醒，继续执行释放了，A经历了什么？<br>wait前，A提前加入condition的等待队列尾部，不需CAS；当A在队列头部，就是被唤醒，就会进行一轮线程竞争，如果竞争失败，会加入到锁的同步队列尾部，需要CAS；A排队到头部，被唤醒，看公平锁还是非公平锁，如果是非公平锁，可能还会保持一段时间饥饿，如果是公平锁，直接获取锁，直接跳转wait方法释放，直到把锁释放。</p>
+<p>8，等待唤醒机制，sychronized与Object进行配合，使用notifyAll方法操作；lock需要用contdition接口配合，也是wait/notify机制，只是方法名不同await/signalAll。<br>如果线程获取锁，并condition的await方法，线程去哪？<br>在await方法，线程加入condition的等待队列，不需要CAS，直接加，此时持有当前锁，说明自己竞争成功。当调用await后，它会进行锁释放。<br>场景：线程A获取锁后，调用wait，A被唤醒，继续执行释放了，A经历了什么？<br>当前持有锁的A执行await时，加入condition等待队列的尾部，因为本来就是在获取锁以后的操作，不需CAS；当A在队列头部，就是signal被唤醒时，如果唤醒成功，则会加入到同步队列CLH尾部，需要CAS；A排队到头部，被唤醒，看公平锁还是非公平锁，如果是非公平锁，可能还会保持一段时间饥饿，如果是公平锁，直接获取锁，直接跳转wait方法释放，直到把锁释放。</p>
+<p>非公平锁，插入CLH队尾时，需要CAS竞争，通知CLH队头时，也要CAS竞争</p>
 <figure class="image-box">
                 <a rel=并发编程| 深理解volatile+锁升级+DCL单例+线程池调优 href="image-20220305082139330.png" title="image-20220305082139330" data-fancybox="images"><img src="image-20220305082139330.png" alt="image-20220305082139330" title class></a>
                 <p>image-20220305082139330</p>
@@ -415,7 +416,7 @@
 <p>因为线程B把对象 markword改成重量级锁，那么线程A<code>替换失败</code>，那么就把自己栈桢的Displaced Mark Word拷贝到对象头的<strong>Monitor</strong>对象的header变量，并且<strong>Monitor</strong>对象的owner变量指向自己。保证displaced mark word不丢失。</p>
 <p><strong>重量级锁</strong>：<br>CAS发生10次后，轻量级锁升级为重量级锁，把锁指针指向重量级锁Object的monitor。</p>
 <p>在Java虚拟机(HotSpot)中，Monitor对象其实就是ObjectMonitor对象，这个对象是一个C++对象，定义在虚拟机源码中。</p>
-<p>回顾Monitor机制。<br>场景：线程A获取锁后，调用wait，A被唤醒，继续执行释放了，A经历了什么？<br>wait前，A提前加入等待队列WaitSet尾部，不需CAS；当A在队列头部，就是被唤醒，就会进行一轮线程竞争，如果竞争失败，会加入到锁的同步队列EntrySet尾部，需要CAS；当A排队到同步队列头部，被唤醒，看公平锁还是非公平锁，如果是非公平锁，可能还会保持一段时间饥饿，如果是公平锁，直接获取锁，直接跳转wait方法释放，直到把锁释放。当然，synchronized是非公平锁，公平锁情况并没有出现。</p>
+<p>回顾Monitor机制。<br>场景：线程A获取锁后，调用wait，A被唤醒，继续执行释放了，A经历了什么？<br>wait，A加入等待队列WaitSet尾部，需要CAS；当A在队列头部，就是被唤醒，就会进行一轮线程竞争，如果竞争失败，会加入到锁的同步队列EntrySet尾部，需要CAS；当A排队到同步队列头部，被唤醒，看公平锁还是非公平锁，如果是非公平锁，可能还会保持一段时间饥饿，如果是公平锁，直接获取锁，直接跳转wait方法释放，直到把锁释放。当然，synchronized是非公平锁，公平锁情况并没有出现。</p>
 <figure class="image-box">
                 <a rel=并发编程| 深理解volatile+锁升级+DCL单例+线程池调优 href="image-20220305082139330.png" title="image-20220305082139330" data-fancybox="images"><img src="image-20220305082139330.png" alt="image-20220305082139330" title class></a>
                 <p>image-20220305082139330</p>
@@ -513,7 +514,7 @@
     <div class="content">
         
 <span class="post-time">
-    最後更新時間：<time datetime="2022-03-26T16:03:56.796Z" itemprop="dateUpdated">2022-03-27 00:03:56</time>
+    最后更新时间：<time datetime="2022-05-20T16:36:11.555Z" itemprop="dateUpdated">2022-05-21 00:36:11</time>
 </span><br>
 
 
